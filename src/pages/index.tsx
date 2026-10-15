@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   return (
     <main className="flex min-h-screen items-center justify-center px-4">
-      <h1 className="text-2xl font-bold md:text-4xl">UMC</h1>
+      <h1 className="font-bold text-2xl md:text-4xl">UMC</h1>
     </main>
   )
 }
