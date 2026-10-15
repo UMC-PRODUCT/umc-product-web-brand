@@ -37,7 +37,13 @@
         "useHookAtTopLevel": "error"
       },
       "style": {
-        "useImportType": "error"
+        "useImportType": {
+          "level": "error",
+          "fix": "safe",
+          "options": {
+            "style": "inlineType"
+          }
+        }
       },
       "nursery": {
         "useSortedClasses": {

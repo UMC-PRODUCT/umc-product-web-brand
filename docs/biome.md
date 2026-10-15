@@ -50,7 +50,7 @@ CSS는 Tailwind v4 문법(`@theme`, `@apply`, `@variant` 등)을 읽도록 `css.
 | `correctness/noUnusedImports`         | error | 쓰지 않는 import                                            |
 | `correctness/useExhaustiveDependencies` | error | `useEffect`·`useMemo`·`useCallback` 의존성 배열 누락/과잉 |
 | `correctness/useHookAtTopLevel`       | error | 조건문·반복문 안에서 Hook 호출 금지                         |
-| `style/useImportType`                 | error | 타입만 쓰는 import는 `import type`으로 작성                 |
+| `style/useImportType`                 | error | 타입 import에 `type` 표시 (`inlineType` 방식, 아래 4번 참고) |
 | `nursery/useSortedClasses`            | warn  | Tailwind 클래스 순서 정렬 (아래 5번 참고)                   |
 
 `recommended`에 포함된 `style/noNonNullAssertion`(`!` 사용)은 경고로만 표시됩니다.
@@ -65,9 +65,26 @@ CSS는 Tailwind v4 문법(`@theme`, `@apply`, `@variant` 등)을 읽도록 `css.
 
 그룹 안에서는 알파벳순이고, `{ b, a }` 같은 named import/export도 함께 정렬됩니다.
 
+### 같은 패키지 import는 한 줄로 합침
+
+`useImportType`을 `inlineType` 방식으로 설정해서, 타입은 `import type { ... }` 대신 `{ type X }`처럼 이름 앞에 `type`을 붙입니다. 덕분에 같은 패키지에서 가져오는 타입과 값이 한 줄로 합쳐집니다.
+
+```ts
+// 정리 전
+import { useState } from "react"
+import { useEffect } from "react"
+import type { ReactNode } from "react"
+import type { FC } from "react"
+
+// 정리 후
+import { type FC, type ReactNode, useEffect, useState } from "react"
+```
+
+### 정렬 예시
+
 ```ts
 import path from "node:path"
-import type { QueryClient } from "@tanstack/react-query"
+import { type QueryClient } from "@tanstack/react-query"
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router"
 
 import { cn } from "@/utils/cn"
@@ -77,7 +94,7 @@ import { App } from "./App"
 
 > 이전 perfectionist 설정과 다른 점
 > - `node:` 내장 모듈이 외부 패키지보다 항상 앞에 옵니다.
-> - `import type`을 따로 묶지 않고, 같은 그룹 안에서 일반 import와 함께 정렬합니다.
+> - 타입 import를 따로 묶지 않고, 같은 패키지의 값 import와 한 줄로 합칩니다.
 
 ## 5. Tailwind 클래스 정렬
 
