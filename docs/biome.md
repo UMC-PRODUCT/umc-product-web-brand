@@ -138,7 +138,23 @@ pnpm biome check --write src/pages/index.tsx
 | `git commit`     | husky → lint-staged가 커밋할 파일에 `biome check --write` 실행. 에러가 남으면 커밋 중단 |
 | PR (GitHub Actions) | `pnpm ci:check` 실행. 실패하면 PR 체크 실패                                           |
 
-VS Code를 쓴다면 추천 확장 **Biome (`biomejs.biome`)** 을 설치하세요. 프로젝트를 열면 설치 안내가 뜹니다.
+### VS Code 준비
+
+1. `pnpm install`: 확장이 프로젝트에 설치된 Biome을 사용합니다.
+2. 추천 확장 **Biome (`biomejs.biome`)** 설치: 프로젝트를 열면 설치 안내가 뜹니다.
+3. (선택) 이 워크스페이스에서 ESLint·Prettier 확장 비활성화: 설정 파일이 없어 경고가 뜰 수 있습니다.
+
+`.vscode/settings.json`은 git으로 공유되므로 따로 설정할 필요가 없습니다. ts·tsx·js·json·css는 언어별 포맷터도 Biome으로 지정해 두어서, 개인 설정에서 Prettier를 기본 포맷터로 지정했더라도 이 프로젝트에서는 Biome이 실행됩니다.
+
+### 저장 방식별 적용 범위
+
+| 저장 방식                                                  | 포맷 | import·클래스 정렬 |
+| ---------------------------------------------------------- | ---- | ------------------ |
+| Cmd+S 직접 저장                                            | O    | O                  |
+| 자동 저장: 다른 파일·창으로 이동할 때 (`onFocusChange`, `onWindowChange`) | O    | O                  |
+| 자동 저장: 일정 시간 지나면 (`afterDelay`)                 | X    | X                  |
+
+`afterDelay`는 입력 중에 계속 저장되기 때문에 VS Code가 포맷을 건너뜁니다(VS Code 자체 동작). 에디터에서 빠진 부분은 커밋할 때 lint-staged가 정리하고, PR의 CI가 한 번 더 검사하므로 저장소에 올라가는 코드는 항상 같은 규칙을 따릅니다.
 
 ## 8. 규칙을 잠깐 끄고 싶을 때
 
