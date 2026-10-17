@@ -33,6 +33,14 @@ UMC 브랜드 웹 프론트엔드 저장소입니다. 이 문서는 이 저장�
 | Node.js | 22 (`>=22.12.0`) | `.nvmrc`, `package.json`의 `engines` |
 | pnpm | 10.28.0 | `package.json`의 `packageManager` |
 
+처음 한 번은 UMC 디자인 시스템 패키지(GitHub Packages)를 받을 토큰이 필요합니다. 토큰이 없으면 `pnpm install`이 401이나 403으로 실패합니다.
+
+1. GitHub에서 `read:packages` 권한만 체크한 classic 토큰을 만듭니다. UMC-PRODUCT 조직은 수명이 30일을 넘는 classic 토큰을 막으므로 만료는 30일 이하로 정합니다.
+2. 사용자 폴더의 `~/.npmrc`에 `//npm.pkg.github.com/:_authToken=<토큰>` 한 줄을 적습니다. 저장소의 `.npmrc`에는 레지스트리 주소만 있고 토큰은 넣지 않습니다.
+3. 토큰이 만료되면 다시 발급해 같은 줄을 바꿉니다.
+
+자세한 절차와 오류별 해결은 [디자인 시스템 설치 문서](https://umc-product.github.io/umc-product-design-system/getting-started/installation/)에 있습니다.
+
 ```bash
 nvm use
 corepack enable
@@ -86,10 +94,10 @@ umc-product-web-v2의 기술 스택에서 코어만 가져왔습니다. 두 저�
 | HTTP | axios | 1 | API 요청 |
 | 폼 | react-hook-form, zod, @hookform/resolvers | 7, 4, 5 | 폼 상태와 스키마 검증 |
 | 스타일 | tailwindcss, @tailwindcss/vite | 4 | 유틸리티 CSS |
-| 스타일 유틸 | class-variance-authority, clsx, tailwind-merge | 0.7, 2, 2 | 변형 정의, 클래스 병합 (`src/utils/cn.ts`의 `cn()`) |
+| 스타일 유틸 | class-variance-authority, clsx, tailwind-merge | 0.7, 2, 3 | 변형 정의, 클래스 병합. `cn()`은 디자인 시스템 텍스트 스타일과 그림자 유틸을 등록해 둡니다 (`src/utils/cn.ts`) |
 | 헤드리스 UI | radix-ui | 1 | 접근성을 갖춘 기본 컴포넌트 |
-| 아이콘 | lucide-react | 0.545 | SVG 아이콘 컴포넌트 |
-| 폰트 | pretendard | 1 | 가변 폰트 다이내믹 서브셋 (`src/index.css`) |
+| 아이콘 | lucide-react, @umc-product/icons | 0.545, 0.5 | SVG 아이콘 컴포넌트. UMC 로고와 픽토그램은 디자인 시스템 패키지에서 씁니다 |
+| 디자인 토큰 | @umc-product/design-tokens | 0.5 | 색, 텍스트 스타일, 그림자 토큰과 Tailwind 유틸리티, Pretendard 가변 폰트 (`src/index.css`) |
 | SVG | vite-plugin-svgr | 4 | SVG 파일을 React 컴포넌트로 import |
 | API 타입 | openapi-typescript | 7 | OpenAPI 스키마에서 TypeScript 타입 생성 |
 | 린트·포맷 | @biomejs/biome | 2 | 린트, 포맷, import 정렬, Tailwind 클래스 정렬 |
@@ -99,7 +107,8 @@ umc-product-web-v2의 기술 스택에서 코어만 가져왔습니다. 두 저�
 
 - 정확한 버전은 `package.json`이 기준입니다. 모든 의존성을 캐럿(`^`) 없이 정확한 버전으로 고정합니다.
 - 의존성을 추가할 때는 `pnpm add -E <패키지>`를, 개발 의존성은 `pnpm add -D -E <패키지>`를 씁니다. `-E`를 빼면 캐럿이 붙습니다.
-- zustand, axios, react-hook-form, zod, @hookform/resolvers, openapi-typescript는 설치만 해 두었고 아직 쓰는 곳이 없습니다. 처음 쓰는 PR에서 파일 위치와 사용 규칙을 이 문서에 추가합니다.
+- zustand, axios, react-hook-form, zod, @hookform/resolvers, openapi-typescript, @umc-product/icons는 설치만 해 두었고 아직 쓰는 곳이 없습니다. 처음 쓰는 PR에서 파일 위치와 사용 규칙을 이 문서에 추가합니다.
+- 디자인 토큰의 `tailwind.css`는 Tailwind 기본 색 팔레트를 지웁니다. `gray-500` 같은 기본 색 클래스는 생성되지 않으니 디자인 시스템 유틸(`text-brand-default-600`, `bg-teal-grey-75` 등)을 씁니다. Figma 변수 이름은 여러 색에 겹쳐 붙어 있으므로 hex 값으로 토큰을 찾습니다.
 
 ## 폴더 구조와 라우팅
 
@@ -363,7 +372,7 @@ import { describe, expect, it } from "vitest"
 - 같은 PR에 새 커밋을 push하면 진행 중인 이전 실행을 취소합니다. `dev`, `main` push 실행은 취소하지 않고 머지마다 검증합니다.
 - Commitlint는 PR을 연 시점이 아니라 현재 base 브랜치(`origin/dev` 등)를 기준으로 범위를 잡습니다. PR 브랜치에 `dev`를 합쳐도 다른 사람의 커밋은 검사하지 않습니다.
 - Node 버전은 `.nvmrc`에서, pnpm 버전은 `package.json`의 `packageManager`에서 읽습니다. 버전을 올릴 때 워크플로는 고치지 않아도 됩니다.
-- 워크플로는 저장소 읽기 권한(`contents: read`)만 씁니다.
+- 워크플로는 저장소 읽기(`contents: read`)와 패키지 읽기(`packages: read`) 권한만 씁니다. 디자인 시스템 패키지는 `GITHUB_TOKEN`으로 설치하므로, 각 패키지의 Manage Actions access에 이 저장소가 읽기 권한으로 있어야 합니다.
 
 실패했을 때
 
@@ -405,6 +414,7 @@ import { describe, expect, it } from "vitest"
 
 - 검색 노출용 프리렌더 필요 여부: v2는 공개 페이지를 프리렌더합니다. 지금 `index.html`에는 메타 태그가 없고, 페이지 제목도 브라우저에서 설정합니다.
 - `dev`를 개발 환경에 연결할지 여부
+- 디자인 시스템 패키지 설치 토큰: Amplify는 `GITHUB_TOKEN`을 쓸 수 없어 classic 토큰을 환경 변수로 넣어야 합니다. 조직 정책상 이 토큰은 30일마다 교체해야 하므로 담당자와 교체 방법을 정합니다.
 
 ### 릴리스 절차
 
