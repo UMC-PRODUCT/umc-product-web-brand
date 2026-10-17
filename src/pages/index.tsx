@@ -1,13 +1,54 @@
 import { createFileRoute } from "@tanstack/react-router"
 
+import { Footer } from "@/components/footer/Footer"
+import { SiteHeader } from "@/components/header/SiteHeader"
+
+import { AboutSection } from "./-components/about/AboutSection"
+import { CtaSection } from "./-components/cta/CtaSection"
+import { FaqSection } from "./-components/faq/FaqSection"
+import { HeroSection } from "./-components/hero/HeroSection"
+import { PreviewSection } from "./-components/preview/PreviewSection"
+import { ProjectsSection } from "./-components/projects/ProjectsSection"
+import { RecruitmentSection } from "./-components/recruitment/RecruitmentSection"
+import { SponsorsSection } from "./-components/sponsors/SponsorsSection"
+import { StatsSection } from "./-components/stats/StatsSection"
+import { UniversitiesSection } from "./-components/universities/UniversitiesSection"
+import { ValuesSection } from "./-components/values/ValuesSection"
+
 export const Route = createFileRoute("/")({
-  component: HomePage,
+  component: LandingPage,
 })
 
-function HomePage() {
+function LandingPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center px-4">
-      <h1 className="font-bold text-2xl md:text-4xl">UMC</h1>
-    </main>
+    <div className="min-h-dvh overflow-x-clip bg-landing-page">
+      <a
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-70 focus:bg-white focus:px-4 focus:py-2"
+        href="#main"
+      >
+        본문으로 건너뛰기
+      </a>
+      <SiteHeader />
+      <main id="main" tabIndex={-1}>
+        <HeroSection />
+        <div className="flex flex-col gap-90">
+          <AboutSection />
+          <div className="flex flex-col gap-75">
+            <StatsSection />
+            <SponsorsSection />
+            <ValuesSection />
+          </div>
+          <PreviewSection />
+          <UniversitiesSection />
+          <ProjectsSection />
+          <div className="flex flex-col gap-50">
+            <RecruitmentSection />
+            <FaqSection />
+            <CtaSection />
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
   )
 }
