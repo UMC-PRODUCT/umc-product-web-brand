@@ -6,7 +6,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!src/routeTree.gen.ts", "!pnpm-lock.yaml", "!.claude"]
+    "includes": [
+      "**",
+      "!src/routeTree.gen.ts",
+      "!pnpm-lock.yaml",
+      "!.claude",
+      "!src/assets/**/*.svg"
+    ]
   },
   "formatter": {
     "enabled": true,

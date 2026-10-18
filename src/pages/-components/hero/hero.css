@@ -1,0 +1,104 @@
+.hero-backdrop {
+  --lcp-visible-opacity: 0.01;
+  --hero-height: clamp(640px, 100svh, 1080px);
+  --figma-px: calc(var(--hero-height) / 1080);
+  height: var(--hero-height);
+  background:
+    linear-gradient(127.03deg, rgb(46 209 190 / 0.16) 8.35%, transparent 48.63%),
+    #020807;
+}
+
+.hero-glow {
+  top: calc(-1145 * var(--figma-px));
+  left: calc(50% - 1111 * var(--figma-px));
+  width: calc(3072 * var(--figma-px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-word {
+    --word: 0;
+  }
+  .hero-word:nth-child(2) {
+    --word: 1;
+  }
+  .hero-word:nth-child(3) {
+    --word: 2;
+  }
+  .hero-letter {
+    --letter: 0;
+    transform-box: fill-box;
+    transform-origin: center bottom;
+  }
+  .hero-letter:nth-child(2) {
+    --letter: 1;
+  }
+  .hero-letter:nth-child(3) {
+    --letter: 2;
+  }
+  .hero-letter:nth-child(4) {
+    --letter: 3;
+  }
+  .hero-letter:nth-child(5) {
+    --letter: 4;
+  }
+  .hero-glow-base,
+  .hero-glow-rim {
+    will-change: transform, opacity;
+  }
+
+  .hero-intro[data-intro="pending"] .hero-eyebrow,
+  .hero-intro[data-intro="pending"] .hero-description {
+    opacity: var(--lcp-visible-opacity);
+  }
+  .hero-intro[data-intro="pending"] .hero-letter,
+  .hero-intro[data-intro="pending"] .hero-glow-base,
+  .hero-intro[data-intro="pending"] .hero-glow-rim,
+  .hero-intro[data-glow="pending"] .hero-glow-base,
+  .hero-intro[data-glow="pending"] .hero-glow-rim {
+    opacity: 0;
+  }
+
+  .hero-intro[data-intro="play"] .hero-eyebrow {
+    animation: hero-rise 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .hero-intro[data-intro="play"] .hero-letter {
+    animation: hero-letter 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--word) * 260ms + var(--letter) * 45ms + 80ms);
+  }
+  .hero-intro[data-intro="play"] .hero-description {
+    animation: hero-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) 700ms both;
+  }
+  .hero-intro[data-intro="play"][data-glow="ready"] .hero-glow-base {
+    animation: hero-glow-base 900ms ease-out 200ms both;
+  }
+  .hero-intro[data-intro="play"][data-glow="ready"] .hero-glow-rim {
+    animation: hero-glow-rim 1000ms cubic-bezier(0.45, 0, 0.55, 1) 600ms both;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: var(--lcp-visible-opacity);
+    transform: translateY(16px);
+  }
+}
+
+@keyframes hero-letter {
+  from {
+    opacity: 0;
+    transform: translateY(36px) scaleY(0.7);
+  }
+}
+
+@keyframes hero-glow-base {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@keyframes hero-glow-rim {
+  from {
+    opacity: 0;
+  }
+}

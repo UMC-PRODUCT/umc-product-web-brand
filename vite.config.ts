@@ -13,7 +13,7 @@ export default defineConfig({
       autoCodeSplitting: true,
     }),
     react(),
-    svgr(),
+    svgr({ esbuildOptions: { jsx: "automatic" } }),
     tailwindcss(),
   ],
   resolve: {
