@@ -1,0 +1,76 @@
+.hero-backdrop {
+  --hero-intro: 1400ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both;
+  --hero-height: clamp(640px, 100svh, 1080px);
+  --figma-px: calc(var(--hero-height) / 1080);
+  height: var(--hero-height);
+  background:
+    linear-gradient(127.03deg, rgb(46 209 190 / 0.16) 8.35%, transparent 48.63%),
+    #020807;
+}
+
+.hero-glow {
+  top: calc(-1145 * var(--figma-px));
+  left: calc(50% - 1111 * var(--figma-px));
+  width: calc(3072 * var(--figma-px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-glow-base {
+    animation: hero-glow-base var(--hero-intro);
+  }
+  .hero-glow-rim {
+    animation: hero-glow-rim var(--hero-intro);
+  }
+  .hero-eyebrow {
+    animation: hero-eyebrow var(--hero-intro);
+  }
+  .hero-title {
+    animation: hero-title var(--hero-intro);
+  }
+  .hero-description {
+    animation: hero-description var(--hero-intro);
+  }
+}
+
+@keyframes hero-glow-base {
+  from {
+    opacity: 0.4;
+  }
+  57% {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-glow-rim {
+  from {
+    opacity: 0;
+  }
+  57% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes hero-eyebrow {
+  from {
+    color: #01423d;
+  }
+  57% {
+    color: #63c4b8;
+  }
+}
+
+@keyframes hero-title {
+  from {
+    color: #01423d;
+  }
+  57% {
+    color: #fff;
+  }
+}
+
+@keyframes hero-description {
+  from,
+  57% {
+    opacity: 0;
+  }
+}
