@@ -17,7 +17,7 @@
 ```jsonc
 "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
 "files": {
-  "includes": ["**", "!src/routeTree.gen.ts", "!pnpm-lock.yaml", "!.claude"]
+  "includes": ["**", "!src/routeTree.gen.ts", "!pnpm-lock.yaml", "!.claude", "!src/assets/**/*.svg"]
 }
 ```
 
@@ -26,6 +26,7 @@
   - `src/routeTree.gen.ts`: TanStack Router가 만드는 파일
   - `pnpm-lock.yaml`
   - `.claude`
+  - `src/assets/**/*.svg`: 디자인에서 내보낸 SVG 에셋. 접근성은 쓰는 곳(`img`의 `alt`, `aria-hidden`)에서 처리합니다
 - 지원 파일: `.ts`, `.tsx`, `.js`, `.json`, `.jsonc`, `.css`. **Markdown은 Biome이 지원하지 않아 포맷하지 않습니다.**
 
 ## 2. 포맷 규칙 (기존 Prettier 설정과 동일)
