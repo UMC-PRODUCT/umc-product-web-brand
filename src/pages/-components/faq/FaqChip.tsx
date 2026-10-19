@@ -4,7 +4,7 @@ import { type ComponentPropsWithRef } from "react"
 import { cn } from "@/utils/cn"
 
 const faqChipVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-(--umc-radius-full) bg-teal-grey-100 text-teal-grey-400 outline-teal-500 outline-offset-2 hover:bg-teal-grey-200 focus-visible:outline-2 aria-pressed:bg-teal-500 aria-pressed:text-white motion-safe:transition-colors",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-(--umc-radius-full) bg-fill-neutral-medium-100 text-placeholder outline-teal-500 outline-offset-2 hover:bg-fill-neutral-medium-hover-pressed focus-visible:outline-2 aria-pressed:bg-fill-primary-inverse-medium-500 aria-pressed:text-white motion-safe:transition-colors",
   {
     variants: {
       size: {

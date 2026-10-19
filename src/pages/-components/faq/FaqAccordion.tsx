@@ -43,20 +43,20 @@ export function FaqAccordionItem({
       <Accordion.Header>
         <Accordion.Trigger className="group flex min-h-[34px] w-full items-center justify-between gap-(--umc-spacing-gap-10) text-left outline-teal-500 outline-offset-4 focus-visible:outline-2">
           <span className="flex gap-(--umc-spacing-gap-10) font-semibold text-[26px] leading-[1.3]">
-            <span aria-hidden className="text-teal-600">
+            <span aria-hidden className="text-brand-default-600">
               Q
             </span>
-            <span className="text-teal-grey-800">{question}</span>
+            <span className="text-neutral-strong-800">{question}</span>
           </span>
           <span className="flex shrink-0 px-(--umc-spacing-padding-16)">
             <ChevronDown
               aria-hidden
-              className="size-[24px] text-teal-grey-500 group-data-[state=open]:rotate-180 motion-safe:transition-transform"
+              className="size-[24px] text-icon-neutral-medium-500 group-data-[state=open]:rotate-180 motion-safe:transition-transform"
             />
           </span>
         </Accordion.Trigger>
       </Accordion.Header>
-      <Accordion.Content className="pt-[30px] pr-[14px] text-[20px] text-teal-grey-600 leading-[1.6] tracking-[-0.2px]">
+      <Accordion.Content className="pt-[30px] pr-[14px] text-[20px] text-neutral-medium-600 leading-[1.6] tracking-[-0.2px]">
         {children}
       </Accordion.Content>
     </Accordion.Item>

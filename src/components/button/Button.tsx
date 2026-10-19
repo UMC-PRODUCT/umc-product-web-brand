@@ -10,10 +10,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        fill: "bg-teal-500 text-white hover:bg-teal-700",
+        fill: "bg-fill-primary-inverse-medium-500 text-inverse hover:bg-fill-primary-inverse-medium-hover-pressed",
         // Figma 채우기: teal-400 20% 위에 흰색 20%, Glass 효과는 배경 블러로 옮긴다
         glass:
-          "bg-[linear-gradient(rgb(255_255_255/0.2),rgb(255_255_255/0.2))] bg-teal-400/20 text-teal-600 backdrop-blur-[4px] hover:text-teal-800",
+          "bg-[linear-gradient(rgb(255_255_255/0.2),rgb(255_255_255/0.2))] bg-fill-primary-inverse-weak-400/20 text-brand-default-600 backdrop-blur-[4px] hover:text-brand-strong-800",
       },
       arrow: {
         true: "pr-[30px]",
