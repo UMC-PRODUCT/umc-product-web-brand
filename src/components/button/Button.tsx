@@ -11,8 +11,9 @@ const buttonVariants = cva(
     variants: {
       variant: {
         fill: "bg-teal-500 text-white hover:bg-teal-700",
-        // Glass 배경은 디자이너 확인 전까지 가장 가까운 토큰을 쓴다 (#22)
-        glass: "bg-teal-100 text-teal-600 hover:text-teal-800",
+        // Figma 채우기: teal-400 20% 위에 흰색 20%, Glass 효과는 배경 블러로 옮긴다
+        glass:
+          "bg-[linear-gradient(rgb(255_255_255/0.2),rgb(255_255_255/0.2))] bg-teal-400/20 text-teal-600 backdrop-blur-[4px] hover:text-teal-800",
       },
       arrow: {
         true: "pr-[30px]",
