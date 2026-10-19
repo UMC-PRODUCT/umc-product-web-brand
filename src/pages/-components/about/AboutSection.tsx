@@ -9,12 +9,7 @@ export function AboutSection() {
   const [firstTitleLine, secondTitleLine] = ABOUT_COPY.titleLines
 
   return (
-    <Section
-      className="pt-[217px]"
-      headerTone="light"
-      id="about"
-      labelledBy="about-title"
-    >
+    <Section headerTone="light" id="about" labelledBy="about-title">
       <Container>
         <SectionHeading
           description={ABOUT_COPY.description}
