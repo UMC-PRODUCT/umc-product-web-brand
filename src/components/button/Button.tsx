@@ -12,10 +12,8 @@ const buttonVariants = cva(
       variant: {
         fill: "bg-fill-primary-inverse-medium-500 text-inverse hover:bg-fill-primary-inverse-medium-hover-pressed",
         // Figma 채우기: teal-400 20% 위에 흰색 20%, Glass 효과의 블러(반경 4)는 배경 블러로 옮긴다
-        // 가장자리 명암은 Glass 효과(깊이 20, 빛 각도 -45°, 세기 0.7)를 렌더링 픽셀에 맞춘 안쪽 그림자로 흉내 낸다:
-        // 네 변 밝은 1px 선, 위·왼쪽 안쪽 그늘(~12px), 아래·오른쪽 안쪽 반사(~8px)
         glass:
-          "bg-[linear-gradient(rgb(255_255_255/0.2),rgb(255_255_255/0.2))] bg-fill-primary-inverse-weak-400/20 text-brand-default-600 shadow-[inset_1px_1px_0_rgb(255_255_255/0.4),inset_-1px_-1px_0_rgb(255_255_255/0.3),inset_3px_3px_12px_-4px_rgb(40_65_65/0.06),inset_-3px_-3px_8px_-4px_rgb(255_255_255/0.35)] backdrop-blur-[4px] hover:text-brand-strong-800",
+          "bg-[linear-gradient(rgb(255_255_255/0.2),rgb(255_255_255/0.2))] bg-fill-primary-inverse-weak-400/20 text-brand-default-600 backdrop-blur-[4px] hover:text-brand-strong-800",
       },
       arrow: {
         true: "pr-[30px]",
