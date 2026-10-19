@@ -8,7 +8,8 @@ const faqChipVariants = cva(
   {
     variants: {
       size: {
-        md: "h-[42px] px-[18px] text-[20px] leading-[1.4] tracking-[-0.4px]",
+        // 자간은 랜딩 인스턴스가 모두 덮어쓴 -1%를 따른다 (원본은 -2%)
+        md: "h-[42px] px-[18px] text-[20px] leading-[1.4] tracking-[-0.2px]",
         sm: "h-[35px] px-(--umc-spacing-padding-12) text-body-1-regular",
       },
     },
