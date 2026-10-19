@@ -29,7 +29,7 @@ function LandingPage() {
         본문으로 건너뛰기
       </a>
       <SiteHeader />
-      <main id="main" tabIndex={-1}>
+      <main className="flex flex-col gap-[217px]" id="main" tabIndex={-1}>
         <HeroSection />
         <div className="flex flex-col gap-90">
           <AboutSection />
