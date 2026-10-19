@@ -21,7 +21,11 @@
 @layer base {
   html {
     overscroll-behavior: none;
-    scroll-padding-top: var(--umc-layout-header-height);
+    --anchor-gap-below-header: 10px;
+    scroll-padding-top: calc(
+      var(--umc-layout-header-height) +
+      var(--anchor-gap-below-header)
+    );
     font-family: var(--umc-font-family-brand);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
