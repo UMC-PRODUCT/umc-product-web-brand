@@ -1,0 +1,39 @@
+.stat-card {
+  background:
+    linear-gradient(
+      122.16deg,
+      rgb(46 209 190 / 0.12) 8.49%,
+      rgb(46 209 190 / 0) 61.52%
+    ),
+    rgb(12 42 37 / 0.86);
+}
+
+.stat-card::before,
+.stat-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.stat-card::before {
+  background: rgb(38 38 38 / 0.2);
+  mix-blend-mode: color-dodge;
+}
+
+.stat-card::after {
+  background: linear-gradient(
+    -53.76deg,
+    rgb(46 209 190 / 0.24) 16.06%,
+    rgb(46 209 190 / 0) 20.61%
+  );
+}
+
+.stat-card-value {
+  text-shadow: 0 0 20px rgb(16 181 162 / 0.5);
+}
+
+.stat-card-unit {
+  color: #e9ecec;
+  text-shadow: 0 0 20px rgb(255 255 255 / 0.5);
+}
