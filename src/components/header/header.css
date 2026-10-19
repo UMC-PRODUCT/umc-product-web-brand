@@ -1,0 +1,205 @@
+.site-header {
+  --header-bg: var(--umc-color-fill-neutral-weaker-50);
+  --header-shadow: var(--umc-shadow-drop-neutral-3);
+  --header-logo: var(--umc-color-teal-grey-700);
+  --header-logo-hover: var(--umc-color-text-brand-default-600);
+  --header-nav-bg: var(--umc-color-teal-grey-50);
+  --header-nav-border: var(--umc-color-teal-grey-75);
+  --header-nav-shadow: 0 0 8px rgb(10 86 80 / 0.04);
+  --header-nav-backdrop: none;
+  --header-item-fg: var(--umc-color-text-neutral-medium-600);
+  --header-item-hover-bg: var(--umc-color-fill-neutral-weak-75);
+  --header-item-hover-fg: var(--umc-color-text-neutral-medium-600);
+  --header-item-hover-shadow: var(--umc-shadow-inner-neutral-2);
+  --header-item-active-bg: var(--umc-color-fill-primary-weak-75);
+  --header-item-active-fg: var(--umc-color-text-brand-default-600);
+  --header-item-active-shadow: none;
+  --header-quick-bg: transparent;
+  --header-quick-hover-bg: var(--umc-color-teal-75);
+  --header-quick-fg: var(--umc-color-text-brand-default-600);
+  --header-quick-border: transparent;
+  --header-login-bg: var(--umc-color-teal-100);
+  --header-login-fg: var(--umc-color-text-brand-default-600);
+  --header-login-border: white;
+  --header-focus: var(--umc-color-border-primary-strong-500);
+  --header-menu-bg: white;
+  --header-menu-border: transparent;
+  --header-menu-backdrop: none;
+  --header-menu-title: #98938f;
+  --header-menu-item-fg: var(--umc-color-text-neutral-default-900);
+  --header-menu-item-hover-bg: var(--umc-color-teal-grey-50);
+  --header-menu-item-hover-shadow: var(--umc-shadow-inner-neutral-2);
+
+  background-color: var(--header-bg);
+  box-shadow: var(--header-shadow);
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.site-header[data-tone="dark"] {
+  --header-bg: transparent;
+  --header-shadow: none;
+  --header-logo: var(--umc-color-teal-50);
+  --header-logo-hover: var(--umc-color-teal-200);
+  --header-nav-bg: rgb(251 252 252 / 0.2);
+  --header-nav-border: white;
+  --header-nav-shadow: 0 0 16px rgb(10 86 80 / 0.04);
+  --header-nav-backdrop: blur(21px);
+  --header-item-fg: var(--umc-color-teal-grey-200);
+  --header-item-hover-bg: transparent;
+  --header-item-hover-fg: var(--umc-color-text-brand-default-600);
+  --header-item-hover-shadow: none;
+  --header-item-active-bg: rgb(221 244 241 / 0.3);
+  --header-item-active-fg: var(--umc-color-teal-grey-200);
+  --header-item-active-shadow: inset 0 0 0 1px white;
+  --header-quick-bg: rgb(251 252 252 / 0.3);
+  --header-quick-hover-bg: rgb(251 252 252 / 0.4);
+  --header-quick-fg: white;
+  --header-quick-border: white;
+  --header-login-bg: transparent;
+  --header-login-fg: white;
+  --header-login-border: transparent;
+  --header-focus: white;
+  --header-menu-bg: rgb(16 40 37 / 0.72);
+  --header-menu-border: rgb(255 255 255 / 0.2);
+  --header-menu-backdrop: blur(21px);
+  --header-menu-title: var(--umc-color-teal-grey-300);
+  --header-menu-item-fg: white;
+  --header-menu-item-hover-bg: rgb(255 255 255 / 0.12);
+  --header-menu-item-hover-shadow: none;
+}
+
+.site-header-logo {
+  color: var(--header-logo);
+  transition: color 150ms ease;
+}
+
+.site-header-nav-list {
+  background-color: var(--header-nav-bg);
+  box-shadow:
+    inset 0 0 0 1px var(--header-nav-border),
+    var(--header-nav-shadow);
+  backdrop-filter: var(--header-nav-backdrop);
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.site-header-nav-link {
+  color: var(--header-item-fg);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.site-header-nav-link[aria-current] {
+  background-color: var(--header-item-active-bg);
+  color: var(--header-item-active-fg);
+  box-shadow: var(--header-item-active-shadow);
+  font-weight: var(--umc-typography-body-1-semibold-font-weight);
+}
+
+.site-header-quick {
+  background-color: var(--header-quick-bg);
+  color: var(--header-quick-fg);
+  box-shadow: inset 0 0 0 1px var(--header-quick-border);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.site-header-login {
+  background-color: var(--header-login-bg);
+  color: var(--header-login-fg);
+  box-shadow: inset 0 0 0 1px var(--header-login-border);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+@media (hover: hover) {
+  .site-header-logo:hover {
+    color: var(--header-logo-hover);
+  }
+
+  .site-header-nav-link:not([aria-current]):hover {
+    background-color: var(--header-item-hover-bg);
+    color: var(--header-item-hover-fg);
+    box-shadow: var(--header-item-hover-shadow);
+  }
+
+  .site-header-quick:hover {
+    background-color: var(--header-quick-hover-bg);
+  }
+}
+
+.site-header :focus-visible {
+  outline: 2px solid var(--header-focus);
+  outline-offset: 2px;
+}
+
+.site-header-menu {
+  background-color: var(--header-menu-bg);
+  box-shadow:
+    inset 0 0 0 1px var(--header-menu-border),
+    var(--umc-shadow-drop-neutral-1);
+  backdrop-filter: var(--header-menu-backdrop);
+}
+
+.site-header-menu-title {
+  color: var(--header-menu-title);
+}
+
+.site-header-menu-item {
+  color: var(--header-menu-item-fg);
+}
+
+.site-header-menu-item[data-highlighted] {
+  background-color: var(--header-menu-item-hover-bg);
+  box-shadow: var(--header-menu-item-hover-shadow);
+}
+
+.site-header-menu-item:focus-visible {
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .site-header-menu-item:hover {
+    outline: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header-logo,
+  .site-header-nav-list,
+  .site-header-nav-link,
+  .site-header-quick,
+  .site-header-login {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .site-header {
+    border-bottom: 1px solid CanvasText;
+  }
+
+  .site-header-nav-link[aria-current] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  .site-header :focus-visible {
+    outline-color: CanvasText;
+  }
+
+  .site-header-menu {
+    border: 1px solid CanvasText;
+  }
+}
