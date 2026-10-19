@@ -8,6 +8,7 @@ interface CarouselPaginationProps {
   onSelect: (index: number) => void
   getLabel: (index: number) => string
   controlsId: string
+  className?: string
 }
 
 const ARROW_STEP: Record<string, number> = { ArrowLeft: -1, ArrowRight: 1 }
@@ -18,6 +19,7 @@ export function CarouselPagination({
   onSelect,
   getLabel,
   controlsId,
+  className,
 }: CarouselPaginationProps) {
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
 
@@ -33,7 +35,7 @@ export function CarouselPagination({
   const labels = Array.from({ length: count }, (_, index) => getLabel(index))
 
   return (
-    <div className="relative -my-1.5 flex items-center">
+    <div className={cn("relative -my-1.5 flex items-center", className)}>
       {labels.map((label, index) => {
         const isSelected = index === selectedIndex
         return (

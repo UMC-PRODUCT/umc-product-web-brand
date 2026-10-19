@@ -1,5 +1,5 @@
 import useEmblaCarousel from "embla-carousel-react"
-import { useEffect, useId, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 
 import { cn } from "@/utils/cn"
 
@@ -12,6 +12,7 @@ interface AboutCarouselProps {
   slides: readonly AboutSlide[]
   startIndex: number
   label: string
+  zooming: boolean
   className?: string
 }
 
@@ -22,15 +23,22 @@ export function AboutCarousel({
   slides,
   startIndex,
   label,
+  zooming,
   className,
 }: AboutCarouselProps) {
   const viewportId = useId()
+  const interactiveRef = useRef(!zooming)
   const [viewportRef, emblaApi] = useEmblaCarousel({
     align: "center",
     loop: true,
     startIndex,
+    watchDrag: () => interactiveRef.current,
   })
   const [selectedIndex, setSelectedIndex] = useState(startIndex)
+
+  useEffect(() => {
+    interactiveRef.current = !zooming
+  }, [zooming])
 
   useEffect(() => {
     if (!emblaApi) return
@@ -38,7 +46,7 @@ export function AboutCarousel({
       setSelectedIndex(emblaApi.selectedScrollSnap())
     const selectClickedSlide = (event: MouseEvent) => {
       const target = event.target
-      if (!(target instanceof Node)) return
+      if (!interactiveRef.current || !(target instanceof Node)) return
       const clickedIndex = emblaApi
         .slideNodes()
         .findIndex((slide) => slide.contains(target))
@@ -92,16 +100,25 @@ export function AboutCarousel({
                   src={slide.src}
                   width={900}
                 />
+                <div aria-hidden className="about-slide-dim absolute inset-0" />
                 <div
                   aria-hidden
                   className="about-slide-veil absolute inset-0"
                 />
+                {zooming && index === selectedIndex && (
+                  <div
+                    aria-hidden
+                    className="about-slide-tone absolute inset-x-0 bottom-0"
+                    data-header-tone="dark"
+                  />
+                )}
               </div>
             </figure>
           ))}
         </div>
       </div>
       <CarouselPagination
+        className="about-pagination"
         controlsId={viewportId}
         count={slides.length}
         getLabel={(index) => `${index + 1}번째 사진`}
