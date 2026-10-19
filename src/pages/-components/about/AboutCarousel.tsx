@@ -36,9 +36,22 @@ export function AboutCarousel({
     if (!emblaApi) return
     const syncSelectedIndex = () =>
       setSelectedIndex(emblaApi.selectedScrollSnap())
+    const selectClickedSlide = (event: MouseEvent) => {
+      const target = event.target
+      if (!(target instanceof Node)) return
+      const clickedIndex = emblaApi
+        .slideNodes()
+        .findIndex((slide) => slide.contains(target))
+      if (clickedIndex === -1 || clickedIndex === emblaApi.selectedScrollSnap())
+        return
+      emblaApi.scrollTo(clickedIndex, prefersReducedMotion())
+    }
+    const root = emblaApi.rootNode()
     emblaApi.on("select", syncSelectedIndex)
+    root.addEventListener("click", selectClickedSlide)
     return () => {
       emblaApi.off("select", syncSelectedIndex)
+      root.removeEventListener("click", selectClickedSlide)
     }
   }, [emblaApi])
 
@@ -78,6 +91,10 @@ export function AboutCarousel({
                   height={500}
                   src={slide.src}
                   width={900}
+                />
+                <div
+                  aria-hidden
+                  className="about-slide-veil absolute inset-0"
                 />
               </div>
             </figure>

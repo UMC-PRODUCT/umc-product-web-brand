@@ -20,6 +20,12 @@
   transition: clip-path 500ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.about-slide-veil {
+  background: rgb(255 255 255 / 0.15);
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+
 .about-slide[data-active="true"] .about-slide-shadow {
   opacity: 1;
 }
@@ -28,9 +34,20 @@
   clip-path: inset(0 round 24px);
 }
 
+@media (hover: hover) {
+  .about-slide:not([data-active="true"]) {
+    cursor: pointer;
+  }
+
+  .about-slide:not([data-active="true"]):hover .about-slide-veil {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .about-slide-shadow,
-  .about-slide-frame {
+  .about-slide-frame,
+  .about-slide-veil {
     transition: none;
   }
 }
