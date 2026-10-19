@@ -1,5 +1,6 @@
 @import "tailwindcss";
-@import "@umc-product/react/styles.css";
+@import "@umc-product/design-tokens/fonts.css";
+@import "@umc-product/design-tokens/base.css";
 @import "@umc-product/design-tokens/tailwind.css";
 
 @utility bg-landing-page {
