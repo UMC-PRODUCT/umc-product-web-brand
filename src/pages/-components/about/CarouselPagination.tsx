@@ -41,7 +41,7 @@ export function CarouselPagination({
             aria-controls={controlsId}
             aria-current={isSelected ? "true" : undefined}
             aria-label={label}
-            className="flex h-6 items-center rounded-full px-1 focus-visible:outline-2 focus-visible:outline-teal-600"
+            className="flex h-6 items-center rounded-full px-1.5 focus-visible:outline-2 focus-visible:outline-teal-600"
             key={label}
             onClick={() => onSelect(index)}
             onKeyDown={(event) => handleKeyDown(event, index)}
