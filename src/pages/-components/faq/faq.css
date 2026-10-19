@@ -1,0 +1,24 @@
+/*
+ * FAQ 아코디언 테두리
+ * Figma: a0beb5 100%→0% 선형 그라데이션, 레이어 투명도 50%, 안쪽 1px.
+ * 그라데이션이 오른쪽 끝에서 시작해 왼쪽으로 사라져서 테두리는 오른쪽 끝에서만 보인다.
+ * 각도와 지점은 Figma gradientTransform을 1200x98 크기 기준으로 CSS 각도로 바꾼 값이다.
+ * a0beb5는 토큰에 없는 시안 값 (#22)
+ */
+.faq-accordion-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(
+      275.9deg,
+      rgb(160 190 181 / 0.5) 2.2%,
+      transparent 26.5%
+    )
+    border-box;
+  mask:
+    linear-gradient(#000 0 0) padding-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}

@@ -4,6 +4,8 @@ import { type ComponentProps, type ReactNode } from "react"
 
 import { cn } from "@/utils/cn"
 
+import "./faq.css"
+
 type FaqAccordionProps = ComponentProps<typeof Accordion.Root>
 
 export function FaqAccordion({ className, ...props }: FaqAccordionProps) {
@@ -31,9 +33,9 @@ export function FaqAccordionItem({
   return (
     <Accordion.Item
       className={cn(
-        // 테두리 #a0beb5와 배경 레이어는 토큰에 없는 시안 값 (#22에서 확인 중)
-        // Figma 테두리는 안쪽에 그려지므로 여백을 1px씩 줄여 32/30/40px 시안 크기를 맞춘다
-        "rounded-(--umc-radius-12) border border-[#a0beb5] bg-[linear-gradient(rgb(208_232_227/0.12),rgb(208_232_227/0.12)),linear-gradient(rgb(182_193_193/0.16),rgb(182_193_193/0.16))] py-[31px] pr-[29px] pl-[39px]",
+        // 배경 레이어 d0e8e3 12%, b6c1c1 16%는 토큰에 없는 시안 값 (#22). Figma Glass 효과는 배경 블러로 옮긴다
+        // 테두리는 faq.css의 ::before가 레이아웃 밖에 그리므로 여백은 시안 값 그대로 쓴다
+        "faq-accordion-item relative rounded-(--umc-radius-12) bg-[linear-gradient(rgb(208_232_227/0.12),rgb(208_232_227/0.12)),linear-gradient(rgb(182_193_193/0.16),rgb(182_193_193/0.16))] py-(--umc-spacing-padding-32) pr-[30px] pl-[40px] backdrop-blur-[4px]",
         className,
       )}
       value={value}
