@@ -1,16 +1,18 @@
 import { act, renderHook } from "@testing-library/react"
-import { afterEach, describe, expect, it, vi } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { type HeaderTone } from "@/components/layout/Section"
 
 import { useSectionUnderHeader } from "./useSectionUnderHeader"
 
 const HEADER_HEIGHT = 80
+const ANCHOR_OFFSET = 90
 const SECTION_WIDTH = 1440
 const SECTION_HEIGHT = 100
 
 interface SectionBox {
   top: number
+  bottom: number
   width: number
   height: number
 }
@@ -27,13 +29,13 @@ function addSection(
   section.id = id
   section.dataset.headerTone = tone
   section.getBoundingClientRect = () => sectionBoxes.get(id) as DOMRect
-  sectionBoxes.set(id, { top, ...size })
+  sectionBoxes.set(id, { top, bottom: top + size.height, ...size })
   document.body.append(section)
 }
 
 function moveSection(id: string, top: number) {
   const box = sectionBoxes.get(id)
-  if (box) sectionBoxes.set(id, { ...box, top })
+  if (box) sectionBoxes.set(id, { ...box, top, bottom: top + box.height })
 }
 
 function renderUnderHeader() {
@@ -50,8 +52,17 @@ function fireAndAdvanceFrame(type: "scroll" | "resize") {
   })
 }
 
+function setAnchorOffset(offset: number) {
+  document.documentElement.style.scrollPaddingTop = `${offset}px`
+}
+
 describe("useSectionUnderHeader", () => {
+  beforeEach(() => {
+    setAnchorOffset(HEADER_HEIGHT)
+  })
+
   afterEach(() => {
+    document.documentElement.style.scrollPaddingTop = ""
     vi.useRealTimers()
     sectionBoxes.clear()
     document.body.replaceChildren()
@@ -67,13 +78,33 @@ describe("useSectionUnderHeader", () => {
     expect(result.current).toEqual({ id: "about", tone: "light" })
   })
 
-  it("섹션 사이 간격에서는 위 섹션의 값을 돌려준다", () => {
-    addSection("faq", "light", -400)
-    addSection("cta", "dark", 200)
+  it("섹션 사이 간격에서는 위 섹션 id와 페이지 배경 톤을 돌려준다", () => {
+    addSection("hero", "dark", -1000, { width: SECTION_WIDTH, height: 900 })
+    addSection("about", "light", 200)
 
     const { result } = renderUnderHeader()
 
-    expect(result.current).toEqual({ id: "faq", tone: "light" })
+    expect(result.current).toEqual({ id: "hero", tone: "light" })
+  })
+
+  it("활성 섹션은 앵커 도착선(scroll-padding-top) 기준으로 판정한다", () => {
+    setAnchorOffset(ANCHOR_OFFSET)
+    addSection("hero", "dark", -1000, { width: SECTION_WIDTH, height: 900 })
+    addSection("about", "light", ANCHOR_OFFSET)
+
+    const { result } = renderUnderHeader()
+
+    expect(result.current).toEqual({ id: "about", tone: "light" })
+  })
+
+  it("톤은 헤더 선을 덮은 섹션으로 판정한다", () => {
+    setAnchorOffset(ANCHOR_OFFSET)
+    addSection("hero", "dark", -815, { width: SECTION_WIDTH, height: 900 })
+    addSection("about", "light", 85)
+
+    const { result } = renderUnderHeader()
+
+    expect(result.current).toEqual({ id: "about", tone: "dark" })
   })
 
   it("헤더 선 아래 1px까지 걸친 섹션은 지난 것으로 본다", () => {
