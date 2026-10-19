@@ -1,0 +1,53 @@
+.about-carousel-viewport {
+  --side-exposure: max(0px, calc((100% - 900px) / 2 - 16px));
+  mask-image: linear-gradient(
+    to right,
+    rgb(0 0 0 / 0.45),
+    #000 calc(var(--side-exposure) * 0.48),
+    #000 calc(100% - var(--side-exposure) * 0.48),
+    rgb(0 0 0 / 0.45)
+  );
+}
+
+.about-slide-shadow {
+  box-shadow: 0 4px 100px rgb(33 83 77 / 0.08);
+  opacity: 0;
+  transition: opacity 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-slide-frame {
+  clip-path: inset(24px 3.5px round 24px);
+  transition: clip-path 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-slide-veil {
+  background: rgb(255 255 255 / 0.15);
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+
+.about-slide[data-active="true"] .about-slide-shadow {
+  opacity: 1;
+}
+
+.about-slide[data-active="true"] .about-slide-frame {
+  clip-path: inset(0 round 24px);
+}
+
+@media (hover: hover) {
+  .about-slide:not([data-active="true"]) {
+    cursor: pointer;
+  }
+
+  .about-slide:not([data-active="true"]):hover .about-slide-veil {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-slide-shadow,
+  .about-slide-frame,
+  .about-slide-veil {
+    transition: none;
+  }
+}
