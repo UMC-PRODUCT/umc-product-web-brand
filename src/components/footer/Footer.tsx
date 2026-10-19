@@ -63,21 +63,23 @@ const CHANNELS: FooterChannel[] = [
   { icon: KakaoIcon, links: [{ label: "Kakao" }] },
 ]
 
-// 다크 배경 283938, 라이트 배경 f6f7f7 위 e5f5f2 10%, 다크 채널 글자 f6f7f7은 토큰에 없는 시안 값 (#22)
+// 다크 배경 283938, 라이트 배경 위 e5f5f2 10%는 토큰에 없는 시안 값 (#22)
+// 라이트 배경은 Figma 변수 TealGray-100에 맞춰 코드 토큰 teal-grey-100을 쓴다
 const footerVariants = cva("", {
   variants: {
     tone: {
       dark: "bg-[#283938] text-inverse",
       light:
-        "bg-[#f6f7f7] bg-[linear-gradient(rgb(229_245_242/0.1),rgb(229_245_242/0.1))] text-placeholder",
+        "bg-[linear-gradient(rgb(229_245_242/0.1),rgb(229_245_242/0.1))] bg-teal-grey-100 text-placeholder",
     },
   },
 })
 
+// Figma 변수 TealGray-100(f6f7f7)은 코드 토큰 teal-grey-100(eff0f0)과 값이 다르다. 코드 토큰을 따른다
 const channelTextVariants = cva("", {
   variants: {
     tone: {
-      dark: "text-[#f6f7f7]",
+      dark: "text-teal-grey-100",
       light: "text-placeholder",
     },
   },
@@ -119,8 +121,11 @@ export function Footer({ tone = "dark", className }: FooterProps) {
           </div>
         </div>
         <div className="flex flex-col gap-(--umc-spacing-gap-16)">
-          {/* SF Pro 15px 시안을 Pretendard로 옮긴다 (#22) */}
-          <p className="font-medium text-[15px] leading-[1.252]" lang="en">
+          {/* 시안은 SF Pro Medium(510). SF Pro는 Apple 기기 밖에서 웹폰트로 배포할 수 없어 시스템 글꼴로 부르고, 없으면 Pretendard로 보인다 */}
+          <p
+            className="font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Text','SF_Pro',var(--umc-font-family-brand)] font-[510] text-[15px] leading-[1.252]"
+            lang="en"
+          >
             Made by UMC PRODUCT
           </p>
           <nav aria-label="사이트 링크" className="flex gap-[140px]">
