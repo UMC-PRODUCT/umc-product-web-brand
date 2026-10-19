@@ -22,3 +22,19 @@
     linear-gradient(#000 0 0);
   pointer-events: none;
 }
+
+/*
+ * FAQ 아코디언 가장자리 명암
+ * Figma Glass 효과(깊이 20, 빛 각도 -45°, 세기 0.7)는 CSS에 없어서, 렌더링 픽셀을 재서 안쪽 그림자로 흉내 낸다.
+ * - 위·왼쪽 맨 끝 1px: 밝은 선 (e3eae9 → edf2f2)
+ * - 위·왼쪽 안쪽 약 16px: 가운데(e7eeed)보다 어두운 그늘
+ * - 아래·오른쪽 안쪽 약 12px: 가장자리로 갈수록 밝아지는 반사, 맨 끝 1px은 eef3f2
+ * 배경 블러(Glass 반경 4)는 컴포넌트의 backdrop-blur로 준다
+ */
+.faq-accordion-item {
+  box-shadow:
+    inset 1px 1px 0 rgb(255 255 255 / 0.4),
+    inset -1px -1px 0 rgb(255 255 255 / 0.15),
+    inset 3px 3px 14px -4px rgb(40 65 65 / 0.07),
+    inset -3px -3px 12px -4px rgb(255 255 255 / 0.6);
+}
