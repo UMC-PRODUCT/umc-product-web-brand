@@ -54,7 +54,7 @@
 }
 
 .about-zoom {
-  --about-zoom-runway: 100svh;
+  --about-zoom-runway: 300svh;
   height: calc(
     100svh -
     var(--umc-layout-header-height) +
