@@ -1,0 +1,20 @@
+import { fireEvent, render, screen } from "@testing-library/react"
+import { describe, expect, it } from "vitest"
+
+import { PreviewTabImage } from "./PreviewTabImage"
+
+describe("PreviewTabImage", () => {
+  it("사진이 로드되기 전에는 스켈레톤을 보여주고 로드되면 없앤다", () => {
+    render(<PreviewTabImage alt="행사 사진" src="/photo.webp" />)
+
+    expect(screen.getByTestId("preview-image-skeleton")).toBeInTheDocument()
+    expect(screen.getByAltText("행사 사진")).toHaveClass("opacity-0")
+
+    fireEvent.load(screen.getByAltText("행사 사진"))
+
+    expect(
+      screen.queryByTestId("preview-image-skeleton"),
+    ).not.toBeInTheDocument()
+    expect(screen.getByAltText("행사 사진")).toHaveClass("opacity-100")
+  })
+})

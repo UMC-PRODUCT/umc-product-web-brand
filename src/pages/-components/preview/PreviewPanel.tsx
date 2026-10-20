@@ -5,6 +5,7 @@ import { cn } from "@/utils/cn"
 
 import { PREVIEW_COPY, PREVIEW_TABS } from "./constants"
 import { PreviewTabButton } from "./PreviewTabButton"
+import { PreviewTabImage } from "./PreviewTabImage"
 
 interface PreviewPanelProps {
   className?: string
@@ -45,15 +46,7 @@ export function PreviewPanel({ className }: PreviewPanelProps) {
             value={tab.id}
           >
             {tab.image && (
-              <img
-                alt={tab.image.alt}
-                className="aspect-[1021/600] w-full select-none object-cover"
-                decoding="async"
-                draggable={false}
-                height={600}
-                src={tab.image.src}
-                width={1021}
-              />
+              <PreviewTabImage alt={tab.image.alt} src={tab.image.src} />
             )}
             {tab.description && (
               <p className="text-neutral-medium-600 text-title-3-medium">
