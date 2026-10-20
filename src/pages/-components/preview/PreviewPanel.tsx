@@ -17,7 +17,7 @@ export function PreviewPanel({ className }: PreviewPanelProps) {
   return (
     <Tabs.Root
       className={cn(
-        // Figma Web/Panel: 테두리는 안쪽에 그려져 여백에서 1px씩 뺀다 (32→31, 24→23). 테두리 #179d93은 토큰에 없는 시안 값 (Dev Mode, 그라데이션이지만 단색으로 구현)
+        // Figma Web/Panel: 여백은 시안 값 그대로 32(아래 24)이고 테두리 1px은 여백에서 빼지 않아 안쪽이 시안보다 2px 좁다. 테두리 #179d93은 토큰에 없는 시안 값 (Dev Mode, 그라데이션이지만 단색으로 구현)
         "rounded-[16px] border border-[#179d93] p-[32px] pb-[24px]",
         // 배경: teal-100 24% 위에 d3e3e2 30%(토큰 없음), 청록 그라데이션 2겹(4.2%, 8%). Glass 효과는 블러만 옮긴다
         "bg-[linear-gradient(225.98deg,rgb(143_194_181/0.08)_11.84%,rgb(143_194_181/0)_87.72%),linear-gradient(49.29deg,rgb(143_194_181/0.042)_0.78%,rgb(143_194_181/0)_45.17%),linear-gradient(rgb(211_227_226/0.3),rgb(211_227_226/0.3))] bg-teal-100/24 backdrop-blur-[4px]",
