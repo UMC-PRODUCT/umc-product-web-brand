@@ -103,9 +103,11 @@ describe("getZoomFrame", () => {
 
 describe("getZoomStart", () => {
   const LAYOUT_1440 = {
+    viewportWidth: 1440,
     stickyTop: 80,
     gapAboveSection: 217,
     slideTop: 273.5,
+    slideWidth: 900,
     slideHeight: 500,
   }
 
@@ -121,6 +123,16 @@ describe("getZoomStart", () => {
 
     expect(short.scale).toBeCloseTo((900 + 80 + 287) / 500, 5)
     expect(tall.scale).toBeCloseTo((1080 + 80 + 287) / 500, 5)
+  })
+
+  it("넓은 화면에서는 사진이 화면 폭과 양옆 80px을 덮도록 배율을 키운다", () => {
+    const start = getZoomStart({
+      ...LAYOUT_1440,
+      viewportWidth: 3440,
+      viewportHeight: 1440,
+    })
+
+    expect(start.scale).toBeCloseTo((3440 + 160) / 900, 5)
   })
 
   it("배율은 스토리보드 값 2.4보다 작아지지 않는다", () => {

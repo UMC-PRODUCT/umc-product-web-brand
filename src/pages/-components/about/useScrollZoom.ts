@@ -26,10 +26,12 @@ function measureGeometry(
     ? Number.parseFloat(getComputedStyle(carousel).paddingTop) || 0
     : 0
   return {
+    viewportWidth: document.documentElement.clientWidth,
     viewportHeight: window.innerHeight,
     stickyTop: readStickyTop(stage),
     gapAboveSection: sectionTop - heroBottom,
     slideTop: (carousel?.offsetTop ?? 0) + carouselPadding,
+    slideWidth: slide?.offsetWidth || 1,
     slideHeight: slide?.offsetHeight || 1,
   }
 }

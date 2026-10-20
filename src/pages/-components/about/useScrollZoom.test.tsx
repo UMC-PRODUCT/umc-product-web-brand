@@ -15,6 +15,7 @@ function mountZoomSection(sectionTop: number, stageTop: number) {
   Object.defineProperty(carousel, "offsetTop", { value: 227 })
   const slide = document.createElement("figure")
   slide.className = "about-slide"
+  Object.defineProperty(slide, "offsetWidth", { value: 900 })
   Object.defineProperty(slide, "offsetHeight", { value: 500 })
   carousel.append(slide)
   stage.append(carousel)
