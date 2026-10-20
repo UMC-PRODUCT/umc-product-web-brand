@@ -95,7 +95,7 @@ umc-product-web-v2의 기술 스택에서 코어만 가져왔습니다. 두 저�
 | 폼 | react-hook-form, zod, @hookform/resolvers | 7, 4, 5 | 폼 상태와 스키마 검증 |
 | 스타일 | tailwindcss, @tailwindcss/vite | 4 | 유틸리티 CSS |
 | 스타일 유틸 | class-variance-authority, clsx, tailwind-merge | 0.7, 2, 3 | 변형 정의, 클래스 병합. `cn()`은 디자인 시스템 텍스트 스타일과 그림자 유틸을 등록해 둡니다 (`src/utils/cn.ts`) |
-| 헤드리스 UI | radix-ui | 1 | 접근성을 갖춘 기본 컴포넌트 |
+| 헤드리스 UI | radix-ui | 1 | 아코디언처럼 동작이 있는 UI의 접근성 처리 |
 | 아이콘 | lucide-react, @umc-product/icons | 0.545, 0.5 | SVG 아이콘 컴포넌트. UMC 로고와 픽토그램은 디자인 시스템 패키지에서 씁니다 |
 | 디자인 토큰 | @umc-product/design-tokens | 0.5 | 색, 텍스트 스타일, 그림자 토큰과 Tailwind 유틸리티, Pretendard 가변 폰트 (`src/index.css`) |
 | SVG | vite-plugin-svgr | 4 | SVG 파일을 React 컴포넌트로 import |
@@ -107,8 +107,10 @@ umc-product-web-v2의 기술 스택에서 코어만 가져왔습니다. 두 저�
 
 - 정확한 버전은 `package.json`이 기준입니다. 모든 의존성을 캐럿(`^`) 없이 정확한 버전으로 고정합니다.
 - 의존성을 추가할 때는 `pnpm add -E <패키지>`를, 개발 의존성은 `pnpm add -D -E <패키지>`를 씁니다. `-E`를 빼면 캐럿이 붙습니다.
-- zustand, axios, react-hook-form, zod, @hookform/resolvers, openapi-typescript, @umc-product/icons는 설치만 해 두었고 아직 쓰는 곳이 없습니다. 처음 쓰는 PR에서 파일 위치와 사용 규칙을 이 문서에 추가합니다.
+- zustand, axios, react-hook-form, zod, @hookform/resolvers, openapi-typescript는 설치만 해 두었고 아직 쓰는 곳이 없습니다. 처음 쓰는 PR에서 파일 위치와 사용 규칙을 이 문서에 추가합니다.
+- `@umc-product/icons`는 UMC 로고와 픽토그램에 씁니다(예: `src/components/footer/Footer.tsx`의 `UmcLogo`). 패키지에 없는 로고나 SNS 아이콘은 Figma SVG를 `currentColor`로 바꿔 `src/assets/landing/<섹션>/`에 두고 `?react`로 불러옵니다.
 - 디자인 토큰의 `tailwind.css`는 Tailwind 기본 색 팔레트를 지웁니다. `gray-500` 같은 기본 색 클래스는 생성되지 않으니 디자인 시스템 유틸(`text-brand-default-600`, `bg-teal-grey-75` 등)을 씁니다. Figma 변수 이름은 여러 색에 겹쳐 붙어 있으므로 hex 값으로 토큰을 찾습니다.
+- 디자인 시스템 React 컴포넌트(`@umc-product/react`)는 쓰지 않습니다. 랜딩 시안의 버튼이 대부분 링크인데 이 패키지의 `Button`은 `<button>`으로만 렌더링되고, 크기도 시안과 달라서입니다. UI는 `src/components`와 섹션 `-components`에 직접 만들고, 디자인 토큰만 가져다 씁니다.
 
 ## 폴더 구조와 라우팅
 

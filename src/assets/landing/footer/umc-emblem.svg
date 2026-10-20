@@ -1,0 +1,19 @@
+<svg width="63.6364" height="20" viewBox="0 0 63.6364 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#umc-emblem-inner-shadow)">
+<path d="M18.6017 0H0.97902C0.438622 0 0 0.448012 0 1.00005V10C0 15.522 4.38412 20 9.79041 20C15.1966 20 19.5807 15.522 19.5807 10V1.00005C19.5807 0.448012 19.1422 0 18.6017 0Z" fill="currentColor"/>
+<path d="M40.6294 0C35.7636 0 31.818 3.02805 31.818 8.00004C31.818 3.02805 27.8725 0 23.0067 0C22.4663 0 22.0277 0.448012 22.0277 1.00005V19C22.0277 19.552 22.4663 20 23.0067 20H40.6294C41.1698 20 41.6084 19.552 41.6084 19V1.00005C41.6084 0.448012 41.1698 0 40.6294 0Z" fill="currentColor"/>
+<path d="M63.6364 19V1.00005C63.6364 0.448012 63.1979 0 62.6571 0H53.8458C48.4396 0 44.0554 4.47805 44.0554 10C44.0554 15.522 48.4396 20 53.8458 20H62.6571C63.1979 20 63.6364 19.552 63.6364 19Z" fill="currentColor"/>
+</g>
+<defs>
+<filter id="umc-emblem-inner-shadow" x="0" y="-4" width="63.6364" height="24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="-4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_0_48"/>
+</filter>
+</defs>
+</svg>
