@@ -1,9 +1,10 @@
-import "./universities.css"
+import { useRef } from "react"
 
 import { cn } from "@/utils/cn"
 
 import { type School } from "./constants"
 import { SchoolTagChip } from "./SchoolTagChip"
+import { useMarquee } from "./useMarquee"
 
 interface UniversityMarqueeProps {
   schools: School[]
@@ -11,20 +12,23 @@ interface UniversityMarqueeProps {
   className?: string
 }
 
-// 같은 목록을 두 벌 이어 붙여 절반(-50%)만 이동하면 끊김 없이 반복된다
+// 같은 목록을 두 벌 이어 붙여 한 벌 너비만큼 이동하면 끊김 없이 반복된다
 export function UniversityMarquee({
   schools,
   reverse = false,
   className,
 }: UniversityMarqueeProps) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  useMarquee(trackRef, { reverse })
+
   return (
-    <div className={cn("overflow-hidden", className)}>
-      <div
-        className={cn(
-          "university-marquee-track flex w-max",
-          reverse && "university-marquee-track-reverse",
-        )}
-      >
+    <div
+      className={cn(
+        "cursor-grab touch-pan-y select-none overflow-hidden overscroll-x-contain active:cursor-grabbing",
+        className,
+      )}
+    >
+      <div className="flex w-max will-change-transform" ref={trackRef}>
         {[false, true].map((isCopy) => (
           <ul
             aria-hidden={isCopy || undefined}
