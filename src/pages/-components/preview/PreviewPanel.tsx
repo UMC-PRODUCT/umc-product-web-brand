@@ -18,7 +18,7 @@ export function PreviewPanel({ className }: PreviewPanelProps) {
     <Tabs.Root
       className={cn(
         // Figma Web/Panel: 테두리는 안쪽에 그려져 여백에서 1px씩 뺀다 (32→31, 24→23). 테두리 #179d93은 토큰에 없는 시안 값 (Dev Mode, 그라데이션이지만 단색으로 구현)
-        "rounded-(--umc-radius-16) border border-[#179d93] px-[31px] pt-[31px] pb-[23px]",
+        "rounded-[16px] border border-[#179d93] p-[32px] pb-[24px]",
         // 배경: teal-100 24% 위에 d3e3e2 30%(토큰 없음), 청록 그라데이션 2겹(4.2%, 8%). Glass 효과는 블러만 옮긴다
         "bg-[linear-gradient(225.98deg,rgb(143_194_181/0.08)_11.84%,rgb(143_194_181/0)_87.72%),linear-gradient(49.29deg,rgb(143_194_181/0.042)_0.78%,rgb(143_194_181/0)_45.17%),linear-gradient(rgb(211_227_226/0.3),rgb(211_227_226/0.3))] bg-teal-100/24 backdrop-blur-[4px]",
         // 그림자 반경 16px, efefef 50%는 그림자 토큰에 없는 시안 값
@@ -41,7 +41,7 @@ export function PreviewPanel({ className }: PreviewPanelProps) {
         </Tabs.List>
         {PREVIEW_TABS.map((tab) => (
           <Tabs.Content
-            className="flex min-w-0 flex-1 flex-col gap-6 px-(--umc-spacing-padding-28) py-4 outline-none"
+            className="flex min-w-0 flex-1 flex-col gap-6 px-7 py-4 outline-none"
             key={tab.id}
             value={tab.id}
           >
