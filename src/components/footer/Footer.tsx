@@ -121,11 +121,8 @@ export function Footer({ tone = "dark", className }: FooterProps) {
           </div>
         </div>
         <div className="flex flex-col gap-(--umc-spacing-gap-16)">
-          {/* 시안은 SF Pro Medium(510). SF Pro는 Apple 기기 밖에서 웹폰트로 배포할 수 없어 시스템 글꼴로 부르고, 없으면 Pretendard로 보인다 */}
-          <p
-            className="font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Text','SF_Pro',var(--umc-font-family-brand)] font-[510] text-[15px] leading-[1.252]"
-            lang="en"
-          >
+          {/* 시안은 SF Pro Medium이지만 푸터의 다른 글자와 같은 브랜드 글꼴(Pretendard)로 맞춘다 */}
+          <p className="font-medium text-[15px] leading-[1.252]" lang="en">
             Made by UMC PRODUCT
           </p>
           <nav aria-label="사이트 링크" className="flex gap-[140px]">
