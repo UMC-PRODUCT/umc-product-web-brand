@@ -82,7 +82,6 @@ export function SchoolTagChip({
             className="absolute max-w-none select-none"
             decoding="async"
             draggable={false}
-            loading="lazy"
             src={logoSrc}
             style={{
               left: `${logoFrame.left}%`,
