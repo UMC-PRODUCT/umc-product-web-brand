@@ -55,6 +55,7 @@
 
 .about-zoom {
   --about-zoom-runway: 300svh;
+  --about-content-without-slide: 315px;
   height: calc(
     100svh -
     var(--umc-layout-header-height) +
@@ -88,6 +89,17 @@
 
 .about-zoom:not(.about-zoom-settled) .about-carousel-viewport {
   will-change: transform;
+}
+
+.about-zoom .about-slide {
+  height: min(
+    500px,
+    calc(
+      100svh -
+      var(--umc-layout-header-height) -
+      var(--about-content-without-slide)
+    )
+  );
 }
 
 .about-zoom .about-slide img {
