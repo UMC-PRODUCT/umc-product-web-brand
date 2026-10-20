@@ -26,7 +26,7 @@ function addSection(
   size = { width: SECTION_WIDTH, height: SECTION_HEIGHT },
 ) {
   const section = document.createElement("section")
-  section.id = id
+  if (id) section.id = id
   section.dataset.headerTone = tone
   section.getBoundingClientRect = () => sectionBoxes.get(id) as DOMRect
   sectionBoxes.set(id, { top, bottom: top + size.height, ...size })
@@ -97,7 +97,7 @@ describe("useSectionUnderHeader", () => {
     expect(result.current).toEqual({ id: "about", tone: "light" })
   })
 
-  it("톤은 헤더 선을 덮은 섹션으로 판정한다", () => {
+  it("어두운 섹션이 헤더 영역을 다 덮으면 Dark를 돌려준다", () => {
     setAnchorOffset(ANCHOR_OFFSET)
     addSection("hero", "dark", -815, { width: SECTION_WIDTH, height: 900 })
     addSection("about", "light", 85)
@@ -105,6 +105,24 @@ describe("useSectionUnderHeader", () => {
     const { result } = renderUnderHeader()
 
     expect(result.current).toEqual({ id: "about", tone: "dark" })
+  })
+
+  it("id가 없는 톤 요소는 톤에만 쓰고 활성 섹션으로 고르지 않는다", () => {
+    addSection("about", "light", -100, { width: SECTION_WIDTH, height: 1000 })
+    addSection("", "dark", 0, { width: SECTION_WIDTH, height: 600 })
+
+    const { result } = renderUnderHeader()
+
+    expect(result.current).toEqual({ id: "about", tone: "dark" })
+  })
+
+  it("어두운 섹션이 헤더 영역을 다 덮기 전에는 Light를 유지한다", () => {
+    addSection("faq", "light", -900, { width: SECTION_WIDTH, height: 700 })
+    addSection("cta", "dark", 30, { width: SECTION_WIDTH, height: 600 })
+
+    const { result } = renderUnderHeader()
+
+    expect(result.current).toEqual({ id: "cta", tone: "light" })
   })
 
   it("헤더 선 아래 1px까지 걸친 섹션은 지난 것으로 본다", () => {
@@ -160,6 +178,41 @@ describe("useSectionUnderHeader", () => {
     fireAndAdvanceFrame("resize")
 
     expect(result.current).toEqual({ id: "about", tone: "light" })
+  })
+
+  it("톤 속성이 바뀌면 스크롤 없이도 다음 프레임에 다시 판정한다", async () => {
+    vi.useFakeTimers({
+      toFake: ["requestAnimationFrame", "cancelAnimationFrame"],
+    })
+    addSection("about", "light", -100, { width: SECTION_WIDTH, height: 1000 })
+    const { result } = renderUnderHeader()
+    const about = document.getElementById("about")
+
+    await act(async () => {
+      about?.setAttribute("data-header-tone", "dark")
+    })
+    act(() => {
+      vi.advanceTimersToNextFrame()
+    })
+
+    expect(result.current).toEqual({ id: "about", tone: "dark" })
+  })
+
+  it("톤 요소가 새로 생기면 스크롤 없이도 다음 프레임에 다시 판정한다", async () => {
+    vi.useFakeTimers({
+      toFake: ["requestAnimationFrame", "cancelAnimationFrame"],
+    })
+    addSection("about", "light", -100, { width: SECTION_WIDTH, height: 1000 })
+    const { result } = renderUnderHeader()
+
+    await act(async () => {
+      addSection("", "dark", -50, { width: SECTION_WIDTH, height: 600 })
+    })
+    act(() => {
+      vi.advanceTimersToNextFrame()
+    })
+
+    expect(result.current).toEqual({ id: "about", tone: "dark" })
   })
 
   it("마운트 뒤에 추가된 섹션도 판정한다", () => {

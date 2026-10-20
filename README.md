@@ -6,7 +6,7 @@ UMC 브랜드 웹 프론트엔드 저장소입니다. 이 문서는 이 저장�
 | --- | --- |
 | 독자 | 이 저장소에 처음 합류한 FE 개발자, PR 리뷰어 |
 | 소유자 | brand 웹 FE 팀 |
-| 기준일 | 2026-10-17, `dev` 브랜치 |
+| 기준일 | 2026-10-20, `dev` 브랜치 |
 
 규칙을 바꾸는 PR에서는 이 문서도 함께 고칩니다.
 
@@ -23,7 +23,7 @@ UMC 브랜드 웹 프론트엔드 저장소입니다. 이 문서는 이 저장�
 9. [테스트](#테스트)
 10. [빌드와 환경 변수](#빌드와-환경-변수)
 11. [CI](#ci)
-12. [배포 (예정)](#배포-예정)
+12. [배포](#배포)
 13. [문제 해결](#문제-해결)
 
 ## 빠른 시작
@@ -181,7 +181,7 @@ import Logo from "@/assets/logo.svg?react"
 4. **PR 생성**: base는 `dev`입니다. PR 템플릿을 채우고 본문에 `Closes #<이슈번호>`를 적습니다. `dev`가 기본 브랜치라서 PR이 머지되면 이슈도 자동으로 닫힙니다. PR 제목 역시 커밋 메시지 형식으로 씁니다.
 5. **CI와 리뷰**: [CI](#ci)의 `Verify`와 `Commitlint`가 통과해야 합니다.
 6. **머지**: merge commit으로 머지합니다. squash 머지는 PR 제목으로 새 커밋 메시지를 만드는데, 이 메시지는 어떤 검사도 거치지 않습니다.
-7. **릴리스**: `dev`에 모인 변경은 릴리스 PR로 `main`에 올립니다. 절차는 [배포 (예정)](#배포-예정)에 있습니다.
+7. **릴리스**: `dev`에 모인 변경은 릴리스 PR로 `main`에 올립니다. 절차는 [배포](#배포)에 있습니다.
 
 아직 정하지 않은 것: 리뷰 승인 인원, 머지 후 브랜치 삭제 여부, 릴리스 주기와 담당자.
 
@@ -387,19 +387,30 @@ import { describe, expect, it } from "vitest"
 - `dev`에는 `Verify`와 `Commitlint`를, `main`에는 `Verify`를 머지 필수 체크로 걸 예정입니다. 적용하면 이 문단을 갱신합니다.
 - 잡 이름(`Verify`, `Commitlint`)이 곧 체크 이름입니다. 잡 이름을 바꾸면 필수 체크 설정도 같이 바꿉니다.
 
-## 배포 (예정)
+## 배포
 
 > [!NOTE]
-> 아직 배포 환경을 연결하지 않았습니다. 아래는 umc-product-web-v2와 같은 방식으로 진행할 예정인 절차입니다. 배포를 연결하면 실제 설정에 맞춰 이 절을 고칩니다.
+> `dev`는 확인용으로 GitHub Pages에 배포합니다. 운영 배포(`main`)는 아직 연결하지 않았고, 아래 Amplify 절은 umc-product-web-v2와 같은 방식으로 진행할 예정인 절차입니다. 운영 배포를 연결하면 실제 설정에 맞춰 이 절을 고칩니다.
 
 ### 브랜치와 환경
 
 | 브랜치 | 역할 | 배포 |
 | --- | --- | --- |
-| `dev` | 기본 브랜치. 기능 PR이 모이는 통합 브랜치 | 개발 환경 연결 여부는 배포를 연결할 때 결정 |
+| `dev` | 기본 브랜치. 기능 PR이 모이는 통합 브랜치 | push마다 GitHub Pages에 확인용 배포 |
 | `main` | 릴리스 브랜치 | 머지하면 운영 환경에 배포 |
 
-### 배포 방식: AWS Amplify Git 연동
+### dev 확인용 배포: GitHub Pages
+
+- 주소: <https://umc-product.github.io/umc-product-web-brand/>
+- `.github/workflows/deploy-dev.yml`이 `dev` push 때 빌드해 배포합니다. 바로 다시 배포하려면 Actions의 `Deploy dev`에서 Run workflow를 누릅니다
+- 사이트가 하위 경로(`/umc-product-web-brand/`)에 있어서, 워크플로가 `configure-pages`에서 받은 기준 경로를 `vite build --base`로 넘깁니다. 라우터는 `import.meta.env.BASE_URL`을 `basepath`로 씁니다
+- 그래서 이미지 같은 자원은 import로 불러옵니다. `/`로 시작하는 경로를 문자열로 직접 쓰면 Pages에서 깨집니다
+- 서버 rewrite가 없어 `index.html`을 `404.html`로 복사합니다. 하위 경로에서 새로고침해도 앱이 뜨지만, 응답 상태 코드는 404입니다
+- 배포 결과는 Actions의 `Deploy dev` 실행과 저장소 Environments의 `github-pages`에서 봅니다
+- 공개 저장소라 누구나 열 수 있습니다. 비밀값을 번들에 넣지 않습니다
+- 같은 조건을 로컬에서 보려면 `pnpm build --base /umc-product-web-brand/` 뒤에 `pnpm preview --base /umc-product-web-brand/`를 실행합니다
+
+### 운영 배포 방식(예정): AWS Amplify Git 연동
 
 - Amplify가 연결한 브랜치의 push를 받아 저장소의 `amplify.yml`로 빌드하고 `dist/`를 배포합니다. GitHub Actions는 배포하지 않고 검증만 맡습니다.
 - Amplify는 Actions 결과를 기다리지 않습니다. 검증을 통과한 커밋만 `main`에 들어가도록 필수 체크로 막습니다.
@@ -415,7 +426,7 @@ import { describe, expect, it } from "vitest"
 ### 배포 연결 전에 정할 것
 
 - 검색 노출용 프리렌더 필요 여부: v2는 공개 페이지를 프리렌더합니다. 지금 `index.html`에는 메타 태그가 없고, 페이지 제목도 브라우저에서 설정합니다.
-- `dev`를 개발 환경에 연결할지 여부
+- 운영과 같은 조건의 개발 환경(Amplify)이 따로 필요한지 여부. 지금 `dev`는 GitHub Pages 확인용 배포만 있습니다
 - 디자인 시스템 패키지 설치 토큰: Amplify는 `GITHUB_TOKEN`을 쓸 수 없어 classic 토큰을 환경 변수로 넣어야 합니다. 조직 정책상 이 토큰은 30일마다 교체해야 하므로 담당자와 교체 방법을 정합니다.
 
 ### 릴리스 절차

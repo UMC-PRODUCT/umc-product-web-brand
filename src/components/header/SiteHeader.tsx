@@ -1,6 +1,7 @@
 import { UmcLogo } from "@umc-product/icons"
 import { useRef } from "react"
 
+import { useSmoothAnchorScroll } from "./anchorScroll"
 import {
   LOGIN_URL,
   NAV_ITEMS,
@@ -17,6 +18,7 @@ import "./header.css"
 export function SiteHeader() {
   const headerRef = useRef<HTMLElement>(null)
   const section = useSectionUnderHeader(headerRef)
+  useSmoothAnchorScroll(headerRef)
 
   return (
     <header
