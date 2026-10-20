@@ -41,7 +41,7 @@ export function FaqAccordionItem({
     >
       <Accordion.Header>
         <Accordion.Trigger className="group flex min-h-[34px] w-full items-center justify-between gap-(--umc-spacing-gap-10) text-left outline-teal-500 outline-offset-4 focus-visible:outline-2">
-          <span className="flex gap-(--umc-spacing-gap-10) font-semibold text-[26px] leading-[1.3]">
+          <span className="flex gap-(--umc-spacing-gap-10) text-heading-2-semibold">
             <span aria-hidden className="text-brand-default-600">
               Q
             </span>

@@ -10,9 +10,9 @@ const schoolTagChipVariants = cva(
       size: {
         // 칩 배경 4c7272 8%와 글자색 999는 토큰에 없는 시안 값 (#22)
         // lg 글자는 랜딩 인스턴스 16개가 모두 덮어쓴 값(24px, 줄높이 1.35, 자간 -2%)을 따른다. 맞는 텍스트 스타일 토큰이 없다
-        lg: "gap-[14px] bg-[rgb(76_114_114/0.08)] py-(--umc-spacing-padding-12) pr-(--umc-spacing-padding-20) pl-(--umc-spacing-padding-16) text-[#999] text-[24px] leading-[1.35] tracking-[-0.48px]",
+        lg: "gap-[14px] bg-[rgb(76_114_114/0.08)] py-(--umc-spacing-padding-12) pr-(--umc-spacing-padding-20) pl-(--umc-spacing-padding-16) text-neutral-weak-500 text-title-1-semibold",
         md: "h-[60px] gap-(--umc-spacing-gap-12) bg-[rgb(76_114_114/0.08)] pr-(--umc-spacing-padding-16) pl-[13px] text-[22px] text-neutral-weak-500 leading-[1.35] tracking-[-0.44px]",
-        sm: "h-[44px] gap-(--umc-spacing-gap-10) bg-white/10 pr-(--umc-spacing-padding-12) pl-(--umc-spacing-padding-8) text-[#999] text-[18px] leading-[1.4] tracking-[-0.18px]",
+        sm: "h-[44px] gap-(--umc-spacing-gap-10) bg-white/10 pr-(--umc-spacing-padding-12) pl-(--umc-spacing-padding-8) text-heading-4-semibold text-neutral-weak-500",
       },
     },
     defaultVariants: {
