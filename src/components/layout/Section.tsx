@@ -1,4 +1,4 @@
-import { type ReactNode } from "react"
+import { type ReactNode, type Ref } from "react"
 
 export type HeaderTone = "light" | "dark"
 
@@ -20,6 +20,7 @@ interface SectionProps {
   headerTone: HeaderTone
   labelledBy: string
   className?: string
+  ref?: Ref<HTMLElement>
   children: ReactNode
 }
 
@@ -28,6 +29,7 @@ export function Section({
   headerTone,
   labelledBy,
   className,
+  ref,
   children,
 }: SectionProps) {
   return (
@@ -36,6 +38,7 @@ export function Section({
       className={className}
       data-header-tone={headerTone}
       id={id}
+      ref={ref}
     >
       {children}
     </section>
