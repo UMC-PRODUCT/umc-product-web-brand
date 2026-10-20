@@ -60,9 +60,11 @@ export function SchoolTagChip({
   return (
     <div className={cn(schoolTagChipVariants({ size }), className)}>
       {logoSrc ? (
+        // 로고를 누른 채 움직이면 브라우저 기본 이미지 끌기가 일어나지 않게 막는다
         <img
           alt=""
-          className={logoVariants({ size, filled: true })}
+          className={cn(logoVariants({ size, filled: true }), "select-none")}
+          draggable={false}
           src={logoSrc}
         />
       ) : (
