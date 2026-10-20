@@ -89,7 +89,10 @@ export function useScrollZoom(
       if (progress >= SETTLED_PROGRESS) return
       const remaining =
         section.getBoundingClientRect().top - readStickyTop(stage)
-      window.scrollTo({ top: window.scrollY + remaining + measureRunway() })
+      window.scrollTo({
+        top: window.scrollY + remaining + measureRunway(),
+        behavior: "instant",
+      })
     }
 
     update()

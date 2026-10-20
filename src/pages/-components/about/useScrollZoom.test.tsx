@@ -38,6 +38,7 @@ function mountZoomSection(sectionTop: number, stageTop: number) {
 
 describe("useScrollZoom", () => {
   afterEach(() => {
+    vi.restoreAllMocks()
     vi.useRealTimers()
     document.body.replaceChildren()
   })
@@ -78,5 +79,17 @@ describe("useScrollZoom", () => {
       "1",
     )
     expect(result.current).toBe(true)
+  })
+
+  it("정착 전 무대 안으로 포커스가 들어오면 정착 위치로 즉시 스크롤한다", () => {
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {})
+    const zoom = mountZoomSection(80, 80)
+    renderHook(() => useScrollZoom(zoom.sectionRef, zoom.stageRef))
+
+    zoom.stageRef.current.dispatchEvent(new FocusEvent("focusin"))
+
+    expect(scrollTo).toHaveBeenCalledWith(
+      expect.objectContaining({ behavior: "instant" }),
+    )
   })
 })
