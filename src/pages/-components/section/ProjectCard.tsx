@@ -23,9 +23,11 @@ export function ProjectCard({
         className,
       )}
     >
+      {/* 썸네일을 누른 채 움직이면 브라우저 기본 이미지 끌기가 일어나지 않게 막는다 */}
       <img
         alt=""
-        className="h-[260px] w-full bg-white object-cover"
+        className="h-[260px] w-full select-none bg-white object-cover"
+        draggable={false}
         src={thumbnailSrc}
       />
       <div className="flex flex-col gap-(--umc-spacing-gap-12) px-(--umc-spacing-padding-20) pt-(--umc-spacing-padding-16) pb-(--umc-spacing-padding-24)">
