@@ -67,6 +67,7 @@ export function useSectionUnderHeader(
     window.addEventListener("resize", scheduleUpdate)
     toneChanges.observe(document.body, {
       subtree: true,
+      childList: true,
       attributeFilter: ["data-header-tone"],
     })
     return () => {

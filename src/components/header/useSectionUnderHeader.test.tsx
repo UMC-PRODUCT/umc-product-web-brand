@@ -198,6 +198,23 @@ describe("useSectionUnderHeader", () => {
     expect(result.current).toEqual({ id: "about", tone: "dark" })
   })
 
+  it("톤 요소가 새로 생기면 스크롤 없이도 다음 프레임에 다시 판정한다", async () => {
+    vi.useFakeTimers({
+      toFake: ["requestAnimationFrame", "cancelAnimationFrame"],
+    })
+    addSection("about", "light", -100, { width: SECTION_WIDTH, height: 1000 })
+    const { result } = renderUnderHeader()
+
+    await act(async () => {
+      addSection("", "dark", -50, { width: SECTION_WIDTH, height: 600 })
+    })
+    act(() => {
+      vi.advanceTimersToNextFrame()
+    })
+
+    expect(result.current).toEqual({ id: "about", tone: "dark" })
+  })
+
   it("마운트 뒤에 추가된 섹션도 판정한다", () => {
     vi.useFakeTimers({
       toFake: ["requestAnimationFrame", "cancelAnimationFrame"],
