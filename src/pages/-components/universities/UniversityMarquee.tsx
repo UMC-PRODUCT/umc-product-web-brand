@@ -24,7 +24,8 @@ export function UniversityMarquee({
   return (
     <div
       className={cn(
-        "cursor-grab touch-pan-y select-none overflow-hidden overscroll-x-contain active:cursor-grabbing",
+        // 칩(64px) 위아래 2px씩: Figma 줄 컨테이너 높이 68px
+        "cursor-grab touch-pan-y select-none overflow-hidden overscroll-x-contain py-0.5 active:cursor-grabbing",
         className,
       )}
     >
