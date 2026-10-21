@@ -10,7 +10,7 @@ const schoolTagChipVariants = cva(
       size: {
         // 칩 배경 4c7272 8%는 토큰에 없는 시안 값 (#22). 글자는 텍스트 스타일·색 토큰을 쓴다
         // 랜딩 인스턴스 값: 글자는 원본(title-1, 22px)이 아니라 24px/1.35/-0.48px, 색은 #999 (토큰에 없는 값)
-        lg: "gap-[14px] bg-[rgb(76_114_114/0.08)] py-(--umc-spacing-padding-12) pr-(--umc-spacing-padding-20) pl-(--umc-spacing-padding-16) text-[#999] text-[24px] leading-[1.35] tracking-[-0.48px]",
+        lg: "gap-[14px] bg-[rgb(76_114_114/0.08)] py-(--umc-spacing-padding-12) pr-(--umc-spacing-padding-20) pl-(--umc-spacing-padding-16) text-[24px] text-neutral-weak-500 leading-[1.35] tracking-[-0.48px]",
         md: "h-[60px] gap-(--umc-spacing-gap-12) bg-[rgb(76_114_114/0.08)] pr-(--umc-spacing-padding-16) pl-[13px] text-[22px] text-neutral-weak-500 leading-[1.35] tracking-[-0.44px]",
         sm: "h-[44px] gap-(--umc-spacing-gap-10) bg-white/10 pr-(--umc-spacing-padding-12) pl-(--umc-spacing-padding-8) text-heading-4-semibold text-neutral-weak-500",
       },
