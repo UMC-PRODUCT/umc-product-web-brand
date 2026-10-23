@@ -35,6 +35,8 @@ export function PreviewTabImage({ src, alt, className }: PreviewTabImageProps) {
         decoding="async"
         draggable={false}
         height={600}
+        // 숨긴 패널의 사진은 처음 열 때 받는다
+        loading="lazy"
         onLoad={() => setLoaded(true)}
         // 캐시에 있던 사진은 onLoad 이전에 이미 끝나 있을 수 있다
         ref={(image) => {
