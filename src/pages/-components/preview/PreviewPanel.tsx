@@ -40,8 +40,10 @@ export function PreviewPanel({ className }: PreviewPanelProps) {
           ))}
         </Tabs.List>
         {PREVIEW_TABS.map((tab) => (
+          // 패널을 DOM에 남겨 탭을 바꿔도 사진을 다시 마운트하지 않는다 (재방문 때 깜빡임 방지). forceMount는 hidden 속성을 붙이지 않아 비활성 패널은 직접 숨긴다
           <Tabs.Content
-            className="flex min-w-0 flex-1 flex-col gap-6 px-7 py-4 outline-none"
+            className="flex min-w-0 flex-1 flex-col gap-6 px-7 py-4 outline-none data-[state=inactive]:hidden"
+            forceMount
             key={tab.id}
             value={tab.id}
           >
