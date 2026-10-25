@@ -1,0 +1,132 @@
+/*
+ * 섹션 사이 세로 간격
+ * Figma 반응형 프레임(768:21185)에서 앞 섹션 콘텐츠 끝부터 다음 섹션 콘텐츠 시작까지 잰 값이다
+ * (절대 위치 장식, 숨긴 레이어 제외). 360과 390, 1440과 1920은 값이 같다
+ * 미디어 쿼리 폭은 index.css의 --breakpoint-md(48rem), lg(64rem), xl(90rem)과 같다
+ */
+.landing-main > #about {
+  margin-top: 150px;
+}
+.landing-main > #stats {
+  margin-top: 142px;
+}
+.landing-main > #sponsors {
+  margin-top: 107px;
+}
+.landing-main > #values {
+  margin-top: 170px;
+}
+.landing-main > #preview {
+  margin-top: 174px;
+}
+.landing-main > #universities {
+  margin-top: 142px;
+}
+.landing-main > #projects {
+  margin-top: 202px;
+}
+.landing-main > #recruit {
+  margin-top: 174px;
+}
+.landing-main > #faq {
+  margin-top: 174px;
+}
+/* FAQ 섹션 아래 여백 32 + 본문 묶음 아래 여백 120 */
+.landing-main > #cta {
+  margin-top: 152px;
+}
+
+@media (width >= 48rem) {
+  .landing-main > #stats {
+    margin-top: 190px;
+  }
+  .landing-main > #sponsors {
+    margin-top: 130px;
+  }
+  .landing-main > #values {
+    margin-top: 192px;
+  }
+  .landing-main > #preview {
+    margin-top: 202px;
+  }
+  .landing-main > #universities {
+    margin-top: 162px;
+  }
+  .landing-main > #projects {
+    margin-top: 242px;
+  }
+  .landing-main > #recruit {
+    margin-top: 194px;
+  }
+  .landing-main > #faq {
+    margin-top: 222px;
+  }
+  .landing-main > #cta {
+    margin-top: 180px;
+  }
+}
+
+@media (width >= 64rem) {
+  .landing-main > #stats {
+    margin-top: 220px;
+  }
+  .landing-main > #sponsors {
+    margin-top: 185px;
+  }
+  .landing-main > #values {
+    margin-top: 256px;
+  }
+  .landing-main > #preview {
+    margin-top: 280px;
+  }
+  .landing-main > #universities {
+    margin-top: 192px;
+  }
+  .landing-main > #projects {
+    margin-top: 272px;
+  }
+  .landing-main > #recruit {
+    margin-top: 224px;
+  }
+  .landing-main > #faq {
+    margin-top: 252px;
+  }
+}
+
+@media (width >= 90rem) {
+  .landing-main > #stats {
+    margin-top: 260px;
+  }
+  .landing-main > #sponsors {
+    margin-top: 200px;
+  }
+  .landing-main > #values {
+    margin-top: 296px;
+  }
+  .landing-main > #preview {
+    margin-top: 320px;
+  }
+  .landing-main > #universities {
+    margin-top: 280px;
+  }
+  .landing-main > #projects {
+    margin-top: 312px;
+  }
+  .landing-main > #recruit {
+    margin-top: 264px;
+  }
+  .landing-main > #faq {
+    margin-top: 292px;
+  }
+}
+
+/*
+ * 소개 축소 인터랙션(.about-zoom, 1024 이상)은 스크롤 구간이 있어 정적인 시안 간격을 그대로 쓸 수 없다.
+ * 히어로 아래와 소개 아래 간격은 인터랙션에 맞춘 기존 값을 유지한다
+ */
+.landing-main > #hero + .about-zoom {
+  margin-top: 217px;
+}
+.landing-main > .about-zoom + #stats {
+  margin-top: 360px;
+}

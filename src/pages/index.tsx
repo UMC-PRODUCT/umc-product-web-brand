@@ -15,6 +15,8 @@ import { StatsSection } from "./-components/stats/StatsSection"
 import { UniversitiesSection } from "./-components/universities/UniversitiesSection"
 import { ValuesSection } from "./-components/values/ValuesSection"
 
+import "./-components/landing.css"
+
 export const Route = createFileRoute("/")({
   component: LandingPage,
 })
@@ -29,24 +31,18 @@ function LandingPage() {
         본문으로 건너뛰기
       </a>
       <SiteHeader />
-      <main className="flex flex-col gap-[217px]" id="main" tabIndex={-1}>
+      <main className="landing-main flex flex-col" id="main" tabIndex={-1}>
         <HeroSection />
-        <div className="flex flex-col gap-90">
-          <AboutSection />
-          <div className="flex flex-col gap-75">
-            <StatsSection />
-            <SponsorsSection />
-            <ValuesSection />
-          </div>
-          <PreviewSection />
-          <UniversitiesSection />
-          <ProjectsSection />
-          <div className="flex flex-col gap-50">
-            <RecruitmentSection />
-            <FaqSection />
-            <CtaSection />
-          </div>
-        </div>
+        <AboutSection />
+        <StatsSection />
+        <SponsorsSection />
+        <ValuesSection />
+        <PreviewSection />
+        <UniversitiesSection />
+        <ProjectsSection />
+        <RecruitmentSection />
+        <FaqSection />
+        <CtaSection />
       </main>
       <Footer />
     </div>
