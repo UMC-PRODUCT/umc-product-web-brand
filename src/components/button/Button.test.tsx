@@ -14,7 +14,7 @@ describe("Button", () => {
 
   it("asChild면 넘긴 링크로 렌더링하고 화살표도 링크 안에 넣는다", () => {
     render(
-      <Button arrow asChild variant="glass">
+      <Button arrow asChild variant="weak">
         <a href="/projects">챌린저들 프로젝트 구경하기</a>
       </Button>,
     )
@@ -33,5 +33,38 @@ describe("Button", () => {
 
     const button = screen.getByRole("button", { name: "모집 안내 보러가기" })
     expect(button.querySelector("[aria-hidden]")).not.toBeNull()
+  })
+
+  it("Lg는 화살표가 있을 때만 높이가 64px이다", () => {
+    render(
+      <>
+        <Button size="lg">11기 지원하기</Button>
+        <Button arrow size="lg">
+          모집 안내 보러가기
+        </Button>
+      </>,
+    )
+
+    const plain = screen.getByRole("button", { name: "11기 지원하기" })
+    const withArrow = screen.getByRole("button", { name: "모집 안내 보러가기" })
+    expect(plain).toHaveClass("h-[62px]")
+    expect(plain).not.toHaveClass("h-[64px]")
+    expect(withArrow).toHaveClass("h-[64px]", "pr-(--umc-spacing-padding-16)")
+    expect(withArrow).not.toHaveClass("h-[62px]")
+  })
+
+  it("Color와 Style 조합에 맞는 배경을 고른다", () => {
+    render(
+      <Button color="neutral" variant="weak">
+        모집 안내 보러가기
+      </Button>,
+    )
+
+    const button = screen.getByRole("button", { name: "모집 안내 보러가기" })
+    expect(button).toHaveClass(
+      "bg-fill-neutral-medium-100",
+      "text-teal-grey-700",
+    )
+    expect(button).not.toHaveClass("bg-fill-primary-medium-100")
   })
 })
