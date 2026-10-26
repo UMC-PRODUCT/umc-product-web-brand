@@ -7,8 +7,6 @@ interface PreviewTabStepperProps {
   labels: readonly string[]
   index: number
   onIndexChange: (index: number) => void
-  // 화살표가 움직이는 슬라이드 영역의 id
-  controlsId?: string
   className?: string
 }
 
@@ -17,7 +15,6 @@ export function PreviewTabStepper({
   labels,
   index,
   onIndexChange,
-  controlsId,
   className,
 }: PreviewTabStepperProps) {
   const isFirst = index <= 0
@@ -32,7 +29,6 @@ export function PreviewTabStepper({
       )}
     >
       <StepButton
-        controlsId={controlsId}
         disabled={isFirst}
         label="이전 활동"
         onClick={() => onIndexChange(index - 1)}
@@ -51,7 +47,6 @@ export function PreviewTabStepper({
         <span className="truncate">{labels[index]}</span>
       </p>
       <StepButton
-        controlsId={controlsId}
         disabled={isLast}
         label="다음 활동"
         onClick={() => onIndexChange(index + 1)}
@@ -66,20 +61,12 @@ interface StepButtonProps {
   label: string
   disabled: boolean
   onClick: () => void
-  controlsId?: string
   children: ReactNode
 }
 
-function StepButton({
-  label,
-  disabled,
-  onClick,
-  controlsId,
-  children,
-}: StepButtonProps) {
+function StepButton({ label, disabled, onClick, children }: StepButtonProps) {
   return (
     <button
-      aria-controls={controlsId}
       aria-label={label}
       className="flex shrink-0 items-center justify-center text-icon-neutral-medium-500 outline-teal-500 outline-offset-2 focus-visible:outline-2 disabled:text-icon-disabled"
       disabled={disabled}
