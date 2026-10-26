@@ -16,18 +16,19 @@ export interface PreviewTab {
 
 export const PREVIEW_COPY = {
   title: "UMC Preview",
-  description: "다양한 IT 네트워킹을, 여기 UMC에서 경험하세요.",
+  description:
+    "새로운 만남부터 특별한 도전까지, UMC에서는 모두 경험할 수 있어요.",
   tabListLabel: "UMC 활동",
 } as const
 
-// 시안에는 첫 번째 탭의 이미지와 설명만 있다. 나머지 탭의 사진은 src/assets/landing/preview/에, 설명 문구는 이 파일에 직접 둔다
+// 시안에는 첫 번째 탭의 이미지와 설명만 있다. 첫 탭 설명은 1440 시안 문구를 따른다(1440 미만 프레임은 이전 문구). 나머지 탭의 사진은 src/assets/landing/preview/에, 설명 문구는 이 파일에 직접 둔다
 export const PREVIEW_TABS: readonly PreviewTab[] = [
   {
     id: "school-ot",
     label: "학교 OT · 연합 OT",
     image: { src: schoolOt, alt: "학교 OT에서 발표를 듣는 챌린저들" },
     description:
-      "UMC의 첫걸음을 내딛는 챌린저들을 위해 각 학교 및 중앙운영사무국이 주최하는 자리로 UMC의 전반적인 소개는 물론, 우리만의 독특한 문화, 앞으로 도전해야 할 목표와 커리큘럼, 그리고 스터디가 어떻게 진행될지에 대한 모든 것을 공유",
+      "UMC의 첫걸음을 내딛는 챌린저들을 위해 각 학교와 중앙운영사무국에서 오리엔테이션을 진행해요. UMC만의 문화와 활동 목표, 커리큘럼부터 앞으로 진행될 스터디까지, 새로운 도전을 시작하기 위해 필요한 모든 것을 알아보는 시간이에요.",
   },
   {
     id: "core-day",
