@@ -87,11 +87,12 @@ export function SchoolTagChip({
   return (
     <div className={cn(schoolTagChipVariants({ size }), className)}>
       {logoSrc && logoFrame ? (
+        // 위치를 잡은 로고는 흰 원(Figma 68px 인스턴스) 기준이라 크기와 관계없이 흰 배경을 깐다. teal-900은 로고가 없는 Empty 변형의 색이다
         <span
           aria-hidden
           className={cn(
             logoVariants({ size }),
-            "relative overflow-hidden rounded-(--umc-radius-full)",
+            "relative overflow-hidden rounded-(--umc-radius-full) bg-icon-inverse",
           )}
         >
           <img
