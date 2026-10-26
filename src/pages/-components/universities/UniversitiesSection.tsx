@@ -27,7 +27,8 @@ export function UniversitiesSection() {
           titleId="universities-title"
         />
       </Container>
-      <div className="mt-[72px] flex flex-col gap-(--umc-spacing-gap-16)">
+      {/* Figma 제목 묶음과 마퀴 간격: Mobile 40, Pad 48, Small PC 56, PC 72 */}
+      <div className="mt-10 flex flex-col gap-(--umc-spacing-gap-16) md:mt-12 lg:mt-14 xl:mt-[72px]">
         {SCHOOL_ROWS.map((schools, index) => (
           <UniversityMarquee
             key={schools[0]?.name}
