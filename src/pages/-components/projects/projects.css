@@ -1,0 +1,94 @@
+/*
+ * 프로젝트 카드 캐러셀
+ * 카드는 Figma 기준 크기(372×356)로 그리고 뷰포트마다 통째로 줄인다. 시안도 글자까지 같은 비율로 줄어 있다
+ * Figma 카드 폭: Mobile 248.9(0.669), Pad·Small PC 300(0.8065), PC 이상 372(1)
+ * 미디어 쿼리 폭은 index.css의 --breakpoint-md(48rem), xl(90rem)과 같다
+ */
+.project-carousel {
+  --project-card-scale: 0.669;
+  /* 가운데 카드 확대 비율: Figma 408.1 / 372 */
+  --project-card-active-scale: 1.097;
+}
+
+@media (width >= 48rem) {
+  .project-carousel {
+    --project-card-scale: 0.8065;
+  }
+}
+
+@media (width >= 90rem) {
+  .project-carousel {
+    --project-card-scale: 1;
+  }
+}
+
+/*
+ * 슬라이드 상자는 카드 위치만 잡는다. Embla가 상자 크기로 위치를 계산하므로 상자 크기는 바꾸지 않고 안쪽 카드만 키운다
+ * Figma 카드 중심 간격 406(확대 카드 408 + 간격 16 + 기본 카드 372의 반씩)을 맞추려고 오른쪽 여백을 34로 둔다
+ * 높이는 확대된 카드 높이(356 × 1.097 ≈ 390)
+ */
+.project-slide {
+  position: relative;
+  flex: none;
+  width: calc(372px * var(--project-card-scale));
+  height: calc(
+    356px *
+    var(--project-card-active-scale) *
+    var(--project-card-scale)
+  );
+  margin-right: calc(34px * var(--project-card-scale));
+}
+
+.project-slide-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 372px;
+  transform: translate(-50%, -50%) scale(var(--project-card-scale));
+}
+
+.project-slide[data-active="true"] .project-slide-card {
+  transform: translate(-50%, -50%)
+    scale(calc(var(--project-card-scale) * var(--project-card-active-scale)));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-slide-card {
+    transition: transform 500ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+}
+
+/*
+ * 양 끝 흐림: Figma Scroll Fade, 폭 130, 흰색 0%→100%(91% 지점), 레이어 불투명도 70%. PC 이상 프레임에만 있다
+ */
+@media (width >= 90rem) {
+  .project-carousel::before,
+  .project-carousel::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 130px;
+    pointer-events: none;
+    content: "";
+    opacity: 0.7;
+  }
+
+  .project-carousel::before {
+    left: 0;
+    background: linear-gradient(
+      to left,
+      transparent 0%,
+      var(--umc-color-white) 91%
+    );
+  }
+
+  .project-carousel::after {
+    right: 0;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      var(--umc-color-white) 91%
+    );
+  }
+}
