@@ -4,9 +4,8 @@ import { Container } from "@/components/layout/Container"
 import { Section } from "@/components/layout/Section"
 import { cn } from "@/utils/cn"
 
+import { CTA_APPLY_URL, CTA_COPY } from "./constants"
 import "./cta.css"
-
-const APPLY_URL = "https://university.neordinary.com/projects/apply-guide"
 
 export function CtaSection() {
   return (
@@ -24,7 +23,7 @@ export function CtaSection() {
             className="font-medium text-[#20c9bc] text-[16px] uppercase leading-[1.4] tracking-[1px] md:text-[24px]"
             lang="en"
           >
-            University MakeUs Challenge
+            {CTA_COPY.eyebrow}
           </p>
           {/* Figma 제목 텍스트 박스: Mobile 84(글자 70), Pad 이상 102(글자 100). 라벨과 간격 24, 25 */}
           <h2
@@ -32,13 +31,13 @@ export function CtaSection() {
             id="cta-title"
           >
             <span className="sr-only" lang="en">
-              UMC 11th
+              {CTA_COPY.title}
             </span>
             <Umc11th aria-hidden className="h-[53px] w-auto md:h-[76px]" />
           </h2>
           {/* 제목 묶음과 설명 간격: Mobile 16, Pad 이상 28. 설명 박스는 위 2, 아래 18 여백을 가진다 */}
           <p className="mt-(--umc-spacing-gap-16) pt-0.5 pb-[18px] text-[16px] text-disabled leading-[1.5] tracking-[-0.03em] md:mt-(--umc-spacing-gap-28) md:text-[24px]">
-            AI를 활용해 기획하고, 디자인하고, 직접 서비스를 만드는 11기 UMC
+            {CTA_COPY.description}
           </p>
         </hgroup>
         <Button
@@ -55,8 +54,8 @@ export function CtaSection() {
           size="lg"
           variant="fill"
         >
-          <a href={APPLY_URL} rel="noopener noreferrer" target="_blank">
-            11기 지원하기
+          <a href={CTA_APPLY_URL} rel="noopener noreferrer" target="_blank">
+            {CTA_COPY.cta}
             <span className="sr-only"> (새 창)</span>
           </a>
         </Button>
