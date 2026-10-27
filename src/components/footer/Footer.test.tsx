@@ -22,7 +22,7 @@ describe("Footer", () => {
     )
   })
 
-  it("사이트 링크는 네 묶음의 제목과 항목으로 보여준다", () => {
+  it("사이트 링크는 세 묶음의 제목과 항목으로 보여준다", () => {
     render(<Footer />)
 
     const nav = screen.getByRole("navigation", { name: "사이트 링크" })
@@ -30,7 +30,7 @@ describe("Footer", () => {
       within(nav)
         .getAllByRole("heading", { level: 2 })
         .map((heading) => heading.textContent),
-    ).toEqual(["About", "Service", "Community", "Contact"])
+    ).toEqual(["About", "Service", "Community"])
     expect(within(nav).getByText("UPMS 서비스")).toBeInTheDocument()
   })
 

@@ -39,15 +39,7 @@ const LINK_GROUPS: FooterLinkGroup[] = [
   },
   {
     title: "Community",
-    links: [
-      { label: "테크 블로그" },
-      { label: "유튜브" },
-      { label: "링크드인" },
-    ],
-  },
-  {
-    title: "Contact",
-    links: [{ label: "문의하기" }],
+    links: [{ label: "테크 블로그" }],
   },
 ]
 
@@ -57,7 +49,10 @@ interface FooterChannel {
 }
 
 const CHANNELS: FooterChannel[] = [
-  { icon: "umc", links: [{ label: "iOS" }, { label: "Android" }] },
+  {
+    icon: "umc",
+    links: [{ label: "Web" }, { label: "iOS" }, { label: "Android" }],
+  },
   { icon: "umc", links: [{ label: "Product Tech" }] },
   { icon: InstagramIcon, links: [{ label: "Instagram" }] },
   { icon: KakaoIcon, links: [{ label: "Kakao" }] },
@@ -85,6 +80,25 @@ const channelTextVariants = cva("", {
   },
 })
 
+// 다크 시안의 "Made by" 글자는 Teal-75, 링크 묶음 제목은 Brand-Disabled-300에 연결되어 있다
+const madeByTextVariants = cva("", {
+  variants: {
+    tone: {
+      dark: "text-teal-75",
+      light: "",
+    },
+  },
+})
+
+const groupTitleVariants = cva("", {
+  variants: {
+    tone: {
+      dark: "text-brand-disabled-300",
+      light: "",
+    },
+  },
+})
+
 interface FooterProps {
   tone?: HeaderTone
   className?: string
@@ -96,18 +110,27 @@ export function Footer({ tone = "dark", className }: FooterProps) {
       className={cn(footerVariants({ tone }), className)}
       data-header-tone={tone}
     >
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-[34px] py-(--umc-spacing-64) pr-[56px] pl-[60px]">
-        <div className="flex items-center justify-between">
+      <div
+        className={cn(
+          // Figma 1920 이상에서도 최대 폭 없이 화면 끝까지 넓어진다
+          "flex flex-col gap-[34px] py-(--umc-spacing-64)",
+          // Figma 여백 64/56/64/60 (Pad 이상). Mobile 시안이 없어 다른 섹션과 같은 좌우 32를 쓴다
+          "px-8 md:pr-[56px] md:pl-[60px]",
+        )}
+      >
+        {/* Mobile은 시안이 없어 세로로 쌓는다. Pad는 브랜드와 약관이 한 줄에 들어가지 않으면 약관을 아래로 내린다 */}
+        <div className="flex flex-col items-start gap-(--umc-spacing-gap-16) md:flex-row md:flex-wrap md:items-center md:justify-between">
           <p className="flex items-center gap-(--umc-spacing-gap-16)">
-            <UmcEmblem aria-hidden className="h-[20px] w-auto" />
+            <UmcEmblem aria-hidden className="h-[20px] w-auto shrink-0" />
+            {/* Figma 텍스트: SemiBold 20, 줄 높이 160%, 자간 -2%. 같은 텍스트 스타일 토큰이 없다 */}
             <span
-              className="font-bold text-[20px] leading-[1.6] tracking-[-0.4px]"
+              className="font-semibold text-[20px] leading-[1.6] tracking-[-0.02em]"
               lang="en"
             >
               University MakeUs Challenge
             </span>
           </p>
-          <div className="flex items-center gap-(--umc-spacing-gap-24) text-body-3-regular">
+          <div className="flex flex-wrap items-center gap-x-(--umc-spacing-gap-24) gap-y-(--umc-spacing-gap-4) text-body-3-regular">
             <ul className="flex gap-(--umc-spacing-gap-24)">
               {LEGAL_LINKS.map((link) => (
                 <li key={link.label}>
@@ -121,20 +144,32 @@ export function Footer({ tone = "dark", className }: FooterProps) {
           </div>
         </div>
         <div className="flex flex-col gap-(--umc-spacing-gap-16)">
-          {/* 시안은 SF Pro Medium이지만 푸터의 다른 글자와 같은 브랜드 글꼴(Pretendard)로 맞춘다 */}
-          <p className="font-medium text-[15px] leading-[1.252]" lang="en">
+          <p
+            className={cn("text-body-2-medium", madeByTextVariants({ tone }))}
+            lang="en"
+          >
             Made by UMC PRODUCT
           </p>
-          <nav aria-label="사이트 링크" className="flex gap-[140px]">
+          <nav
+            aria-label="사이트 링크"
+            // Figma 묶음 간격 140 (Pad 이상). Mobile은 140이 들어가지 않아 40으로 줄이고 줄을 바꾼다
+            className="flex flex-wrap gap-x-10 gap-y-(--umc-spacing-gap-24) md:gap-x-[140px]"
+          >
             {LINK_GROUPS.map((group) => (
               <div
                 className="flex flex-col gap-(--umc-spacing-gap-10)"
                 key={group.title}
               >
-                <h2 className="text-body-3-medium" lang="en">
+                <h2
+                  className={cn(
+                    "text-body-3-medium",
+                    groupTitleVariants({ tone }),
+                  )}
+                  lang="en"
+                >
                   {group.title}
                 </h2>
-                <ul className="flex flex-col gap-(--umc-spacing-gap-4) text-[13px] leading-[1.252]">
+                <ul className="flex flex-col gap-(--umc-spacing-gap-4) text-label-5-medium">
                   {group.links.map((link) => (
                     <li key={link.label}>
                       <FooterLinkItem link={link} />
@@ -148,7 +183,10 @@ export function Footer({ tone = "dark", className }: FooterProps) {
         <ul
           aria-label="UMC 채널"
           className={cn(
-            "flex items-center gap-(--umc-spacing-gap-24) font-medium text-[14px] leading-[1.5] tracking-[-0.14px]",
+            // Figma 채널 간격 24. Mobile은 한 줄에 들어가지 않아 줄을 바꾼다
+            "flex flex-wrap items-center gap-x-(--umc-spacing-gap-24) gap-y-(--umc-spacing-gap-8)",
+            // Figma 텍스트: Medium 14, 줄 높이 150%, 자간 -1%. 같은 텍스트 스타일 토큰이 없다
+            "font-medium text-[14px] leading-[1.5] tracking-[-0.01em]",
             channelTextVariants({ tone }),
           )}
           lang="en"
