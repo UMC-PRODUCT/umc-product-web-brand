@@ -1,0 +1,26 @@
+/*
+ * Figma Recruitment CTA Section 채우기 세 겹 (아래부터): #020a09 단색,
+ * #2ed1be 70%→0% 선형(레이어 투명도 0.4), #2ed1be 40%→0% 선형(레이어 투명도 0.24).
+ * 세 색 모두 토큰에 없는 시안 값이다. 레이어 투명도는 정지점 알파에 곱했다 (0.7×0.4, 0.4×0.24).
+ * Figma 그라데이션은 박스 비율을 따라 늘어나므로 각도·지점은 Mobile(390×702)과 PC(1440×805)
+ * 프레임에서 gradientTransform을 역변환해 따로 구했다.
+ */
+.cta-section-bg {
+  background:
+    linear-gradient(162.7deg, rgb(46 209 190 / 0.096) 7.7%, transparent 60.2%),
+    linear-gradient(329.4deg, rgb(46 209 190 / 0.28) -34.9%, transparent 31.9%),
+    #020a09;
+}
+
+@media (width >= 48rem) {
+  .cta-section-bg {
+    background:
+      linear-gradient(135deg, rgb(46 209 190 / 0.096) 8.4%, transparent 48.6%),
+      linear-gradient(
+        297.7deg,
+        rgb(46 209 190 / 0.28) -24.5%,
+        transparent 44.5%
+      ),
+      #020a09;
+  }
+}
