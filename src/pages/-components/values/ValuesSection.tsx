@@ -12,7 +12,12 @@ export function ValuesSection() {
   const [firstTitleLine, secondTitleLine] = VALUES_TITLE_LINES
 
   return (
-    <Section headerTone="light" id="values" labelledBy="values-title">
+    <Section
+      className="snap-start"
+      headerTone="light"
+      id="values"
+      labelledBy="values-title"
+    >
       <Container className="flex flex-col items-center gap-7 md:gap-12 lg:gap-[50px]">
         <SectionHeading
           description={VALUES_DESCRIPTION}
