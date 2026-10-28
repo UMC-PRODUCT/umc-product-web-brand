@@ -17,45 +17,29 @@ const INPUT_EVENTS = ["wheel", "keydown", "mousedown", "touchstart"] as const
 
 type ScrollDirection = 1 | -1
 
-export interface SnapPoint {
-  top: number
-  afterRunway: boolean
-}
-
-function findTargetBetween(
-  top: number,
-  direction: ScrollDirection,
-  previous: SnapPoint,
-  next: SnapPoint,
-  pageHeight: number,
-) {
-  const commitDistance = pageHeight * COMMIT_RATIO
-  const fitsOnePage = next.afterRunway || next.top - previous.top <= pageHeight
-  if (fitsOnePage) {
-    const travelled = direction > 0 ? top - previous.top : next.top - top
-    const committed = travelled >= commitDistance
-    const ahead = direction > 0 ? next.top : previous.top
-    const behind = direction > 0 ? previous.top : next.top
-    return committed ? ahead : behind
-  }
-  if (direction > 0) {
-    return next.top - top <= pageHeight - commitDistance ? next.top : null
-  }
-  return top - previous.top <= commitDistance ? previous.top : null
+export interface SectionRange {
+  start: number
+  end: number
 }
 
 export function findSnapTarget(
   top: number,
   direction: ScrollDirection,
-  points: readonly SnapPoint[],
+  sections: readonly SectionRange[],
   pageHeight: number,
 ) {
-  if (points.some((point) => Math.abs(point.top - top) < MIN_MOVE_PX))
-    return null
-  const previous = points.findLast((point) => point.top < top)
-  const next = points.find((point) => point.top > top)
+  const isInsideSection = sections.some(
+    (section) =>
+      top > section.start - MIN_MOVE_PX && top < section.end + MIN_MOVE_PX,
+  )
+  if (isInsideSection) return null
+  const previous = sections.findLast((section) => section.end < top)
+  const next = sections.find((section) => section.start > top)
   if (!previous || !next) return null
-  return findTargetBetween(top, direction, previous, next, pageHeight)
+  const travelled = direction > 0 ? top - previous.end : next.start - top
+  const committed = travelled >= pageHeight * COMMIT_RATIO
+  if (direction > 0) return committed ? next.start : previous.end
+  return committed ? previous.end : next.start
 }
 
 function getWheelDirection(event: Event): ScrollDirection | null {
@@ -63,20 +47,22 @@ function getWheelDirection(event: Event): ScrollDirection | null {
   return event.deltaY > 0 ? 1 : -1
 }
 
-function collectSnapPoints(container: HTMLElement) {
+function measureSections(container: HTMLElement): SectionRange[] {
+  const pageEnd = document.documentElement.scrollHeight - window.innerHeight
   const sections = Array.from(
     container.querySelectorAll(":scope > section[id]"),
-    (section) => ({
-      top: getAnchorScrollTop(section),
-      afterRunway:
-        Number.parseFloat(getComputedStyle(section).scrollMarginTop) < 0,
-    }),
+    (section) => {
+      const start = getAnchorScrollTop(section)
+      const bottomAtViewportBottom =
+        window.scrollY +
+        section.getBoundingClientRect().bottom -
+        window.innerHeight
+      return { start, end: Math.max(start, bottomAtViewportBottom) }
+    },
   )
-  const pageEnd = {
-    top: document.documentElement.scrollHeight - window.innerHeight,
-    afterRunway: false,
-  }
-  return [...sections, pageEnd].sort((a, b) => a.top - b.top)
+  return [...sections, { start: pageEnd, end: pageEnd }].sort(
+    (a, b) => a.start - b.start,
+  )
 }
 
 const visiblePageHeight = () =>
@@ -109,7 +95,7 @@ export function useSectionMagnet(containerRef: RefObject<HTMLElement | null>) {
       const target = findSnapTarget(
         window.scrollY,
         direction,
-        collectSnapPoints(container),
+        measureSections(container),
         pageHeight,
       )
       if (target === null) return

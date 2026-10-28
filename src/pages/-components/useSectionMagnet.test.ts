@@ -3,62 +3,57 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import {
   findSnapTarget,
-  type SnapPoint,
+  type SectionRange,
   useSectionMagnet,
 } from "./useSectionMagnet"
 
 const PAGE_HEIGHT = 800
-const point = (top: number, afterRunway = false): SnapPoint => ({
-  top,
-  afterRunway,
-})
+const section = (start: number, end = start): SectionRange => ({ start, end })
 
 describe("findSnapTarget", () => {
-  describe("한 화면 이하 구간", () => {
-    const points = [point(1000), point(1600)]
+  const sections = [
+    section(0),
+    section(600),
+    section(1600),
+    section(2400, 2700),
+    section(3400),
+  ]
 
-    it("아래로 화면의 10% 넘게 왔으면 다음 섹션, 덜 왔으면 원래 섹션 시작으로 간다", () => {
-      expect(findSnapTarget(1100, 1, points, PAGE_HEIGHT)).toBe(1600)
-      expect(findSnapTarget(1050, 1, points, PAGE_HEIGHT)).toBe(1000)
-    })
-
-    it("위로 화면의 10% 넘게 왔으면 이전 섹션, 덜 왔으면 원래 섹션 시작으로 간다", () => {
-      expect(findSnapTarget(1500, -1, points, PAGE_HEIGHT)).toBe(1000)
-      expect(findSnapTarget(1550, -1, points, PAGE_HEIGHT)).toBe(1600)
-    })
+  it("섹션 사이가 한 화면보다 길어도 아래로 화면의 10% 넘게 굴리면 다음 섹션, 덜 굴리면 원래 섹션 시작으로 간다", () => {
+    expect(findSnapTarget(700, 1, sections, PAGE_HEIGHT)).toBe(1600)
+    expect(findSnapTarget(650, 1, sections, PAGE_HEIGHT)).toBe(600)
   })
 
-  describe("한 화면보다 긴 구간", () => {
-    const points = [point(1000), point(2400)]
-
-    it("아래로 가다 다음 섹션이 화면 아래 10% 선을 넘어 올라오면 다음 섹션으로 간다", () => {
-      expect(findSnapTarget(1600, 1, points, PAGE_HEIGHT)).toBeNull()
-      expect(findSnapTarget(1700, 1, points, PAGE_HEIGHT)).toBe(2400)
-    })
-
-    it("아래로 조금 내려 읽는 중에는 섹션 시작으로 되돌리지 않는다", () => {
-      expect(findSnapTarget(1100, 1, points, PAGE_HEIGHT)).toBeNull()
-    })
-
-    it("위로 가다 섹션 시작에서 화면의 10% 안쪽이면 섹션 시작으로 간다", () => {
-      expect(findSnapTarget(1050, -1, points, PAGE_HEIGHT)).toBe(1000)
-      expect(findSnapTarget(1100, -1, points, PAGE_HEIGHT)).toBeNull()
-    })
+  it("위로 화면의 10% 넘게 굴리면 이전 섹션, 덜 굴리면 원래 섹션 시작으로 간다", () => {
+    expect(findSnapTarget(1500, -1, sections, PAGE_HEIGHT)).toBe(600)
+    expect(findSnapTarget(1550, -1, sections, PAGE_HEIGHT)).toBe(1600)
   })
 
-  it("런웨이 끝에 붙는 섹션(소개)까지는 길이와 상관없이 한 구간으로 넘긴다", () => {
-    const points = [point(0), point(1900, true)]
+  it("한 화면보다 큰 섹션 안에서는 어느 방향이든 그 자리에 둔다", () => {
+    expect(findSnapTarget(2500, 1, sections, PAGE_HEIGHT)).toBeNull()
+    expect(findSnapTarget(2500, -1, sections, PAGE_HEIGHT)).toBeNull()
+  })
 
-    expect(findSnapTarget(100, 1, points, PAGE_HEIGHT)).toBe(1900)
-    expect(findSnapTarget(50, 1, points, PAGE_HEIGHT)).toBe(0)
-    expect(findSnapTarget(1800, -1, points, PAGE_HEIGHT)).toBe(0)
-    expect(findSnapTarget(1850, -1, points, PAGE_HEIGHT)).toBe(1900)
+  it("큰 섹션 아래 끝을 조금 지나면 끝 화면으로 돌아오고, 10% 넘게 지나면 다음 섹션으로 간다", () => {
+    expect(findSnapTarget(2750, 1, sections, PAGE_HEIGHT)).toBe(2700)
+    expect(findSnapTarget(2800, 1, sections, PAGE_HEIGHT)).toBe(3400)
+  })
+
+  it("아래 섹션에서 위로 10% 넘게 굴리면 큰 섹션의 아래 끝 화면에 붙는다", () => {
+    expect(findSnapTarget(3300, -1, sections, PAGE_HEIGHT)).toBe(2700)
+  })
+
+  it("Hero와 소개 정착 화면처럼 먼 구간도 같은 기준으로 한 번에 넘긴다", () => {
+    const heroAndAbout = [section(0), section(1900)]
+
+    expect(findSnapTarget(100, 1, heroAndAbout, PAGE_HEIGHT)).toBe(1900)
+    expect(findSnapTarget(50, 1, heroAndAbout, PAGE_HEIGHT)).toBe(0)
+    expect(findSnapTarget(1800, -1, heroAndAbout, PAGE_HEIGHT)).toBe(0)
+    expect(findSnapTarget(1850, -1, heroAndAbout, PAGE_HEIGHT)).toBe(1900)
   })
 
   it("이미 섹션 시작에 있으면 움직이지 않는다", () => {
-    expect(
-      findSnapTarget(1000, 1, [point(1000), point(1600)], PAGE_HEIGHT),
-    ).toBeNull()
+    expect(findSnapTarget(600, 1, sections, PAGE_HEIGHT)).toBeNull()
   })
 })
 
@@ -66,13 +61,17 @@ describe("useSectionMagnet", () => {
   const CURRENT_TOP = 1000
   const STATS_TOP = 700
   const SPONSORS_TOP = 1300
+  const SECTION_HEIGHT = 300
   let frames: FrameRequestCallback[] = []
   let scrollTo = vi.fn()
 
   function placeSection(id: string, top: number) {
-    const section = document.getElementById(id) as HTMLElement
-    section.getBoundingClientRect = () =>
-      ({ top: top - CURRENT_TOP }) as DOMRect
+    const element = document.getElementById(id) as HTMLElement
+    element.getBoundingClientRect = () =>
+      ({
+        top: top - CURRENT_TOP,
+        bottom: top + SECTION_HEIGHT - CURRENT_TOP,
+      }) as DOMRect
   }
 
   function renderOnPage({ magnetAllowed = true } = {}) {
