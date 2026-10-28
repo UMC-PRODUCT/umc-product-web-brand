@@ -44,6 +44,14 @@
       scroll-behavior: smooth;
     }
   }
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) {
+    html {
+      scroll-snap-type: y proximity;
+    }
+    html[data-anchor-scrolling] {
+      scroll-snap-type: none;
+    }
+  }
   button:not(:disabled) {
     cursor: pointer;
   }

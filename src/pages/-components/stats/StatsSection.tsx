@@ -8,7 +8,7 @@ import { StatCard } from "./StatCard"
 export function StatsSection() {
   return (
     <Section
-      className="relative isolate overflow-clip"
+      className="relative isolate snap-start overflow-clip"
       headerTone="light"
       id="stats"
       labelledBy="stats-title"
