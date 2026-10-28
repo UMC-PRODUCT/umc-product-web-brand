@@ -37,3 +37,11 @@
   color: #e9ecec;
   text-shadow: 0 0 20px rgb(255 255 255 / 0.5);
 }
+
+.stats-glow {
+  background: radial-gradient(
+    closest-side,
+    rgb(54 211 192 / 0.07),
+    rgb(54 211 192 / 0)
+  );
+}
