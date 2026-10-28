@@ -1,5 +1,9 @@
 const CANCEL_EVENTS = ["wheel", "touchstart", "keydown", "mousedown"] as const
 
+let cancelRunningScroll: (() => void) | null = null
+
+export const isWindowScrollAnimating = () => cancelRunningScroll !== null
+
 export function easeInOutCubic(progress: number) {
   return progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
 }
@@ -31,6 +35,7 @@ export function animateWindowScroll(
   const cancel = () => {
     cancelAnimationFrame(frame)
     for (const type of CANCEL_EVENTS) window.removeEventListener(type, cancel)
+    if (cancelRunningScroll === cancel) cancelRunningScroll = null
   }
 
   const step = (now: number) => {
@@ -50,6 +55,8 @@ export function animateWindowScroll(
   for (const type of CANCEL_EVENTS) {
     window.addEventListener(type, cancel, { passive: true })
   }
+  cancelRunningScroll?.()
+  cancelRunningScroll = cancel
   frame = requestAnimationFrame(step)
   return cancel
 }

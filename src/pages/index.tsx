@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { useRef } from "react"
 
 import { Footer } from "@/components/footer/Footer"
 import { SiteHeader } from "@/components/header/SiteHeader"
@@ -13,6 +14,7 @@ import { RecruitmentSection } from "./-components/recruitment/RecruitmentSection
 import { SponsorsSection } from "./-components/sponsors/SponsorsSection"
 import { StatsSection } from "./-components/stats/StatsSection"
 import { UniversitiesSection } from "./-components/universities/UniversitiesSection"
+import { useSectionMagnet } from "./-components/useSectionMagnet"
 import { ValuesSection } from "./-components/values/ValuesSection"
 
 import "./-components/landing.css"
@@ -22,6 +24,9 @@ export const Route = createFileRoute("/")({
 })
 
 function LandingPage() {
+  const mainRef = useRef<HTMLElement>(null)
+  useSectionMagnet(mainRef)
+
   return (
     <div className="min-h-dvh overflow-x-clip bg-landing-page">
       <a
@@ -31,7 +36,12 @@ function LandingPage() {
         본문으로 건너뛰기
       </a>
       <SiteHeader />
-      <main className="landing-main flex flex-col" id="main" tabIndex={-1}>
+      <main
+        className="landing-main flex flex-col"
+        id="main"
+        ref={mainRef}
+        tabIndex={-1}
+      >
         <HeroSection />
         <AboutSection />
         <StatsSection />
