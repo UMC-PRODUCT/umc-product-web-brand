@@ -8,10 +8,12 @@ import { cn } from "@/utils/cn"
 import { AboutCarousel } from "./AboutCarousel"
 import { ABOUT_COPY, ABOUT_SLIDES, ABOUT_START_INDEX } from "./constants"
 import { useAboutMode } from "./useAboutMode"
+import { useKeepNextSectionInView } from "./useKeepNextSectionInView"
 import { useScrollZoom } from "./useScrollZoom"
 
 export function AboutSection() {
   const mode = useAboutMode()
+  useKeepNextSectionInView(mode, "about")
   return mode === "zoom" ? <AboutZoomSection /> : <AboutStaticSection />
 }
 
