@@ -344,7 +344,7 @@ import { describe, expect, it } from "vitest"
 
 ### 환경 변수
 
-지금은 필요한 환경 변수가 없습니다. 추가할 때는 아래 규칙을 따릅니다.
+앱 코드가 읽는 환경 변수는 지금 없습니다. Amplify 빌드에는 패키지 설치용 `UMC_PACKAGES_TOKEN`만 필요합니다([Amplify 배포](#amplify-배포)). 변수를 추가할 때는 아래 규칙을 따릅니다.
 
 - 클라이언트 코드에서 읽을 변수는 `VITE_`로 시작합니다. Vite는 `VITE_`로 시작하는 변수만 `import.meta.env`에 노출합니다.
 - `VITE_` 변수는 빌드한 JavaScript에 그대로 들어가 누구나 볼 수 있습니다. API 비밀 키나 토큰 같은 비밀값은 넣지 마세요.
@@ -390,14 +390,14 @@ import { describe, expect, it } from "vitest"
 ## 배포
 
 > [!NOTE]
-> `dev`는 확인용으로 GitHub Pages에 배포합니다. 운영 배포(`main`)는 아직 연결하지 않았고, 아래 Amplify 절은 umc-product-web-v2와 같은 방식으로 진행할 예정인 절차입니다. 운영 배포를 연결하면 실제 설정에 맞춰 이 절을 고칩니다.
+> 저장소 쪽 Amplify 설정(`amplify.yml`)과 콘솔에 넣을 값은 준비했습니다. Amplify 앱 생성과 브랜치·도메인 연결은 콘솔에서 합니다. 두 도메인은 지금 v2(UPMS)가 쓰고 있어서, 옮기기 전에 [도메인 전환 전에 정할 것](#도메인-전환-전에-정할-것)부터 처리합니다.
 
 ### 브랜치와 환경
 
 | 브랜치 | 역할 | 배포 |
 | --- | --- | --- |
-| `dev` | 기본 브랜치. 기능 PR이 모이는 통합 브랜치 | push마다 GitHub Pages에 확인용 배포 |
-| `main` | 릴리스 브랜치 | 머지하면 운영 환경에 배포 |
+| `dev` | 기본 브랜치. 기능 PR이 모이는 통합 브랜치 | Amplify `dev.university.neordinary.com`, GitHub Pages 확인용 |
+| `main` | 릴리스 브랜치 | Amplify `university.neordinary.com` |
 
 ### dev 확인용 배포: GitHub Pages
 
@@ -410,24 +410,80 @@ import { describe, expect, it } from "vitest"
 - 공개 저장소라 누구나 열 수 있습니다. 비밀값을 번들에 넣지 않습니다
 - 같은 조건을 로컬에서 보려면 `pnpm build --base /umc-product-web-brand/` 뒤에 `pnpm preview --base /umc-product-web-brand/`를 실행합니다
 
-### 운영 배포 방식(예정): AWS Amplify Git 연동
+### Amplify 배포
 
-- Amplify가 연결한 브랜치의 push를 받아 저장소의 `amplify.yml`로 빌드하고 `dist/`를 배포합니다. GitHub Actions는 배포하지 않고 검증만 맡습니다.
-- Amplify는 Actions 결과를 기다리지 않습니다. 검증을 통과한 커밋만 `main`에 들어가도록 필수 체크로 막습니다.
-- `amplify.yml`은 배포를 시작하는 이슈에서 v2 파일을 기준으로 추가합니다. v2는 `nvm install`과 `corepack enable`로 Node와 pnpm을 맞추고, `.pnpm-store`를 캐시하고, `pnpm run build` 결과인 `dist`를 배포합니다.
+Amplify가 연결한 브랜치의 push를 받아 저장소의 `amplify.yml`로 빌드하고 `dist/`를 배포합니다. GitHub Actions는 배포하지 않고 검증만 맡습니다. Amplify는 Actions 결과를 기다리지 않으므로, 검증을 통과한 커밋만 `main`에 들어가도록 필수 체크로 막습니다.
+
+`amplify.yml`이 하는 일은 다음과 같습니다.
+
+- `.nvmrc`(22)로 Node를, `package.json`의 `packageManager`로 pnpm 버전을 맞춥니다
+- `UMC_PACKAGES_TOKEN`을 `~/.npmrc`에 써서 GitHub Packages의 디자인 시스템 패키지를 받습니다. 저장소 `.npmrc`에는 레지스트리 주소만 둡니다
+- `.pnpm-store`를 캐시하고, `pnpm run build` 결과인 `dist/`를 배포합니다
+- `main`이 아닌 브랜치(`dev`, PR 프리뷰)는 `dist/robots.txt`로 검색 수집을 막습니다. 브랜치는 Amplify가 넣어 주는 `AWS_BRANCH`로 구분합니다
+
+#### 환경 변수
+
+Amplify 콘솔의 Hosting > Environment variables에 넣습니다.
+
+| 이름 | 값 | 브랜치 |
+| --- | --- | --- |
+| `UMC_PACKAGES_TOKEN` | GitHub classic 토큰. 권한 `read:packages`, 만료 30일 이하 | 모든 브랜치 |
+
+- 앱 코드가 읽는 `VITE_` 변수는 없고, 기준 경로도 기본값 `/`를 씁니다
+- 조직 정책상 토큰은 30일마다 다시 발급합니다. 설치 단계 로그로 원인을 가릅니다
+
+| 설치 단계 오류 | 원인 |
+| --- | --- |
+| `401 ... authentication token not provided` | 변수가 비어 있음 |
+| `401 ... User cannot be authenticated with the token provided` | 토큰 만료 또는 오타 |
+
+#### Rewrites and redirects
+
+Amplify 콘솔의 Hosting > Rewrites and redirects > Manage redirects에서 JSON으로 넣습니다. 규칙은 앱 단위라 `dev`와 `main`에 같이 적용됩니다.
+
+```json
+[
+  {
+    "source": "</^[^.]+$|\\.(?!(css|js|map|json|txt|xml|webmanifest|ico|png|jpg|jpeg|gif|svg|webp|avif|woff|woff2|ttf)$)([^.]+$)/>",
+    "status": "200",
+    "target": "/index.html",
+    "condition": null
+  }
+]
+```
+
+- 확장자가 없는 경로(`/`, `/about`, `/about/`)는 `index.html`로 보내 SPA 라우터가 처리하게 합니다
+- `.js`, `.css`, 이미지, 글꼴은 규칙에서 뺐습니다. 없는 파일은 HTML 대신 404로 응답하므로, 배포 뒤 옛 청크를 요청한 탭이 HTML을 스크립트로 읽어 깨지지 않습니다
+- `amplify.yml`에는 rewrite 규칙을 넣지 않습니다. v2는 `customRules`를 넣었지만 Amplify가 이 키를 읽지 않아 하위 경로에서 404가 났습니다
+
+#### 첫 배포 뒤 확인
+
+```bash
+for host in dev.university.neordinary.com university.neordinary.com; do
+  for path in / /about /about/ /assets/missing.js /robots.txt; do
+    curl -sS -o /dev/null -w "%{http_code} %{content_type} $host$path\n" "https://$host$path"
+  done
+done
+```
+
+| 경로 | 기대 응답 |
+| --- | --- |
+| `/`, `/about`, `/about/` | 200, `text/html` |
+| `/assets/missing.js` | 404 |
+| `/robots.txt` | `dev`는 200(`Disallow: /`), `main`은 404 |
 
 ### 주의할 점 (v2 운영 경험)
 
-- SPA라서 모든 경로를 `/index.html`로 돌려보내는 rewrite가 필요합니다. v2는 `amplify.yml`에 규칙을 넣었는데도 하위 경로에서 404가 났습니다. Amplify 콘솔의 Rewrites and redirects 설정까지 확인하세요.
-- Amplify는 GitHub에 배포 결과를 남기지 않습니다. 배포 성공 여부는 Amplify 콘솔에서 봅니다.
-- 환경 변수는 Amplify 콘솔에서 넣습니다. `VITE_` 변수가 번들에 그대로 들어간다는 점은 같습니다.
-- PR 프리뷰를 켜면 PR 코드가 빌드 환경 변수를 읽을 수 있습니다. 공개 저장소이므로 프리뷰 빌드에는 비밀값을 두지 않습니다.
+- Amplify는 GitHub에 배포 결과를 남기지 않습니다. 배포 성공 여부는 Amplify 콘솔에서 봅니다
+- `VITE_` 변수는 번들에 그대로 들어갑니다. 비밀값을 넣지 않습니다
+- PR 프리뷰는 켜지 않습니다. 켜면 PR 코드가 빌드 환경 변수(패키지 토큰 포함)를 읽을 수 있고, 이 저장소는 공개입니다
 
-### 배포 연결 전에 정할 것
+### 도메인 전환 전에 정할 것
 
-- 검색 노출용 프리렌더 필요 여부: v2는 공개 페이지를 프리렌더합니다. 지금 `index.html`에는 메타 태그가 없고, 페이지 제목도 브라우저에서 설정합니다.
-- 운영과 같은 조건의 개발 환경(Amplify)이 따로 필요한지 여부. 지금 `dev`는 GitHub Pages 확인용 배포만 있습니다
-- 디자인 시스템 패키지 설치 토큰: Amplify는 `GITHUB_TOKEN`을 쓸 수 없어 classic 토큰을 환경 변수로 넣어야 합니다. 조직 정책상 이 토큰은 30일마다 교체해야 하므로 담당자와 교체 방법을 정합니다.
+- `university.neordinary.com`과 `dev.university.neordinary.com`은 지금 v2(UPMS)의 운영·개발 도메인입니다. v2를 어느 주소로 옮길지 정하고, v2 Amplify 앱에서 도메인 연결을 뗀 뒤 이 앱에 연결합니다
+- 헤더의 로그인·UPMS·지원 안내 링크와 CTA 링크가 `university.neordinary.com`을 가리킵니다(`src/components/header/constants.ts`, `src/pages/-components/cta/constants.ts`). 랜딩이 이 도메인을 쓰면 v2의 새 주소로 바꿔야 합니다. 그대로 두면 rewrite 규칙 때문에 랜딩 첫 화면이 뜹니다
+- 검색 노출용 프리렌더 필요 여부: `index.html`에 메타 태그가 없고, 페이지 제목도 브라우저에서 설정합니다
+- 패키지 토큰을 30일마다 교체할 담당자
 
 ### 릴리스 절차
 

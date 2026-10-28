@@ -1,0 +1,22 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install
+        - corepack enable
+        - corepack prepare --activate
+        - echo "//npm.pkg.github.com/:_authToken=${UMC_PACKAGES_TOKEN}" >> ~/.npmrc
+        - pnpm config set store-dir .pnpm-store
+        - pnpm install --frozen-lockfile
+    build:
+      commands:
+        - pnpm run build
+        - 'if [ "$AWS_BRANCH" != "main" ]; then printf "User-agent: *\nDisallow: /\n" > dist/robots.txt; fi'
+  artifacts:
+    baseDirectory: dist
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - .pnpm-store/**/*
