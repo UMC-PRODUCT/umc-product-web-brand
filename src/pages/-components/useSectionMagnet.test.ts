@@ -1,28 +1,79 @@
 import { renderHook } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
-import { findMagnetTarget, useSectionMagnet } from "./useSectionMagnet"
+import {
+  findSnapTarget,
+  type SnapPoint,
+  useSectionMagnet,
+} from "./useSectionMagnet"
 
-describe("findMagnetTarget", () => {
-  it("120px 안에서 가장 가까운 섹션 위치를 고른다", () => {
-    expect(findMagnetTarget(1000, [0, 890, 1060, 1900])).toBe(1060)
-    expect(findMagnetTarget(1000, [0, 880, 1200])).toBe(880)
+const PAGE_HEIGHT = 800
+const point = (top: number, afterRunway = false): SnapPoint => ({
+  top,
+  afterRunway,
+})
+
+describe("findSnapTarget", () => {
+  describe("한 화면 이하 구간", () => {
+    const points = [point(1000), point(1600)]
+
+    it("아래로 화면의 20% 넘게 왔으면 다음 섹션, 덜 왔으면 원래 섹션 시작으로 간다", () => {
+      expect(findSnapTarget(1200, 1, points, PAGE_HEIGHT)).toBe(1600)
+      expect(findSnapTarget(1100, 1, points, PAGE_HEIGHT)).toBe(1000)
+    })
+
+    it("위로 화면의 20% 넘게 왔으면 이전 섹션, 덜 왔으면 원래 섹션 시작으로 간다", () => {
+      expect(findSnapTarget(1400, -1, points, PAGE_HEIGHT)).toBe(1000)
+      expect(findSnapTarget(1500, -1, points, PAGE_HEIGHT)).toBe(1600)
+    })
   })
 
-  it("가장 가까운 섹션이 120px보다 멀면 움직이지 않는다", () => {
-    expect(findMagnetTarget(1000, [0, 1121])).toBeNull()
+  describe("한 화면보다 긴 구간", () => {
+    const points = [point(1000), point(2400)]
+
+    it("아래로 가다 다음 섹션이 화면 아래 20% 선을 넘어 올라오면 다음 섹션으로 간다", () => {
+      expect(findSnapTarget(1500, 1, points, PAGE_HEIGHT)).toBeNull()
+      expect(findSnapTarget(1800, 1, points, PAGE_HEIGHT)).toBe(2400)
+    })
+
+    it("아래로 조금 내려 읽는 중에는 섹션 시작으로 되돌리지 않는다", () => {
+      expect(findSnapTarget(1100, 1, points, PAGE_HEIGHT)).toBeNull()
+    })
+
+    it("위로 가다 섹션 시작에서 화면의 20% 안쪽이면 섹션 시작으로 간다", () => {
+      expect(findSnapTarget(1100, -1, points, PAGE_HEIGHT)).toBe(1000)
+      expect(findSnapTarget(1500, -1, points, PAGE_HEIGHT)).toBeNull()
+    })
   })
 
-  it("이미 섹션 위치에 있으면 움직이지 않는다", () => {
-    expect(findMagnetTarget(1060, [1060, 1150])).toBeNull()
+  it("런웨이 끝에 붙는 섹션(소개)까지는 길이와 상관없이 한 구간으로 넘긴다", () => {
+    const points = [point(0), point(1900, true)]
+
+    expect(findSnapTarget(200, 1, points, PAGE_HEIGHT)).toBe(1900)
+    expect(findSnapTarget(100, 1, points, PAGE_HEIGHT)).toBe(0)
+    expect(findSnapTarget(1700, -1, points, PAGE_HEIGHT)).toBe(0)
+    expect(findSnapTarget(1800, -1, points, PAGE_HEIGHT)).toBe(1900)
+  })
+
+  it("이미 섹션 시작에 있으면 움직이지 않는다", () => {
+    expect(
+      findSnapTarget(1000, 1, [point(1000), point(1600)], PAGE_HEIGHT),
+    ).toBeNull()
   })
 })
 
 describe("useSectionMagnet", () => {
   const CURRENT_TOP = 1000
-  const STATS_TOP = 1060
+  const STATS_TOP = 700
+  const SPONSORS_TOP = 1300
   let frames: FrameRequestCallback[] = []
   let scrollTo = vi.fn()
+
+  function placeSection(id: string, top: number) {
+    const section = document.getElementById(id) as HTMLElement
+    section.getBoundingClientRect = () =>
+      ({ top: top - CURRENT_TOP }) as DOMRect
+  }
 
   function renderOnPage({ magnetAllowed = true } = {}) {
     vi.stubGlobal(
@@ -31,22 +82,25 @@ describe("useSectionMagnet", () => {
     )
     vi.stubGlobal("scrollY", CURRENT_TOP)
     document.body.innerHTML =
-      '<main><section id="hero"></section><section id="stats"></section></main>'
-    const hero = document.getElementById("hero") as HTMLElement
-    const stats = document.getElementById("stats") as HTMLElement
-    hero.getBoundingClientRect = () => ({ top: -CURRENT_TOP }) as DOMRect
-    stats.getBoundingClientRect = () =>
-      ({ top: STATS_TOP - CURRENT_TOP }) as DOMRect
+      '<main><section id="stats"></section><section id="sponsors"></section></main>'
+    placeSection("stats", STATS_TOP)
+    placeSection("sponsors", SPONSORS_TOP)
     const main = document.querySelector("main")
     renderHook(() => useSectionMagnet({ current: main }))
+  }
+
+  function runFrames() {
+    for (const frame of frames.splice(0)) frame(performance.now() + 10_000)
   }
 
   function stopScrollingAfter(input: Event) {
     window.dispatchEvent(input)
     window.dispatchEvent(new Event("scroll"))
     vi.advanceTimersByTime(200)
-    for (const frame of frames.splice(0)) frame(performance.now() + 10_000)
+    runFrames()
   }
+
+  const lastScrollTop = () => scrollTo.mock.lastCall?.[0]?.top
 
   beforeEach(() => {
     vi.useFakeTimers()
@@ -70,26 +124,14 @@ describe("useSectionMagnet", () => {
     document.body.innerHTML = ""
   })
 
-  it("휠로 섹션 시작 근처에 멈추면 그 섹션 시작으로 옮긴다", () => {
+  it("휠을 아래로 굴려 멈추면 아래 섹션, 위로 굴려 멈추면 위 섹션 시작으로 옮긴다", () => {
     renderOnPage()
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
+    expect(lastScrollTop()).toBe(SPONSORS_TOP)
 
-    expect(scrollTo).toHaveBeenLastCalledWith({
-      top: STATS_TOP,
-      behavior: "instant",
-    })
-  })
-
-  it("PageDown으로 멈춰도 섹션 시작으로 옮긴다", () => {
-    renderOnPage()
-
-    stopScrollingAfter(new KeyboardEvent("keydown", { key: "PageDown" }))
-
-    expect(scrollTo).toHaveBeenLastCalledWith({
-      top: STATS_TOP,
-      behavior: "instant",
-    })
+    stopScrollingAfter(new WheelEvent("wheel", { deltaY: -100 }))
+    expect(lastScrollTop()).toBe(STATS_TOP)
   })
 
   it("입력 없이 코드로 바뀐 스크롤에는 다시 끌어당기지 않는다", () => {
@@ -99,18 +141,21 @@ describe("useSectionMagnet", () => {
 
     window.dispatchEvent(new Event("scroll"))
     vi.advanceTimersByTime(200)
-    for (const frame of frames.splice(0)) frame(performance.now() + 10_000)
+    runFrames()
 
     expect(scrollTo).not.toHaveBeenCalled()
   })
 
-  it("방향키로 멈추면 그 자리에 둔다", () => {
-    renderOnPage()
+  it.each(["ArrowDown", "PageDown", " ", "End"])(
+    "키보드(%s)로 멈추면 브라우저 기본 이동 그대로 둔다",
+    (key) => {
+      renderOnPage()
 
-    stopScrollingAfter(new KeyboardEvent("keydown", { key: "ArrowDown" }))
+      stopScrollingAfter(new KeyboardEvent("keydown", { key }))
 
-    expect(scrollTo).not.toHaveBeenCalled()
-  })
+      expect(scrollTo).not.toHaveBeenCalled()
+    },
+  )
 
   it("동작 줄이기나 좁은 화면에서는 그 자리에 둔다", () => {
     renderOnPage({ magnetAllowed: false })
