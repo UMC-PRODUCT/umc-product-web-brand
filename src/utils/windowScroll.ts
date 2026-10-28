@@ -1,3 +1,13 @@
+const BASE_DURATION_MS = 700
+const DURATION_PER_PX = 0.18
+const MIN_DURATION_MS = 900
+const MAX_DURATION_MS = 1600
+
+export function getAnchorScrollDuration(distance: number) {
+  const duration = BASE_DURATION_MS + Math.abs(distance) * DURATION_PER_PX
+  return Math.min(Math.max(duration, MIN_DURATION_MS), MAX_DURATION_MS)
+}
+
 const CANCEL_EVENTS = ["wheel", "touchstart", "keydown", "mousedown"] as const
 
 let cancelRunningScroll: (() => void) | null = null

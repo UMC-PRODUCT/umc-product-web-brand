@@ -1,16 +1,10 @@
 import { type RefObject, useEffect } from "react"
 
-import { animateWindowScroll, getAnchorScrollTop } from "@/utils/windowScroll"
-
-const BASE_DURATION_MS = 700
-const DURATION_PER_PX = 0.18
-const MIN_DURATION_MS = 900
-const MAX_DURATION_MS = 1600
-
-export function getAnchorScrollDuration(distance: number) {
-  const duration = BASE_DURATION_MS + Math.abs(distance) * DURATION_PER_PX
-  return Math.min(Math.max(duration, MIN_DURATION_MS), MAX_DURATION_MS)
-}
+import {
+  animateWindowScroll,
+  getAnchorScrollDuration,
+  getAnchorScrollTop,
+} from "@/utils/windowScroll"
 
 const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches
