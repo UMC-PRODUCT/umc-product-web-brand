@@ -49,6 +49,28 @@ describe("PreviewPanel", () => {
     expect(next).toBeDisabled()
   })
 
+  it("첫 사진이 로드되면 나머지 탭 사진을 미리 받는다", () => {
+    const [first, second] = PREVIEW_TABS
+    if (!first?.image || !second?.image) throw new Error("탭 데이터가 없다")
+
+    render(<PreviewPanel />)
+
+    expect(screen.getByAltText(second.image.alt)).toHaveAttribute(
+      "loading",
+      "lazy",
+    )
+
+    fireEvent.load(screen.getByAltText(first.image.alt))
+
+    for (const tab of PREVIEW_TABS) {
+      if (!tab.image) continue
+      expect(screen.getByAltText(tab.image.alt)).toHaveAttribute(
+        "loading",
+        "eager",
+      )
+    }
+  })
+
   it("선택하지 않은 탭의 패널은 DOM에 두고 숨긴다", () => {
     render(<PreviewPanel />)
 
