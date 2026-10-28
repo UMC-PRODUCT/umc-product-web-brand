@@ -35,7 +35,9 @@ export function CarouselPagination({
   const labels = Array.from({ length: count }, (_, index) => getLabel(index))
 
   return (
-    <div className={cn("relative -my-1.5 flex items-center", className)}>
+    <div
+      className={cn("relative -my-2 flex items-center md:-my-1.5", className)}
+    >
       {labels.map((label, index) => {
         const isSelected = index === selectedIndex
         return (
@@ -43,7 +45,7 @@ export function CarouselPagination({
             aria-controls={controlsId}
             aria-current={isSelected ? "true" : undefined}
             aria-label={label}
-            className="flex h-6 items-center rounded-full px-1.5 focus-visible:outline-2 focus-visible:outline-teal-600"
+            className="flex h-6 items-center rounded-full px-2 focus-visible:outline-2 focus-visible:outline-teal-600 md:px-1.5"
             key={label}
             onClick={() => onSelect(index)}
             onKeyDown={(event) => handleKeyDown(event, index)}
@@ -54,8 +56,8 @@ export function CarouselPagination({
           >
             <span
               className={cn(
-                "h-3 w-3 rounded-full bg-teal-grey-200 transition-[width,background-color] duration-300 motion-reduce:transition-none",
-                isSelected && "w-[46px] bg-teal-grey-300",
+                "h-2 w-2 rounded-full bg-teal-grey-200 transition-[width,background-color] duration-300 motion-reduce:transition-none md:h-3 md:w-3",
+                isSelected && "w-[31px] bg-teal-grey-300 md:w-[46px]",
               )}
             />
           </button>

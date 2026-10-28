@@ -70,7 +70,7 @@ export function AboutCarousel({
     <section
       aria-label={label}
       aria-roledescription="carousel"
-      className={cn("flex flex-col items-center gap-7", className)}
+      className={cn("flex flex-col items-center gap-3 md:gap-8", className)}
     >
       <div
         className="about-carousel-viewport -my-12 w-full overflow-hidden py-12"
@@ -82,13 +82,13 @@ export function AboutCarousel({
             <figure
               aria-label={`${index + 1} / ${slides.length}`}
               aria-roledescription="slide"
-              className="about-slide relative mr-4 h-[500px] w-[900px] shrink-0"
+              className="about-slide relative mr-(--about-slide-gap) h-(--about-slide-h) w-(--about-slide-w) shrink-0"
               data-active={index === selectedIndex}
               key={slide.id}
             >
               <div
                 aria-hidden
-                className="about-slide-shadow absolute inset-0 rounded-3xl"
+                className="about-slide-shadow absolute inset-0 rounded-(--about-radius)"
               />
               <div className="about-slide-frame absolute inset-0 bg-[#051f1d]">
                 <img
