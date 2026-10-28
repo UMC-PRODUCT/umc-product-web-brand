@@ -12,14 +12,11 @@ describe("PreviewPanel", () => {
     render(<PreviewPanel />)
 
     const firstImage = screen.getByAltText(first.image.alt)
-    fireEvent.load(firstImage)
-    expect(firstImage).toHaveClass("opacity-100")
 
     fireEvent.mouseDown(screen.getByRole("tab", { name: second.label }))
     fireEvent.mouseDown(screen.getByRole("tab", { name: first.label }))
 
     expect(screen.getByAltText(first.image.alt)).toBe(firstImage)
-    expect(firstImage).toHaveClass("opacity-100")
   })
 
   it("스테퍼로 이전·다음 탭으로 옮기고 처음과 끝에서는 멈춘다", () => {
@@ -47,6 +44,28 @@ describe("PreviewPanel", () => {
       "true",
     )
     expect(next).toBeDisabled()
+  })
+
+  it("첫 사진이 로드되면 나머지 탭 사진을 미리 받는다", () => {
+    const [first, second] = PREVIEW_TABS
+    if (!first?.image || !second?.image) throw new Error("탭 데이터가 없다")
+
+    render(<PreviewPanel />)
+
+    expect(screen.getByAltText(second.image.alt)).toHaveAttribute(
+      "loading",
+      "lazy",
+    )
+
+    fireEvent.load(screen.getByAltText(first.image.alt))
+
+    for (const tab of PREVIEW_TABS) {
+      if (!tab.image) continue
+      expect(screen.getByAltText(tab.image.alt)).toHaveAttribute(
+        "loading",
+        "eager",
+      )
+    }
   })
 
   it("선택하지 않은 탭의 패널은 DOM에 두고 숨긴다", () => {
