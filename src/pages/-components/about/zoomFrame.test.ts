@@ -7,7 +7,6 @@ const STORYBOARD_START = { scale: 2.4, offset: -542 }
 const STORYBOARD_FRAMES = [
   {
     progress: 0,
-    scale: 2.4,
     offset: -542,
     activeImageOpacity: 0.2,
     inactiveImageOpacity: 0,
@@ -17,7 +16,6 @@ const STORYBOARD_FRAMES = [
   },
   {
     progress: 0.25,
-    scale: 1.79,
     offset: -347,
     activeImageOpacity: 0.3,
     inactiveImageOpacity: 0,
@@ -27,7 +25,6 @@ const STORYBOARD_FRAMES = [
   },
   {
     progress: 0.5,
-    scale: 1.35,
     offset: -10,
     activeImageOpacity: 0.3,
     inactiveImageOpacity: 0,
@@ -37,7 +34,6 @@ const STORYBOARD_FRAMES = [
   },
   {
     progress: 0.75,
-    scale: 1.09,
     offset: -10,
     activeImageOpacity: 0.6,
     inactiveImageOpacity: 0.6,
@@ -47,7 +43,6 @@ const STORYBOARD_FRAMES = [
   },
   {
     progress: 1,
-    scale: 1,
     offset: 0,
     activeImageOpacity: 1,
     inactiveImageOpacity: 1,
@@ -59,7 +54,7 @@ const STORYBOARD_FRAMES = [
 
 describe("getZoomFrame", () => {
   it.each(STORYBOARD_FRAMES)(
-    "스토리보드 시작값이면 진행도 $progress에서 프레임 값을 돌려준다",
+    "스토리보드 시작값이면 진행도 $progress에서 위치와 투명도 프레임 값을 돌려준다",
     ({ progress, offset, ...expected }) => {
       const frame = getZoomFrame(progress, STORYBOARD_START)
 
@@ -69,6 +64,20 @@ describe("getZoomFrame", () => {
       }
     },
   )
+
+  it("배율은 같은 스크롤 거리마다 같은 비율로 줄어든다", () => {
+    const scaleAt = (progress: number) =>
+      getZoomFrame(progress, STORYBOARD_START).scale
+    const quarterRatioFrom = (progress: number) =>
+      scaleAt(progress + 0.25) / scaleAt(progress)
+
+    expect(scaleAt(0.25)).toBeCloseTo(1.93, 2)
+    expect(scaleAt(0.5)).toBeCloseTo(1.55, 2)
+    expect(scaleAt(0.75)).toBeCloseTo(1.24, 2)
+    for (const progress of [0.25, 0.5, 0.75]) {
+      expect(quarterRatioFrom(progress)).toBeCloseTo(quarterRatioFrom(0), 5)
+    }
+  })
 
   it("시작 배율과 거리를 처음 프레임에 쓰고 끝에서는 원래 크기로 돌아온다", () => {
     const start = { scale: 2.9, offset: -700 }
