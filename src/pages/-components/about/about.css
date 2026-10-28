@@ -104,7 +104,7 @@
 }
 
 .about-zoom {
-  --about-zoom-runway: 300svh;
+  --about-zoom-runway: 200svh;
   --about-content-without-slide: 315px;
   height: calc(
     100svh -
