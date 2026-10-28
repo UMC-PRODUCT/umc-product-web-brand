@@ -8,21 +8,21 @@ interface StatCardProps {
 
 export function StatCard({ label, value, unit }: StatCardProps) {
   return (
-    <div className="stat-card relative isolate flex h-[220px] flex-1 flex-col items-end justify-between overflow-hidden rounded-3xl px-8 pt-8 pb-9">
-      <dt className="w-full text-[24px] text-white leading-[1.3] tracking-[-0.96px]">
+    <div className="stat-card relative isolate flex w-full max-w-[356px] flex-col items-end justify-between gap-5 overflow-hidden rounded-3xl p-6 md:h-[180px] md:flex-1 md:pt-7 md:pb-8 lg:h-[220px] lg:px-8 lg:pt-8 lg:pb-9">
+      <dt className="w-full text-lg text-white leading-[1.3] tracking-[-0.04em] lg:text-[26px]">
         {label}
       </dt>
       <dd>
         <span className="sr-only">{`${value}${unit} 이상`}</span>
         <span aria-hidden className="flex items-end gap-1">
-          <span className="stat-card-value font-bold text-[72px] text-teal-50 leading-[72px] tracking-[-3px]">
+          <span className="stat-card-value font-bold text-[40px] text-teal-50 leading-[1.4] tracking-[-0.047em] lg:text-[64px]">
             {value}
           </span>
-          <span className="flex h-[72px] items-end">
-            <span className="stat-card-unit -mr-1 self-start font-medium text-[38px] leading-none tracking-[-3px]">
+          <span className="flex items-end self-stretch">
+            <span className="stat-card-unit -mr-1.5 self-start font-medium text-[32px] leading-none tracking-[-0.08em] lg:text-[38px]">
               +
             </span>
-            <span className="stat-card-unit flex h-11 w-[30px] items-center font-medium text-[34px] leading-none tracking-[-3px]">
+            <span className="stat-card-unit flex h-[1.3em] w-[0.9em] items-center font-medium text-[28px] leading-none tracking-[-0.08em] lg:text-[34px]">
               {unit}
             </span>
           </span>

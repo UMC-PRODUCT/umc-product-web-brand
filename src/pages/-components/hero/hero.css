@@ -10,8 +10,14 @@
 
 .hero-glow {
   top: calc(-1145 * var(--figma-px));
-  left: calc(50% - 1111 * var(--figma-px));
+  left: calc(-391 * var(--figma-px));
   width: calc(3072 * var(--figma-px));
+}
+
+@media (width >= 64rem) {
+  .hero-glow {
+    left: calc(50% - 1111 * var(--figma-px));
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

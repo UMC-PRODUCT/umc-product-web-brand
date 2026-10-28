@@ -13,12 +13,15 @@ export interface Sponsor {
   width: number
   height: number
   slotWidth: number
+  lineBreakAfter?: "mobile" | "tablet"
 }
 
 export const SPONSORS_COPY = {
   title: "후원사",
-  description:
-    "UMC의 성장을 함께 만들어주시는 후원사와 함께 더 많은 배움과 도전의 기회를 이어가고 있습니다.",
+  descriptionLines: [
+    "UMC의 성장을 함께 응원해주시는 후원사 덕분에",
+    "더 많은 배움과 도전의 기회를 이어가고 있어요.",
+  ],
 } as const
 
 export const SPONSORS: readonly Sponsor[] = [
@@ -37,6 +40,7 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 222,
     height: 86,
     slotWidth: 222,
+    lineBreakAfter: "mobile",
   },
   {
     id: "comgong-sunbae",
@@ -45,6 +49,7 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 110,
     height: 110,
     slotWidth: 122,
+    lineBreakAfter: "tablet",
   },
   {
     id: "neordinary",
@@ -53,6 +58,7 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 223,
     height: 82,
     slotWidth: 235,
+    lineBreakAfter: "mobile",
   },
   {
     id: "daval",
@@ -69,6 +75,7 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 177,
     height: 68,
     slotWidth: 177,
+    lineBreakAfter: "mobile",
   },
   {
     id: "vieworks",

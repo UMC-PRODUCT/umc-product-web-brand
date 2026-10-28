@@ -8,10 +8,12 @@ import { cn } from "@/utils/cn"
 import { AboutCarousel } from "./AboutCarousel"
 import { ABOUT_COPY, ABOUT_SLIDES, ABOUT_START_INDEX } from "./constants"
 import { useAboutMode } from "./useAboutMode"
+import { useKeepNextSectionInView } from "./useKeepNextSectionInView"
 import { useScrollZoom } from "./useScrollZoom"
 
 export function AboutSection() {
   const mode = useAboutMode()
+  useKeepNextSectionInView(mode, "about")
   return mode === "zoom" ? <AboutZoomSection /> : <AboutStaticSection />
 }
 
@@ -63,7 +65,7 @@ function AboutContent({ zooming }: { zooming: boolean }) {
         />
       </Container>
       <AboutCarousel
-        className="mt-[50px]"
+        className="mt-8 md:mt-9 lg:mt-[50px]"
         label={ABOUT_COPY.carouselLabel}
         slides={ABOUT_SLIDES}
         startIndex={ABOUT_START_INDEX}

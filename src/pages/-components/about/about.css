@@ -1,12 +1,56 @@
 .about-carousel-viewport {
-  --side-exposure: max(0px, calc((100% - 900px) / 2 - 16px));
-  mask-image: linear-gradient(
-    to right,
-    rgb(0 0 0 / var(--about-edge-alpha, 0.45)),
-    #000 calc(var(--side-exposure) * 0.48),
-    #000 calc(100% - var(--side-exposure) * 0.48),
-    rgb(0 0 0 / var(--about-edge-alpha, 0.45))
-  );
+  --about-slide-w: 344px;
+  --about-slide-h: 280px;
+  --about-slide-gap: 0px;
+  --about-clip-y: 13px;
+  --about-clip-x: 16px;
+  --about-radius: 16px;
+  --about-inactive-opacity: 0.8;
+}
+
+@media (width >= 48rem) {
+  .about-carousel-viewport {
+    --about-slide-w: 600px;
+    --about-slide-h: 334px;
+    --about-slide-gap: 1px;
+    --about-clip-y: 20.5px;
+    --about-clip-x: 10px;
+    --about-radius: 16.4px;
+  }
+}
+
+@media (width >= 64rem) {
+  .about-carousel-viewport {
+    --about-slide-w: 683px;
+    --about-slide-h: 380px;
+    --about-slide-gap: 13px;
+    --about-clip-y: 17px;
+    --about-clip-x: 0px;
+    --about-radius: 18.6px;
+    --side-exposure: max(
+      0px,
+      calc((100% - var(--about-slide-w)) / 2 - var(--about-slide-gap))
+    );
+    mask-image: linear-gradient(
+      to right,
+      rgb(0 0 0 / var(--about-edge-alpha, 0.45)),
+      #000 calc(var(--side-exposure) * 0.48),
+      #000 calc(100% - var(--side-exposure) * 0.48),
+      rgb(0 0 0 / var(--about-edge-alpha, 0.45))
+    );
+  }
+}
+
+@media (width >= 90rem) {
+  .about-carousel-viewport {
+    --about-slide-w: 900px;
+    --about-slide-h: 500px;
+    --about-slide-gap: 16px;
+    --about-clip-y: 24px;
+    --about-clip-x: 3.5px;
+    --about-radius: 24px;
+    --about-inactive-opacity: 1;
+  }
 }
 
 .about-slide-shadow {
@@ -20,8 +64,13 @@
 }
 
 .about-slide-frame {
-  clip-path: inset(24px 3.5px round 24px);
-  transition: clip-path 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  clip-path: inset(
+    var(--about-clip-y) var(--about-clip-x) round var(--about-radius)
+  );
+  opacity: var(--about-inactive-opacity);
+  transition:
+    clip-path 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 500ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .about-slide-dim {
@@ -40,7 +89,8 @@
 }
 
 .about-slide[data-active="true"] .about-slide-frame {
-  clip-path: inset(0 round 24px);
+  clip-path: inset(0 round var(--about-radius));
+  opacity: 1;
 }
 
 @media (hover: hover) {
@@ -93,7 +143,7 @@
 
 .about-zoom .about-slide {
   height: min(
-    500px,
+    var(--about-slide-h),
     calc(
       100svh -
       var(--umc-layout-header-height) -
