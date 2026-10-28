@@ -17,42 +17,42 @@ describe("findSnapTarget", () => {
   describe("한 화면 이하 구간", () => {
     const points = [point(1000), point(1600)]
 
-    it("아래로 화면의 20% 넘게 왔으면 다음 섹션, 덜 왔으면 원래 섹션 시작으로 간다", () => {
-      expect(findSnapTarget(1200, 1, points, PAGE_HEIGHT)).toBe(1600)
-      expect(findSnapTarget(1100, 1, points, PAGE_HEIGHT)).toBe(1000)
+    it("아래로 화면의 10% 넘게 왔으면 다음 섹션, 덜 왔으면 원래 섹션 시작으로 간다", () => {
+      expect(findSnapTarget(1100, 1, points, PAGE_HEIGHT)).toBe(1600)
+      expect(findSnapTarget(1050, 1, points, PAGE_HEIGHT)).toBe(1000)
     })
 
-    it("위로 화면의 20% 넘게 왔으면 이전 섹션, 덜 왔으면 원래 섹션 시작으로 간다", () => {
-      expect(findSnapTarget(1400, -1, points, PAGE_HEIGHT)).toBe(1000)
-      expect(findSnapTarget(1500, -1, points, PAGE_HEIGHT)).toBe(1600)
+    it("위로 화면의 10% 넘게 왔으면 이전 섹션, 덜 왔으면 원래 섹션 시작으로 간다", () => {
+      expect(findSnapTarget(1500, -1, points, PAGE_HEIGHT)).toBe(1000)
+      expect(findSnapTarget(1550, -1, points, PAGE_HEIGHT)).toBe(1600)
     })
   })
 
   describe("한 화면보다 긴 구간", () => {
     const points = [point(1000), point(2400)]
 
-    it("아래로 가다 다음 섹션이 화면 아래 20% 선을 넘어 올라오면 다음 섹션으로 간다", () => {
-      expect(findSnapTarget(1500, 1, points, PAGE_HEIGHT)).toBeNull()
-      expect(findSnapTarget(1800, 1, points, PAGE_HEIGHT)).toBe(2400)
+    it("아래로 가다 다음 섹션이 화면 아래 10% 선을 넘어 올라오면 다음 섹션으로 간다", () => {
+      expect(findSnapTarget(1600, 1, points, PAGE_HEIGHT)).toBeNull()
+      expect(findSnapTarget(1700, 1, points, PAGE_HEIGHT)).toBe(2400)
     })
 
     it("아래로 조금 내려 읽는 중에는 섹션 시작으로 되돌리지 않는다", () => {
       expect(findSnapTarget(1100, 1, points, PAGE_HEIGHT)).toBeNull()
     })
 
-    it("위로 가다 섹션 시작에서 화면의 20% 안쪽이면 섹션 시작으로 간다", () => {
-      expect(findSnapTarget(1100, -1, points, PAGE_HEIGHT)).toBe(1000)
-      expect(findSnapTarget(1500, -1, points, PAGE_HEIGHT)).toBeNull()
+    it("위로 가다 섹션 시작에서 화면의 10% 안쪽이면 섹션 시작으로 간다", () => {
+      expect(findSnapTarget(1050, -1, points, PAGE_HEIGHT)).toBe(1000)
+      expect(findSnapTarget(1100, -1, points, PAGE_HEIGHT)).toBeNull()
     })
   })
 
   it("런웨이 끝에 붙는 섹션(소개)까지는 길이와 상관없이 한 구간으로 넘긴다", () => {
     const points = [point(0), point(1900, true)]
 
-    expect(findSnapTarget(200, 1, points, PAGE_HEIGHT)).toBe(1900)
-    expect(findSnapTarget(100, 1, points, PAGE_HEIGHT)).toBe(0)
-    expect(findSnapTarget(1700, -1, points, PAGE_HEIGHT)).toBe(0)
-    expect(findSnapTarget(1800, -1, points, PAGE_HEIGHT)).toBe(1900)
+    expect(findSnapTarget(100, 1, points, PAGE_HEIGHT)).toBe(1900)
+    expect(findSnapTarget(50, 1, points, PAGE_HEIGHT)).toBe(0)
+    expect(findSnapTarget(1800, -1, points, PAGE_HEIGHT)).toBe(0)
+    expect(findSnapTarget(1850, -1, points, PAGE_HEIGHT)).toBe(1900)
   })
 
   it("이미 섹션 시작에 있으면 움직이지 않는다", () => {

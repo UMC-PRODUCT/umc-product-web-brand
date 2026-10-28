@@ -9,7 +9,7 @@ import {
 
 const MAGNET_QUERY =
   "(prefers-reduced-motion: no-preference) and (width >= 64rem)"
-const COMMIT_RATIO = 0.2
+const COMMIT_RATIO = 0.1
 const SHORT_MOVE_DURATION_MS = 500
 const SCROLL_IDLE_MS = 150
 const MIN_MOVE_PX = 1
