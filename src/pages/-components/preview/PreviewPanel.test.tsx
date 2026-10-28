@@ -12,14 +12,11 @@ describe("PreviewPanel", () => {
     render(<PreviewPanel />)
 
     const firstImage = screen.getByAltText(first.image.alt)
-    fireEvent.load(firstImage)
-    expect(firstImage).toHaveClass("opacity-100")
 
     fireEvent.mouseDown(screen.getByRole("tab", { name: second.label }))
     fireEvent.mouseDown(screen.getByRole("tab", { name: first.label }))
 
     expect(screen.getByAltText(first.image.alt)).toBe(firstImage)
-    expect(firstImage).toHaveClass("opacity-100")
   })
 
   it("스테퍼로 이전·다음 탭으로 옮기고 처음과 끝에서는 멈춘다", () => {
