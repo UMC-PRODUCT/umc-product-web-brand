@@ -5,11 +5,24 @@ import { cn } from "@/utils/cn"
 interface PreviewTabImageProps {
   src: string
   alt: string
+  loading?: "lazy" | "eager"
+  onLoad?: () => void
   className?: string
 }
 
-export function PreviewTabImage({ src, alt, className }: PreviewTabImageProps) {
+export function PreviewTabImage({
+  src,
+  alt,
+  loading = "lazy",
+  onLoad,
+  className,
+}: PreviewTabImageProps) {
   const [loaded, setLoaded] = useState(false)
+
+  const handleLoad = () => {
+    setLoaded(true)
+    onLoad?.()
+  }
 
   return (
     <div
@@ -35,12 +48,12 @@ export function PreviewTabImage({ src, alt, className }: PreviewTabImageProps) {
         decoding="async"
         draggable={false}
         height={600}
-        // 숨긴 패널의 사진은 처음 열 때 받는다
-        loading="lazy"
-        onLoad={() => setLoaded(true)}
+        // Preview 근처에 오기 전에는 받지 않는다. 첫 사진이 내려오면 PreviewPanel이 eager로 바꿔 나머지를 미리 받는다
+        loading={loading}
+        onLoad={handleLoad}
         // 캐시에 있던 사진은 onLoad 이전에 이미 끝나 있을 수 있다
         ref={(image) => {
-          if (image?.complete && image.naturalWidth > 0) setLoaded(true)
+          if (image?.complete && image.naturalWidth > 0) handleLoad()
         }}
         src={src}
         width={1021}
