@@ -7,7 +7,7 @@ interface HeaderNavProps {
 
 export function HeaderNav({ items, activeId }: HeaderNavProps) {
   return (
-    <nav aria-label="주요 섹션" className="col-start-2">
+    <nav aria-label="주요 섹션" className="col-start-2 hidden lg:block">
       <ul className="site-header-nav-list flex items-center gap-1.5 rounded-full p-1.5">
         {items.map((item) => (
           <li key={item.id}>
