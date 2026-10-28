@@ -20,8 +20,13 @@ export interface ValueItem {
   description: readonly string[]
 }
 
-export const VALUES_TITLE =
-  "함께한 경험이 새로운 가능성이 되도록, UMC는 다릅니다."
+export const VALUES_TITLE_LINES = [
+  "함께한 경험이 새로운 가능성이 되도록,",
+  "UMC는 다릅니다.",
+] as const
+
+export const VALUES_DESCRIPTION =
+  "서로 배우고 함께 도전하며 더 큰 가능성을 발견해요."
 
 export const VALUES: readonly ValueItem[] = [
   {

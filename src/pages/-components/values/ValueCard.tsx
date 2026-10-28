@@ -22,7 +22,7 @@ export function ValueCard({
 
   return (
     <li
-      className="value-card relative isolate flex h-[420px] min-w-[240px] max-w-[380px] flex-1 flex-col justify-between overflow-hidden rounded-3xl border-[#0b6b64] border-t-6 px-9 pt-[52px] pb-[60px] text-white"
+      className="value-card relative isolate flex h-[210px] w-full max-w-[310px] flex-col justify-between gap-5 overflow-hidden rounded-3xl border-[#0b6b64] border-t-6 px-9 pt-12 pb-[38px] text-white max-md:data-[expanded=true]:h-auto md:h-[363px] md:w-auto md:max-w-none md:pb-[50px] lg:h-[460px] lg:min-w-0 lg:flex-1 xl:h-[400px] xl:max-w-[310px]"
       data-expanded={expanded}
     >
       <div aria-hidden className="absolute inset-0 -z-10">
@@ -41,14 +41,16 @@ export function ValueCard({
       </div>
       <div
         aria-hidden
-        className="value-card-summary pointer-events-none absolute inset-x-9 bottom-[50px] flex flex-col gap-5"
+        className="value-card-summary pointer-events-none absolute inset-x-9 bottom-[38px] flex items-center gap-4 md:bottom-[50px] md:flex-col md:items-start md:gap-5"
       >
-        <span className="value-card-badge flex size-[60px] items-center justify-center rounded-lg border border-[#15e7cf]">
+        <span className="value-card-badge flex size-[60px] shrink-0 items-center justify-center rounded-lg border border-[#15e7cf]">
           {icon}
         </span>
-        <span className="flex flex-col gap-[7px]">
-          <span className="text-display-2-semibold">{title}</span>
-          <span className="text-heading-2-semibold text-teal-grey-400">
+        <span className="flex flex-col gap-1 md:gap-[7px]">
+          <span className="text-heading-1-semibold md:text-display-2-semibold">
+            {title}
+          </span>
+          <span className="font-medium text-lg text-teal-grey-300 leading-[1.35] tracking-[-0.01em] md:text-[22px] xl:text-2xl">
             {subtitle}
           </span>
         </span>
@@ -61,7 +63,9 @@ export function ValueCard({
           onClick={() => setExpanded((isExpanded) => !isExpanded)}
           type="button"
         >
-          <span className="text-display-2-semibold">{title}</span>{" "}
+          <span className="text-heading-1-semibold md:text-display-2-semibold">
+            {title}
+          </span>{" "}
           <span className="text-title-2-semibold" lang="en">
             {subtitle}
           </span>
@@ -69,7 +73,7 @@ export function ValueCard({
       </h3>
       <div
         aria-hidden={!expanded}
-        className="value-card-detail flex flex-col gap-[1.45em] whitespace-pre-line text-[18px] leading-[1.45] tracking-[-0.18px]"
+        className="value-card-detail flex flex-col gap-[1.45em] whitespace-normal text-base leading-[1.45] tracking-[-0.01em] xl:whitespace-pre-line xl:text-[18px]"
         id={descriptionId}
       >
         {description.map((paragraph) => (
