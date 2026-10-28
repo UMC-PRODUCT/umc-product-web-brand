@@ -20,7 +20,7 @@ export function HeroSection() {
 
   return (
     <Section
-      className="hero-backdrop relative isolate snap-start overflow-hidden rounded-b-[60px]"
+      className="hero-backdrop relative isolate overflow-hidden rounded-b-[60px]"
       headerTone="dark"
       id="hero"
       labelledBy="hero-title"

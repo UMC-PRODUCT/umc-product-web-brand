@@ -13,12 +13,7 @@ export function SponsorsSection() {
   const [firstLine, secondLine] = SPONSORS_COPY.descriptionLines
 
   return (
-    <Section
-      className="snap-start"
-      headerTone="light"
-      id="sponsors"
-      labelledBy="sponsors-title"
-    >
+    <Section headerTone="light" id="sponsors" labelledBy="sponsors-title">
       <h2 className="sr-only" id="sponsors-title">
         {SPONSORS_COPY.title}
       </h2>

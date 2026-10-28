@@ -1,11 +1,11 @@
-import { renderHook } from "@testing-library/react"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
 import {
+  animateWindowScroll,
   easeInOutCubic,
   getAnchorScrollDuration,
-  useSmoothAnchorScroll,
-} from "./anchorScroll"
+  isWindowScrollAnimating,
+} from "./windowScroll"
 
 describe("getAnchorScrollDuration", () => {
   it("가까운 거리도 0.9초보다 빨리 끝내지 않는다", () => {
@@ -33,53 +33,28 @@ describe("easeInOutCubic", () => {
   })
 })
 
-describe("useSmoothAnchorScroll", () => {
+describe("animateWindowScroll", () => {
   afterEach(() => {
     vi.unstubAllGlobals()
-    document.body.innerHTML = ""
-    document.documentElement.removeAttribute("data-anchor-scrolling")
   })
 
-  function clickAnchorLink() {
+  it("이동이 끝나거나 휠로 끊기기 전까지만 진행 중으로 본다", () => {
     const frames: FrameRequestCallback[] = []
-    vi.stubGlobal(
-      "matchMedia",
-      vi.fn(() => ({ matches: false })),
-    )
     vi.stubGlobal("scrollTo", vi.fn())
     vi.stubGlobal(
       "requestAnimationFrame",
       vi.fn((callback: FrameRequestCallback) => frames.push(callback)),
     )
     vi.stubGlobal("cancelAnimationFrame", vi.fn())
-    document.body.innerHTML =
-      '<nav><a href="#stats">통계</a></nav><section id="stats"></section>'
-    const nav = document.querySelector("nav")
-    renderHook(() => useSmoothAnchorScroll({ current: nav }))
-    document.querySelector("a")?.click()
-    return {
-      finish: () => frames.shift()?.(performance.now() + 10_000),
-    }
-  }
 
-  const isAnchorScrolling = () =>
-    document.documentElement.hasAttribute("data-anchor-scrolling")
+    animateWindowScroll(500, 500)
+    expect(isWindowScrollAnimating()).toBe(true)
+    frames.shift()?.(performance.now() + 10_000)
+    expect(isWindowScrollAnimating()).toBe(false)
 
-  it("앵커 이동이 끝날 때까지만 html에 data-anchor-scrolling을 단다", () => {
-    const { finish } = clickAnchorLink()
-    expect(isAnchorScrolling()).toBe(true)
-
-    finish()
-
-    expect(isAnchorScrolling()).toBe(false)
-  })
-
-  it("사용자가 휠로 이동을 끊어도 data-anchor-scrolling을 뗀다", () => {
-    clickAnchorLink()
-    expect(isAnchorScrolling()).toBe(true)
-
+    animateWindowScroll(500, 500)
+    expect(isWindowScrollAnimating()).toBe(true)
     window.dispatchEvent(new Event("wheel"))
-
-    expect(isAnchorScrolling()).toBe(false)
+    expect(isWindowScrollAnimating()).toBe(false)
   })
 })
