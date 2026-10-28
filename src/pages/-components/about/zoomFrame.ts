@@ -80,7 +80,7 @@ export function getZoomFrame(progress: number, start: ZoomStart): ZoomFrame {
   const clamped = clampProgress(progress)
   const at = (key: KeyframedValue) =>
     interpolate(STORYBOARD_KEYFRAMES[key], clamped)
-  const scale = 1 + (start.scale - 1) * (1 - clamped) ** 2
+  const scale = start.scale ** (1 - clamped)
   const featherShare = interpolate(EDGE_FEATHER_SHARE_KEYFRAMES, clamped)
   return {
     scale,
