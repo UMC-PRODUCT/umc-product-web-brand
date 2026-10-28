@@ -19,12 +19,7 @@ export function AboutSection() {
 
 function AboutStaticSection() {
   return (
-    <Section
-      className="snap-start"
-      headerTone="light"
-      id="about"
-      labelledBy="about-title"
-    >
+    <Section headerTone="light" id="about" labelledBy="about-title">
       <AboutContent zooming={false} />
     </Section>
   )
@@ -37,7 +32,7 @@ function AboutZoomSection() {
 
   return (
     <Section
-      className={cn("about-zoom snap-start", settled && "about-zoom-settled")}
+      className={cn("about-zoom", settled && "about-zoom-settled")}
       headerTone="light"
       id="about"
       labelledBy="about-title"

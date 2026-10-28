@@ -5,7 +5,6 @@ const DURATION_PER_PX = 0.18
 const MIN_DURATION_MS = 900
 const MAX_DURATION_MS = 1600
 const CANCEL_EVENTS = ["wheel", "touchstart", "keydown", "mousedown"] as const
-const ANCHOR_SCROLLING_ATTRIBUTE = "data-anchor-scrolling"
 
 export function getAnchorScrollDuration(distance: number) {
   const duration = BASE_DURATION_MS + Math.abs(distance) * DURATION_PER_PX
@@ -55,7 +54,6 @@ export function useSmoothAnchorScroll(
     const cancel = () => {
       cancelAnimationFrame(frame)
       frame = 0
-      document.documentElement.removeAttribute(ANCHOR_SCROLLING_ATTRIBUTE)
       for (const type of CANCEL_EVENTS) window.removeEventListener(type, cancel)
     }
 
@@ -66,7 +64,6 @@ export function useSmoothAnchorScroll(
       if (!id || !target || prefersReducedMotion()) return
       event.preventDefault()
       cancel()
-      document.documentElement.setAttribute(ANCHOR_SCROLLING_ATTRIBUTE, "")
 
       const startTop = window.scrollY
       const distance = getAnchorScrollTop(target) - startTop
