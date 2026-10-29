@@ -21,6 +21,7 @@ const router = createRouter({
   basepath: import.meta.env.BASE_URL,
   context: { queryClient },
   defaultPreload: "intent",
+  scrollRestorationBehavior: "instant",
   trailingSlash: "never",
 })
 

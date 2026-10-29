@@ -1,11 +1,13 @@
-import { render, screen, within } from "@testing-library/react"
+import { screen, within } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
+
+import { renderWithRouter } from "@/test/renderWithRouter"
 
 import { Footer } from "./Footer"
 
 describe("Footer", () => {
-  it("contentinfo 랜드마크이고 헤더 톤을 알린다", () => {
-    render(<Footer tone="light" />)
+  it("contentinfo 랜드마크이고 헤더 톤을 알린다", async () => {
+    await renderWithRouter(<Footer tone="light" />)
 
     expect(screen.getByRole("contentinfo")).toHaveAttribute(
       "data-header-tone",
@@ -13,8 +15,8 @@ describe("Footer", () => {
     )
   })
 
-  it("기본 톤은 dark다", () => {
-    render(<Footer />)
+  it("기본 톤은 dark다", async () => {
+    await renderWithRouter(<Footer />)
 
     expect(screen.getByRole("contentinfo")).toHaveAttribute(
       "data-header-tone",
@@ -22,8 +24,8 @@ describe("Footer", () => {
     )
   })
 
-  it("사이트 링크는 세 묶음의 제목과 항목으로 보여준다", () => {
-    render(<Footer />)
+  it("사이트 링크는 세 묶음의 제목과 항목으로 보여준다", async () => {
+    await renderWithRouter(<Footer />)
 
     const nav = screen.getByRole("navigation", { name: "사이트 링크" })
     expect(
@@ -34,8 +36,8 @@ describe("Footer", () => {
     expect(within(nav).getByText("UPMS 서비스")).toBeInTheDocument()
   })
 
-  it("채널 목록의 아이콘은 보조기술에서 숨긴다", () => {
-    render(<Footer />)
+  it("채널 목록의 아이콘은 보조기술에서 숨긴다", async () => {
+    await renderWithRouter(<Footer />)
 
     const channels = screen.getByRole("list", { name: "UMC 채널" })
     expect(within(channels).getAllByRole("listitem")).toHaveLength(4)
@@ -44,8 +46,8 @@ describe("Footer", () => {
     }
   })
 
-  it("Instagram·Kakao 채널은 새 창으로 여는 공식 채널 링크다", () => {
-    render(<Footer />)
+  it("Instagram·Kakao 채널은 새 창으로 여는 공식 채널 링크다", async () => {
+    await renderWithRouter(<Footer />)
 
     const instagram = screen.getByRole("link", { name: "Instagram (새 창)" })
     const kakao = screen.getByRole("link", { name: "Kakao (새 창)" })
@@ -60,10 +62,26 @@ describe("Footer", () => {
     }
   })
 
-  it("주소가 없는 항목은 링크가 아닌 텍스트로 둔다", () => {
-    render(<Footer />)
+  it("주소가 없는 항목은 링크가 아닌 텍스트로 둔다", async () => {
+    await renderWithRouter(<Footer />)
 
     expect(screen.queryByRole("link", { name: /UPMS 서비스/ })).toBeNull()
     expect(screen.getByText("UPMS 서비스")).toBeInTheDocument()
+  })
+
+  it("About의 UMC PRODUCT·중앙사무국은 하위 경로가 붙은 소개 페이지 링크다", async () => {
+    await renderWithRouter(<Footer />, {
+      path: "/umc-product-web-brand",
+      basepath: "/umc-product-web-brand",
+    })
+
+    expect(screen.getByRole("link", { name: "UMC PRODUCT" })).toHaveAttribute(
+      "href",
+      "/umc-product-web-brand/about/umc-product",
+    )
+    expect(screen.getByRole("link", { name: "중앙사무국" })).toHaveAttribute(
+      "href",
+      "/umc-product-web-brand/about/central-office",
+    )
   })
 })
