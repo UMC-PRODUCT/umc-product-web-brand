@@ -28,11 +28,13 @@ export function resolveOfficeSearch(
   search: Record<string, unknown>,
 ): OfficeSearch {
   const parsed = searchSchema.parse(search)
+  const knownGeneration = OFFICE_GENERATIONS.find(
+    ({ id }) => id === parsed.generation,
+  )?.id
   const generation =
-    parsed.generation === ALL_GENERATIONS ||
-    OFFICE_GENERATIONS.some(({ id }) => id === parsed.generation)
-      ? (parsed.generation ?? OFFICE_GENERATIONS[0].id)
-      : OFFICE_GENERATIONS[0].id
+    parsed.generation === ALL_GENERATIONS
+      ? ALL_GENERATIONS
+      : (knownGeneration ?? OFFICE_GENERATIONS[0].id)
   return { generation, bureau: parsed.bureau }
 }
 
