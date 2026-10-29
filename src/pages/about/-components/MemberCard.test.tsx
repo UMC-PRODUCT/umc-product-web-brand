@@ -36,6 +36,14 @@ describe("MemberCard", () => {
     ).toEqual(["Lead", "iOS"])
   })
 
+  it("학교가 없으면 이름 줄만 그린다", () => {
+    const { container } = render(
+      <MemberCard member={{ nickname: "쳇쳇", name: "전채운" }} />,
+    )
+
+    expect(container.querySelectorAll("p")).toHaveLength(1)
+  })
+
   it("사진은 불러오기 전에는 숨겨 두고, 불러오면 보이게 표시한다", () => {
     const { container } = render(
       <MemberCard member={{ ...MEMBER, photo: "23d92c642578" }} />,

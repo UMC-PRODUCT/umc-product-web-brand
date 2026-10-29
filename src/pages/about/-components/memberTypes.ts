@@ -2,13 +2,14 @@ export type PartTag = "PM" | "Design" | "Web" | "iOS" | "Android" | "Spring"
 
 export type MemberTag =
   | { kind: "role"; label: string }
+  | { kind: "central"; label: string }
   | { kind: "part"; label: PartTag }
 
 export interface Member {
   nickname: string
   name: string
   email?: string
-  school: string
+  school?: string
   photo?: string
 }
 
@@ -35,4 +36,13 @@ export interface ProductGeneration {
   label: string
   members: Readonly<Record<string, Member>>
   teams: readonly [TeamView, ...TeamView[]]
+}
+
+export type Bureau = "operations" | "education"
+
+export interface OfficeGeneration {
+  id: number
+  label: string
+  members: Readonly<Record<string, Member>>
+  bureaus: Readonly<Record<Bureau, readonly MemberGroup[]>>
 }

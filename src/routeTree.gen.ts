@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './pages/__root'
 import { Route as IndexRouteImport } from './pages/index'
 import { Route as AboutUmcProductRouteImport } from './pages/about/umc-product'
+import { Route as AboutCentralOfficeRouteImport } from './pages/about/central-office'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const AboutUmcProductRoute = AboutUmcProductRouteImport.update({
   path: '/about/umc-product',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutCentralOfficeRoute = AboutCentralOfficeRouteImport.update({
+  id: '/about/central-office',
+  path: '/about/central-office',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about/central-office': typeof AboutCentralOfficeRoute
   '/about/umc-product': typeof AboutUmcProductRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about/central-office': typeof AboutCentralOfficeRoute
   '/about/umc-product': typeof AboutUmcProductRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about/central-office': typeof AboutCentralOfficeRoute
   '/about/umc-product': typeof AboutUmcProductRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about/umc-product'
+  fullPaths: '/' | '/about/central-office' | '/about/umc-product'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about/umc-product'
-  id: '__root__' | '/' | '/about/umc-product'
+  to: '/' | '/about/central-office' | '/about/umc-product'
+  id: '__root__' | '/' | '/about/central-office' | '/about/umc-product'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutCentralOfficeRoute: typeof AboutCentralOfficeRoute
   AboutUmcProductRoute: typeof AboutUmcProductRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutUmcProductRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about/central-office': {
+      id: '/about/central-office'
+      path: '/about/central-office'
+      fullPath: '/about/central-office'
+      preLoaderRoute: typeof AboutCentralOfficeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutCentralOfficeRoute: AboutCentralOfficeRoute,
   AboutUmcProductRoute: AboutUmcProductRoute,
 }
 export const routeTree = rootRouteImport

@@ -21,9 +21,11 @@ export function MemberGroupSection({
       >
         {group.title}
       </h2>
-      <p className="mt-2 whitespace-pre-line text-body-3-medium text-teal-grey-500 md:text-title-3-medium">
-        {group.description}
-      </p>
+      {group.description && (
+        <p className="mt-2 whitespace-pre-line text-body-3-medium text-teal-grey-500 md:text-title-3-medium">
+          {group.description}
+        </p>
+      )}
       <ul className="mt-8 grid gap-4 md:grid-cols-[repeat(auto-fill,426px)]">
         {group.entries.map(({ memberId, tags }) => {
           const member = members[memberId]
