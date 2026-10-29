@@ -150,7 +150,7 @@ export const PRODUCT_GENERATIONS: readonly [
       },
       원: {
         nickname: "원",
-        name: "이동민",
+        name: "김동민",
         email: "21thingking@gmail.com",
         school: "한국외국어대학교",
         photo: "2bd0cace9277",
@@ -332,7 +332,7 @@ export const PRODUCT_GENERATIONS: readonly [
       },
       토미: {
         nickname: "토미",
-        name: "김진범",
+        name: "김민범",
         email: "orum1223@dgu.ac.kr",
         school: "동국대학교",
         photo: "08285e003629",
@@ -727,7 +727,7 @@ export const PRODUCT_GENERATIONS: readonly [
       },
       원: {
         nickname: "원",
-        name: "이동민",
+        name: "김동민",
         email: "202100552@hufs.ac.kr",
         school: "한국외국어대학교",
         photo: "2bd0cace9277",
@@ -856,7 +856,7 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "모집과 운영을 지원하는 웹 서비스의 화면과 기능을 개발하고, 사용성을 개선해요.",
             entries: [
-              { memberId: "이삭" },
+              { memberId: "이삭", tags: [{ kind: "role", label: "Lead" }] },
               { memberId: "헤일리" },
               { memberId: "주디" },
               { memberId: "준오" },
@@ -867,7 +867,7 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "iOS 환경에 맞는 앱의 화면과 기능을 개발하고, 사용 경험을 개선해요.",
             entries: [
-              { memberId: "제옹" },
+              { memberId: "제옹", tags: [{ kind: "role", label: "Lead" }] },
               { memberId: "리버" },
               { memberId: "소피" },
               { memberId: "원" },
@@ -878,7 +878,7 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "Android 환경에 맞는 앱의 화면과 기능을 개발하고, 사용 경험을 개선해요.",
             entries: [
-              { memberId: "조나단" },
+              { memberId: "조나단", tags: [{ kind: "role", label: "Lead" }] },
               { memberId: "도리" },
               { memberId: "어헛차" },
               { memberId: "우연" },
@@ -940,7 +940,7 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "모집과 운영을 지원하는 웹 서비스의 화면과 기능을 개발하고, 사용성을 개선해요.",
             entries: [
-              { memberId: "이삭" },
+              { memberId: "이삭", tags: [{ kind: "role", label: "Lead" }] },
               { memberId: "헤일리" },
               { memberId: "주디" },
               { memberId: "준오" },
@@ -969,7 +969,7 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "iOS 환경에 맞는 앱의 화면과 기능을 개발하고, 사용 경험을 개선해요.",
             entries: [
-              { memberId: "제옹" },
+              { memberId: "제옹", tags: [{ kind: "role", label: "Lead" }] },
               { memberId: "리버" },
               { memberId: "원" },
               { memberId: "소피" },
@@ -980,7 +980,7 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "Android 환경에 맞는 앱의 화면과 기능을 개발하고, 사용 경험을 개선해요.",
             entries: [
-              { memberId: "조나단" },
+              { memberId: "조나단", tags: [{ kind: "role", label: "Lead" }] },
               { memberId: "우연" },
               { memberId: "어헛차" },
               { memberId: "도리" },
@@ -1048,24 +1048,6 @@ export const PRODUCT_GENERATIONS: readonly [
         photo: "896d42a62a30",
       },
       코튼: { nickname: "코튼", name: "김연진", school: "상명대학교" },
-      헤일리: {
-        nickname: "헤일리",
-        name: "한현서",
-        school: "동덕여자대학교",
-        photo: "52d812a55529",
-      },
-      주디: {
-        nickname: "주디",
-        name: "양혜원",
-        school: "가천대학교",
-        photo: "b33198cc7b31",
-      },
-      준오: {
-        nickname: "준오",
-        name: "오창준",
-        school: "동국대학교",
-        photo: "7d7027f4a8c7",
-      },
       소피: {
         nickname: "소피",
         name: "이예지",
@@ -1109,7 +1091,12 @@ export const PRODUCT_GENERATIONS: readonly [
         school: "동국대학교",
         photo: "f40886f561a7",
       },
-      하늘: { nickname: "하늘", name: "박경운", school: "중앙대학교" },
+      하늘: {
+        nickname: "하늘",
+        name: "박경운",
+        school: "중앙대학교",
+        photo: "1853577af75f",
+      },
       와나: {
         nickname: "와나",
         name: "강하나",
@@ -1165,13 +1152,10 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "사용자가 서비스를 쉽게 이해하고 이용할 수 있도록 화면과 사용 흐름을 설계해요.",
             entries: [
-              { memberId: "나옹", tags: [{ kind: "part", label: "Web" }] },
+              { memberId: "나옹", tags: [{ kind: "role", label: "Web Lead" }] },
               {
                 memberId: "삼이",
-                tags: [
-                  { kind: "part", label: "iOS" },
-                  { kind: "part", label: "Android" },
-                ],
+                tags: [{ kind: "role", label: "Mobile Lead" }],
               },
             ],
           },
@@ -1180,10 +1164,7 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "사용자가 직접 마주하는 웹 화면을 개발하고, 편리하고 원활한 서비스 경험을 제공해요.",
             entries: [
-              { memberId: "코튼" },
-              { memberId: "헤일리" },
-              { memberId: "주디" },
-              { memberId: "준오" },
+              { memberId: "코튼", tags: [{ kind: "role", label: "Lead" }] },
             ],
           },
           {
@@ -1213,7 +1194,7 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "서비스의 핵심 기능과 데이터를 처리하는 서버를 개발하고, 안정적인 서비스 운영을 위한 시스템을 구축해요.",
             entries: [
-              { memberId: "갈래", tags: [{ kind: "role", label: "Web Lead" }] },
+              { memberId: "갈래", tags: [{ kind: "part", label: "Web" }] },
               {
                 memberId: "하늘",
                 tags: [{ kind: "role", label: "Tech Lead" }],
