@@ -35,4 +35,12 @@ describe("MemberCard", () => {
       screen.getAllByRole("listitem").map((item) => item.textContent),
     ).toEqual(["Lead", "iOS"])
   })
+
+  it("학교가 없으면 이름 줄만 그린다", () => {
+    const { container } = render(
+      <MemberCard member={{ nickname: "쳇쳇", name: "전채운" }} />,
+    )
+
+    expect(container.querySelectorAll("p")).toHaveLength(1)
+  })
 })

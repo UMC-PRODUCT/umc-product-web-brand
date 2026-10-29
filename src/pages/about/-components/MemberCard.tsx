@@ -14,6 +14,11 @@ const PART_TAG_BACKGROUND: Record<PartTag, string> = {
   Spring: "bg-part-spring",
 }
 
+const TAG_TONE: Record<Exclude<MemberTag["kind"], "part">, string> = {
+  role: "bg-teal-100 text-teal-600",
+  central: "bg-tag-role-central-weak text-tag-role-central-strong",
+}
+
 const PHOTO_SIZE_PX = 100
 const DEFAULT_LOGO_HEIGHT_PX = 18
 
@@ -39,12 +44,9 @@ export function MemberCard({ member, tags = [] }: MemberCardProps) {
                 <li
                   className={cn(
                     "flex h-[26px] items-center whitespace-nowrap rounded-md px-[7px] text-label-5-medium",
-                    tag.kind === "role"
-                      ? "bg-teal-100 text-teal-600"
-                      : cn(
-                          "text-teal-grey-900",
-                          PART_TAG_BACKGROUND[tag.label],
-                        ),
+                    tag.kind === "part"
+                      ? cn("text-teal-grey-900", PART_TAG_BACKGROUND[tag.label])
+                      : TAG_TONE[tag.kind],
                   )}
                   key={tag.label}
                 >
@@ -54,10 +56,12 @@ export function MemberCard({ member, tags = [] }: MemberCardProps) {
             </ul>
           )}
         </div>
-        <div className="flex flex-col gap-1 font-medium text-[13px] text-teal-grey-500 leading-[1.5] md:text-title-4-medium">
-          {member.email && <p className="break-all">{member.email}</p>}
-          <p>{member.school}</p>
-        </div>
+        {(member.email || member.school) && (
+          <div className="flex flex-col gap-1 font-medium text-[13px] text-teal-grey-500 leading-[1.5] md:text-title-4-medium">
+            {member.email && <p className="break-all">{member.email}</p>}
+            {member.school && <p>{member.school}</p>}
+          </div>
+        )}
       </div>
     </div>
   )
