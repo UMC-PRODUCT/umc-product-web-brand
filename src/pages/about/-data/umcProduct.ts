@@ -802,12 +802,6 @@ export const PRODUCT_GENERATIONS: readonly [
         school: "한양대학교 ERICA",
         photo: "4271f8a4d4c7",
       },
-      하늘: {
-        nickname: "하늘",
-        name: "박경운",
-        school: "중앙대학교",
-        photo: "1853577af75f",
-      },
     },
     teams: [
       {
@@ -895,10 +889,6 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "서비스의 핵심 기능과 데이터를 처리하는 서버를 개발하고, 안정적인 서비스 운영을 위한 시스템을 구축해요.",
             entries: [
-              {
-                memberId: "하늘",
-                tags: [{ kind: "role", label: "Tech Lead" }],
-              },
               { memberId: "와나" },
               { memberId: "박박지현" },
               { memberId: "세니" },
@@ -1007,10 +997,6 @@ export const PRODUCT_GENERATIONS: readonly [
             description:
               "서비스의 핵심 기능과 데이터를 처리하는 서버를 개발하고, 안정적인 서비스 운영을 위한 시스템을 구축해요.",
             entries: [
-              {
-                memberId: "하늘",
-                tags: [{ kind: "role", label: "Tech Lead" }],
-              },
               { memberId: "와나" },
               { memberId: "박박지현" },
               { memberId: "우디" },

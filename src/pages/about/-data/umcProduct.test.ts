@@ -50,12 +50,12 @@ describe("PRODUCT_GENERATIONS", () => {
     },
   )
 
-  it("전체 보기 인원은 3기 46명, 2기 24명, 1기 18명이다", () => {
+  it("전체 보기 인원은 3기 46명, 2기 23명, 1기 18명이다", () => {
     expect(
       PRODUCT_GENERATIONS.map((generation) =>
         countMembers(generation.teams[0].groups),
       ),
-    ).toEqual([46, 24, 18])
+    ).toEqual([46, 23, 18])
   })
 
   it("자리표시 이메일을 싣지 않는다", () => {
@@ -117,14 +117,11 @@ describe("PRODUCT_GENERATIONS", () => {
       )
     })
 
-    it("2기 백엔드는 Tech Lead 하늘부터 시작하고 1기와 같은 사진을 쓴다", () => {
-      expect(entriesOf(2, "all", "Software Engineer - Backend")?.[0]).toBe(
+    it("2기에는 제명된 하늘을 싣지 않는다", () => {
+      expect(memberOf(2, "하늘")).toBeUndefined()
+      expect(entriesOf(2, "all", "Software Engineer - Backend")).not.toContain(
         "하늘:Tech Lead",
       )
-      expect(entriesOf(2, "backend", "Software Engineer - Backend")?.[0]).toBe(
-        "하늘:Tech Lead",
-      )
-      expect(memberOf(2, "하늘")?.photo).toBe("1853577af75f")
     })
 
     it("이름과 사진을 조직도에 맞춘다", () => {
