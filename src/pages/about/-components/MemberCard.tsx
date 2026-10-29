@@ -1,4 +1,5 @@
 import { UmcLogo } from "@umc-product/icons"
+import { useState } from "react"
 
 import { cn } from "@/utils/cn"
 
@@ -79,15 +80,28 @@ function ProfileImage({ photo }: { photo?: string }) {
       </div>
     )
   }
+  return <ProfilePhoto src={src} />
+}
+
+function ProfilePhoto({ src }: { src: string }) {
+  const [loaded, setLoaded] = useState(false)
+  const showIfAlreadyLoaded = (image: HTMLImageElement | null) => {
+    if (image?.complete && image.naturalWidth > 0) setLoaded(true)
+  }
   return (
-    <img
-      alt=""
-      className="size-[86px] shrink-0 rounded-full border border-teal-grey-200 bg-teal-grey-200 object-cover md:size-[100px]"
-      decoding="async"
-      height={PHOTO_SIZE_PX}
-      loading="lazy"
-      src={src}
-      width={PHOTO_SIZE_PX}
-    />
+    <span className="block size-[86px] shrink-0 overflow-hidden rounded-full border border-teal-grey-200 bg-teal-grey-200 md:size-[100px]">
+      <img
+        alt=""
+        className="size-full object-cover opacity-0 transition-opacity duration-200 ease-out data-loaded:opacity-100 motion-reduce:transition-none"
+        data-loaded={loaded || undefined}
+        decoding="async"
+        height={PHOTO_SIZE_PX}
+        loading="lazy"
+        onLoad={() => setLoaded(true)}
+        ref={showIfAlreadyLoaded}
+        src={src}
+        width={PHOTO_SIZE_PX}
+      />
+    </span>
   )
 }
