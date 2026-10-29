@@ -133,6 +133,28 @@ describe("PRODUCT_GENERATIONS", () => {
       expect(memberOf(1, "조나단")?.email).toBe("rudtjr1206@gmail.com")
     })
 
+    it("같은 사람의 이메일은 모든 기수에서 가장 최근 기수 값과 같다", () => {
+      const latestEmail = new Map<string, string>()
+      for (const { members } of PRODUCT_GENERATIONS) {
+        for (const member of Object.values(members)) {
+          const person = `${member.nickname}/${member.name}`
+          if (member.email && !latestEmail.has(person))
+            latestEmail.set(person, member.email)
+        }
+      }
+      const outdated = PRODUCT_GENERATIONS.flatMap(({ id, members }) =>
+        Object.values(members)
+          .filter(
+            (member) =>
+              member.email &&
+              member.email !==
+                latestEmail.get(`${member.nickname}/${member.name}`),
+          )
+          .map((member) => `${id}기 ${member.nickname}`),
+      )
+      expect(outdated).toEqual([])
+    })
+
     it("이메일이 비어 있는 사람은 다른 기수에도 이메일이 없다", () => {
       const filledElsewhere = PRODUCT_GENERATIONS.flatMap((generation) =>
         Object.values(generation.members)
