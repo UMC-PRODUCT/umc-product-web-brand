@@ -10,6 +10,8 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 90rem;
   --breakpoint-2xl: 120rem;
+  --color-part-android: #daf1e5;
+  --color-part-spring: #ede3d9;
 }
 
 @utility bg-landing-page {
