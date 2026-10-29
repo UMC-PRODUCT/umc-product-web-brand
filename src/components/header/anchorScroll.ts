@@ -9,7 +9,7 @@ import {
 const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-function findInPageLink(event: MouseEvent) {
+function findSameOriginHashLink(event: MouseEvent) {
   const isPlainClick =
     event.button === 0 &&
     !event.metaKey &&
@@ -17,7 +17,9 @@ function findInPageLink(event: MouseEvent) {
     !event.shiftKey &&
     !event.altKey
   if (!isPlainClick || !(event.target instanceof Element)) return null
-  return event.target.closest<HTMLAnchorElement>('a[href^="#"]')
+  const link = event.target.closest<HTMLAnchorElement>("a[href]")
+  if (!link?.hash || link.origin !== window.location.origin) return null
+  return link
 }
 
 export function useSmoothAnchorScroll(
@@ -29,7 +31,7 @@ export function useSmoothAnchorScroll(
     let cancelScroll = () => {}
 
     const scrollToAnchor = (event: MouseEvent) => {
-      const link = findInPageLink(event)
+      const link = findSameOriginHashLink(event)
       const id = link?.hash.slice(1)
       const target = id ? document.getElementById(id) : null
       if (!id || !target || prefersReducedMotion()) return

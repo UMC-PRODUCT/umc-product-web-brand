@@ -1,6 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { useState } from "react"
 import { describe, expect, it } from "vitest"
+
+import { renderWithRouter } from "@/test/renderWithRouter"
 
 import { LOGIN_URL, NAV_ITEMS, type NavId } from "./constants"
 import { MobileMenu } from "./MobileMenu"
@@ -24,8 +26,8 @@ function openMenu() {
 }
 
 describe("MobileMenu", () => {
-  it("메뉴 버튼을 누르면 패널이 열리고 aria-expanded가 true가 된다", () => {
-    render(<Harness />)
+  it("메뉴 버튼을 누르면 패널이 열리고 aria-expanded가 true가 된다", async () => {
+    await renderWithRouter(<Harness />)
     const button = screen.getByRole("button", { name: "메뉴 열기" })
     expect(button).toHaveAttribute("aria-expanded", "false")
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument()
@@ -39,8 +41,8 @@ describe("MobileMenu", () => {
     ).toBeInTheDocument()
   })
 
-  it("Esc를 누르면 닫히고 포커스가 메뉴 버튼으로 돌아간다", () => {
-    render(<Harness />)
+  it("Esc를 누르면 닫히고 포커스가 메뉴 버튼으로 돌아간다", async () => {
+    await renderWithRouter(<Harness />)
     const button = openMenu()
     screen.getByRole("link", { name: "프로젝트" }).focus()
 
@@ -50,8 +52,8 @@ describe("MobileMenu", () => {
     expect(button).toHaveFocus()
   })
 
-  it("패널 링크를 누르면 닫힌다", () => {
-    render(<Harness />)
+  it("패널 링크를 누르면 닫힌다", async () => {
+    await renderWithRouter(<Harness />)
     openMenu()
 
     fireEvent.click(screen.getByRole("link", { name: "프로젝트" }))
@@ -59,8 +61,8 @@ describe("MobileMenu", () => {
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument()
   })
 
-  it("패널 밖을 누르면 닫힌다", () => {
-    render(<Harness />)
+  it("패널 밖을 누르면 닫힌다", async () => {
+    await renderWithRouter(<Harness />)
     openMenu()
 
     fireEvent.pointerDown(document.body)
@@ -68,8 +70,8 @@ describe("MobileMenu", () => {
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument()
   })
 
-  it("현재 섹션 항목에만 aria-current=location을 단다", () => {
-    render(<Harness activeId="recruit" />)
+  it("현재 섹션 항목에만 aria-current=location을 단다", async () => {
+    await renderWithRouter(<Harness activeId="recruit" />)
     openMenu()
 
     expect(screen.getByRole("link", { name: "모집안내" })).toHaveAttribute(
@@ -81,8 +83,8 @@ describe("MobileMenu", () => {
     )
   })
 
-  it("패널 아래쪽 링크는 로그인 하나다", () => {
-    render(<Harness />)
+  it("패널 아래쪽 링크는 로그인 하나다", async () => {
+    await renderWithRouter(<Harness />)
     openMenu()
 
     expect(screen.getByRole("link", { name: "로그인" })).toHaveAttribute(
