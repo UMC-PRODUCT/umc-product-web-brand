@@ -17,7 +17,7 @@ import { PRODUCT_COPY, PRODUCT_GENERATIONS } from "./-data/umcProduct"
 export const Route = createFileRoute("/about/umc-product")({
   validateSearch: (
     search: { generation?: number | string; team?: string } & SearchSchemaInput,
-  ) => resolveProductSearch(search),
+  ) => ({ generation: search.generation, team: search.team }),
   head: () => ({ meta: [{ title: "UMC PRODUCT | UMC" }] }),
   component: UmcProductPage,
 })
@@ -28,7 +28,7 @@ const GENERATION_OPTIONS = PRODUCT_GENERATIONS.map(({ id, label }) => ({
 }))
 
 function UmcProductPage() {
-  const search = Route.useSearch()
+  const search = resolveProductSearch(Route.useSearch())
   const navigate = Route.useNavigate()
   const generation = findProductGeneration(search.generation)
   const team =

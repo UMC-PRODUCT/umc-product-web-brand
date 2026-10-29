@@ -21,7 +21,7 @@ export const Route = createFileRoute("/about/central-office")({
       generation?: number | string
       bureau?: string
     } & SearchSchemaInput,
-  ) => resolveOfficeSearch(search),
+  ) => ({ generation: search.generation, bureau: search.bureau }),
   head: () => ({ meta: [{ title: "중앙사무국 | UMC" }] }),
   component: CentralOfficePage,
 })
@@ -32,7 +32,7 @@ const BUREAU_OPTIONS = [
 ] as const
 
 function CentralOfficePage() {
-  const search = Route.useSearch()
+  const search = resolveOfficeSearch(Route.useSearch())
   const navigate = Route.useNavigate()
   const generationOptions = [
     {
