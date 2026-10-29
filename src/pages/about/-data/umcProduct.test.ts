@@ -50,12 +50,12 @@ describe("PRODUCT_GENERATIONS", () => {
     },
   )
 
-  it("전체 보기 인원은 3기 46명, 2기 24명, 1기 18명이다", () => {
+  it("전체 보기 인원은 3기 46명, 2기 23명, 1기 18명이다", () => {
     expect(
       PRODUCT_GENERATIONS.map((generation) =>
         countMembers(generation.teams[0].groups),
       ),
-    ).toEqual([46, 24, 18])
+    ).toEqual([46, 23, 18])
   })
 
   it("자리표시 이메일을 싣지 않는다", () => {
@@ -117,14 +117,40 @@ describe("PRODUCT_GENERATIONS", () => {
       )
     })
 
-    it("2기 백엔드는 Tech Lead 하늘부터 시작하고 1기와 같은 사진을 쓴다", () => {
-      expect(entriesOf(2, "all", "Software Engineer - Backend")?.[0]).toBe(
+    it("2기에는 제명된 하늘을 싣지 않는다", () => {
+      expect(memberOf(2, "하늘")).toBeUndefined()
+      expect(entriesOf(2, "all", "Software Engineer - Backend")).not.toContain(
         "하늘:Tech Lead",
       )
-      expect(entriesOf(2, "backend", "Software Engineer - Backend")?.[0]).toBe(
-        "하늘:Tech Lead",
+    })
+
+    it("빠진 이메일은 다른 기수 값으로 채우고, 다르면 가장 최근 기수를 따른다", () => {
+      expect(memberOf(1, "제옹")?.email).toBe("euijjang97@gmail.com")
+      expect(memberOf(1, "어헛차")?.email).toBe("pys01022342867@gmail.com")
+      expect(memberOf(1, "도리")?.email).toBe("kimdoyeon123@swu.ac.kr")
+      expect(memberOf(1, "리버")?.email).toBe("jwon010523@gmail.com")
+      expect(memberOf(1, "소피")?.email).toBe("yejilya@gmail.com")
+      expect(memberOf(1, "조나단")?.email).toBe("rudtjr1206@gmail.com")
+    })
+
+    it("이메일이 비어 있는 사람은 다른 기수에도 이메일이 없다", () => {
+      const filledElsewhere = PRODUCT_GENERATIONS.flatMap((generation) =>
+        Object.values(generation.members)
+          .filter((member) => !member.email)
+          .filter((member) =>
+            PRODUCT_GENERATIONS.some(({ id, members }) =>
+              Object.values(members).some(
+                (other) =>
+                  id !== generation.id &&
+                  other.nickname === member.nickname &&
+                  other.name === member.name &&
+                  other.email,
+              ),
+            ),
+          )
+          .map((member) => `${generation.id}기 ${member.nickname}`),
       )
-      expect(memberOf(2, "하늘")?.photo).toBe("1853577af75f")
+      expect(filledElsewhere).toEqual([])
     })
 
     it("이름과 사진을 조직도에 맞춘다", () => {
