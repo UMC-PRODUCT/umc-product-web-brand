@@ -10,6 +10,7 @@ import {
   QUICK_LINKS_TITLE,
 } from "./constants"
 import { HeaderNav } from "./HeaderNav"
+import { LandingSectionLink } from "./LandingSectionLink"
 import { MobileMenu } from "./MobileMenu"
 import { QuickLinksMenu } from "./QuickLinksMenu"
 import { useSectionUnderHeader } from "./useSectionUnderHeader"
@@ -30,13 +31,13 @@ export function SiteHeader() {
       data-tone={section.tone}
       ref={headerRef}
     >
-      <a
+      <LandingSectionLink
         aria-label="UMC 홈"
         className="site-header-logo ml-4 justify-self-start rounded-lg p-4 lg:ml-[60px]"
-        href="#hero"
+        sectionId="hero"
       >
         <UmcLogo className="block" />
-      </a>
+      </LandingSectionLink>
       <HeaderNav activeId={activeId} items={NAV_ITEMS} />
       <div className="col-start-3 hidden items-center justify-end gap-4 pr-[34px] pl-4 lg:flex">
         <QuickLinksMenu links={QUICK_LINKS} title={QUICK_LINKS_TITLE} />
