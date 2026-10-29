@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
 import { MemberCard } from "./MemberCard"
@@ -34,5 +34,18 @@ describe("MemberCard", () => {
     expect(
       screen.getAllByRole("listitem").map((item) => item.textContent),
     ).toEqual(["Lead", "iOS"])
+  })
+
+  it("사진은 불러오기 전에는 숨겨 두고, 불러오면 보이게 표시한다", () => {
+    const { container } = render(
+      <MemberCard member={{ ...MEMBER, photo: "23d92c642578" }} />,
+    )
+    const photo = container.querySelector("img")
+
+    expect(photo).not.toHaveAttribute("data-loaded")
+
+    fireEvent.load(photo as HTMLImageElement)
+
+    expect(photo).toHaveAttribute("data-loaded")
   })
 })
