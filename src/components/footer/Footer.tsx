@@ -63,8 +63,19 @@ const CHANNEL_ROWS: FooterChannel[][] = [
     { icon: "umc", links: [{ label: "Product Tech" }] },
   ],
   [
-    { icon: InstagramIcon, links: [{ label: "Instagram" }] },
-    { icon: KakaoIcon, links: [{ label: "Kakao" }] },
+    {
+      icon: InstagramIcon,
+      links: [
+        {
+          label: "Instagram",
+          href: "https://www.instagram.com/uni_makeus_challenge",
+        },
+      ],
+    },
+    {
+      icon: KakaoIcon,
+      links: [{ label: "Kakao", href: "https://pf.kakao.com/_xjqxcln" }],
+    },
   ],
 ]
 
@@ -259,8 +270,11 @@ function FooterLinkItem({ link }: { link: FooterLink }) {
     <a
       className="outline-current outline-offset-2 hover:underline focus-visible:outline-2"
       href={link.href}
+      rel="noopener noreferrer"
+      target="_blank"
     >
       {link.label}
+      <span className="sr-only"> (새 창)</span>
     </a>
   )
 }
