@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router"
 import { UmcLogo } from "@umc-product/icons"
 import { cva } from "class-variance-authority"
 import {
@@ -17,6 +18,7 @@ import { cn } from "@/utils/cn"
 interface FooterLink {
   label: string
   href?: string
+  to?: "/about/umc-product" | "/about/central-office"
 }
 
 interface FooterLinkGroup {
@@ -32,7 +34,10 @@ const LEGAL_LINKS: FooterLink[] = [
 const LINK_GROUPS: FooterLinkGroup[] = [
   {
     title: "About",
-    links: [{ label: "UMC PRODUCT" }, { label: "중앙사무국" }],
+    links: [
+      { label: "UMC PRODUCT", to: "/about/umc-product" },
+      { label: "중앙사무국", to: "/about/central-office" },
+    ],
   },
   {
     title: "Service",
@@ -263,12 +268,21 @@ export function Footer({ tone = "dark", className }: FooterProps) {
   )
 }
 
+const FOOTER_LINK_CLASS =
+  "outline-current outline-offset-2 hover:underline focus-visible:outline-2"
+
 function FooterLinkItem({ link }: { link: FooterLink }) {
+  if (link.to)
+    return (
+      <Link className={FOOTER_LINK_CLASS} to={link.to}>
+        {link.label}
+      </Link>
+    )
   if (!link.href) return <span>{link.label}</span>
 
   return (
     <a
-      className="outline-current outline-offset-2 hover:underline focus-visible:outline-2"
+      className={FOOTER_LINK_CLASS}
       href={link.href}
       rel="noopener noreferrer"
       target="_blank"
