@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './pages/__root'
 import { Route as IndexRouteImport } from './pages/index'
+import { Route as AboutUmcProductRouteImport } from './pages/about/umc-product'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutUmcProductRoute = AboutUmcProductRouteImport.update({
+  id: '/about/umc-product',
+  path: '/about/umc-product',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about/umc-product': typeof AboutUmcProductRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about/umc-product': typeof AboutUmcProductRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about/umc-product': typeof AboutUmcProductRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/about/umc-product'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/about/umc-product'
+  id: '__root__' | '/' | '/about/umc-product'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutUmcProductRoute: typeof AboutUmcProductRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about/umc-product': {
+      id: '/about/umc-product'
+      path: '/about/umc-product'
+      fullPath: '/about/umc-product'
+      preLoaderRoute: typeof AboutUmcProductRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutUmcProductRoute: AboutUmcProductRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
