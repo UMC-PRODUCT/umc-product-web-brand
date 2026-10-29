@@ -43,4 +43,27 @@ describe("Footer", () => {
       expect(icon).toHaveAttribute("aria-hidden")
     }
   })
+
+  it("Instagram·Kakao 채널은 새 창으로 여는 공식 채널 링크다", () => {
+    render(<Footer />)
+
+    const instagram = screen.getByRole("link", { name: "Instagram (새 창)" })
+    const kakao = screen.getByRole("link", { name: "Kakao (새 창)" })
+    expect(instagram).toHaveAttribute(
+      "href",
+      "https://www.instagram.com/uni_makeus_challenge",
+    )
+    expect(kakao).toHaveAttribute("href", "https://pf.kakao.com/_xjqxcln")
+    for (const link of [instagram, kakao]) {
+      expect(link).toHaveAttribute("target", "_blank")
+      expect(link).toHaveAttribute("rel", "noopener noreferrer")
+    }
+  })
+
+  it("주소가 없는 항목은 링크가 아닌 텍스트로 둔다", () => {
+    render(<Footer />)
+
+    expect(screen.queryByRole("link", { name: /UPMS 서비스/ })).toBeNull()
+    expect(screen.getByText("UPMS 서비스")).toBeInTheDocument()
+  })
 })
