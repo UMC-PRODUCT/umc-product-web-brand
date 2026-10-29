@@ -20,7 +20,7 @@ describe("resolveOfficeSearch", () => {
   })
 
   it("데이터에 없는 기수와 잘못된 소속은 기본값으로 바꾼다", () => {
-    expect(resolveOfficeSearch({ generation: 8, bureau: "sales" })).toEqual({
+    expect(resolveOfficeSearch({ generation: 12, bureau: "sales" })).toEqual({
       generation: 11,
       bureau: "operations",
     })
@@ -43,16 +43,24 @@ describe("getOfficeSections", () => {
       bureau: "operations",
     }).map(({ group }) => group.title)
     expect(titles[0]).toBe("11기 총괄단")
-    expect(titles.at(-1)).toBe("9기 행사기획")
+    expect(titles.at(-1)).toBe("1기 디자인국장")
     expect(
       titles.findIndex((title) => title.startsWith("10기")),
     ).toBeGreaterThan(titles.findLastIndex((title) => title.startsWith("11기")))
   })
 })
 
+describe("getOfficeSections 빈 소속", () => {
+  it("그 기수에 소속 명단이 없으면 빈 목록을 돌려준다", () => {
+    expect(getOfficeSections({ generation: 3, bureau: "education" })).toEqual(
+      [],
+    )
+  })
+})
+
 describe("countOfficeMembers", () => {
   it("여러 기수에 걸친 같은 사람은 한 번만 센다", () => {
-    expect(countOfficeMembers("operations")).toBe(22)
-    expect(countOfficeMembers("education")).toBe(33)
+    expect(countOfficeMembers("operations")).toBe(50)
+    expect(countOfficeMembers("education")).toBe(64)
   })
 })
