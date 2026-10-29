@@ -68,6 +68,14 @@ describe("useSectionUnderHeader", () => {
     document.body.replaceChildren()
   })
 
+  it("id가 있는 밝은 main 하나뿐인 페이지는 첫 렌더 직후 Light를 돌려준다", () => {
+    addSection("main", "light", 0, { width: SECTION_WIDTH, height: 2000 })
+
+    const { result } = renderUnderHeader()
+
+    expect(result.current).toEqual({ id: "main", tone: "light" })
+  })
+
   it("헤더 선을 지난 마지막 섹션의 id와 톤을 돌려준다", () => {
     addSection("hero", "dark", -900)
     addSection("about", "light", 40)
