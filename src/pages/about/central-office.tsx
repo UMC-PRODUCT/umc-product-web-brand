@@ -45,6 +45,13 @@ function CentralOfficePage() {
       label,
     })),
   ]
+  const sections = getOfficeSections(search)
+  const selectedGeneration = OFFICE_GENERATIONS.find(
+    ({ id }) => id === search.generation,
+  )
+  const selectedBureau = BUREAU_OPTIONS.find(
+    ({ value }) => value === search.bureau,
+  )
   const changeSearch = (next: OfficeSearch) =>
     navigate({ search: next, replace: true, resetScroll: false })
   const changeGeneration = (value: string) =>
@@ -86,11 +93,17 @@ function CentralOfficePage() {
           value={search.bureau}
         />
       </div>
-      <div className="mt-8 flex flex-col gap-[100px] md:mt-[100px]">
-        {getOfficeSections(search).map(({ key, group, members }) => (
-          <MemberGroupSection group={group} key={key} members={members} />
-        ))}
-      </div>
+      {sections.length > 0 ? (
+        <div className="mt-8 flex flex-col gap-[100px] md:mt-[100px]">
+          {sections.map(({ key, group, members }) => (
+            <MemberGroupSection group={group} key={key} members={members} />
+          ))}
+        </div>
+      ) : (
+        <p className="mt-8 text-body-3-medium text-teal-grey-500 md:mt-[100px] md:text-title-3-medium">
+          {`${selectedGeneration?.label} ${selectedBureau?.label} 명단이 없어요.`}
+        </p>
+      )}
     </MemberPageShell>
   )
 }
