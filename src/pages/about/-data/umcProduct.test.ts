@@ -124,6 +124,35 @@ describe("PRODUCT_GENERATIONS", () => {
       )
     })
 
+    it("빠진 이메일은 다른 기수 값으로 채우고, 다르면 가장 최근 기수를 따른다", () => {
+      expect(memberOf(1, "제옹")?.email).toBe("euijjang97@gmail.com")
+      expect(memberOf(1, "어헛차")?.email).toBe("pys01022342867@gmail.com")
+      expect(memberOf(1, "도리")?.email).toBe("kimdoyeon123@swu.ac.kr")
+      expect(memberOf(1, "리버")?.email).toBe("jwon010523@gmail.com")
+      expect(memberOf(1, "소피")?.email).toBe("yejilya@gmail.com")
+      expect(memberOf(1, "조나단")?.email).toBe("rudtjr1206@gmail.com")
+    })
+
+    it("이메일이 비어 있는 사람은 다른 기수에도 이메일이 없다", () => {
+      const filledElsewhere = PRODUCT_GENERATIONS.flatMap((generation) =>
+        Object.values(generation.members)
+          .filter((member) => !member.email)
+          .filter((member) =>
+            PRODUCT_GENERATIONS.some(({ id, members }) =>
+              Object.values(members).some(
+                (other) =>
+                  id !== generation.id &&
+                  other.nickname === member.nickname &&
+                  other.name === member.name &&
+                  other.email,
+              ),
+            ),
+          )
+          .map((member) => `${generation.id}기 ${member.nickname}`),
+      )
+      expect(filledElsewhere).toEqual([])
+    })
+
     it("이름과 사진을 조직도에 맞춘다", () => {
       expect(memberOf(3, "원")?.name).toBe("김동민")
       expect(memberOf(2, "원")?.name).toBe("김동민")

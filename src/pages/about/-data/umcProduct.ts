@@ -1025,12 +1025,14 @@ export const PRODUCT_GENERATIONS: readonly [
       제옹: {
         nickname: "제옹",
         name: "정의찬",
+        email: "euijjang97@gmail.com",
         school: "중앙대학교",
         photo: "631542d55250",
       },
       리버: {
         nickname: "리버",
         name: "이재원",
+        email: "jwon010523@gmail.com",
         school: "한성대학교",
         photo: "23d92c642578",
       },
@@ -1051,6 +1053,7 @@ export const PRODUCT_GENERATIONS: readonly [
       소피: {
         nickname: "소피",
         name: "이예지",
+        email: "yejilya@gmail.com",
         school: "가천대학교",
         photo: "163bacf532e6",
       },
@@ -1063,18 +1066,21 @@ export const PRODUCT_GENERATIONS: readonly [
       어헛차: {
         nickname: "어헛차",
         name: "박유수",
+        email: "pys01022342867@gmail.com",
         school: "숭실대학교",
         photo: "34ab1639e74d",
       },
       조나단: {
         nickname: "조나단",
         name: "조경석",
+        email: "rudtjr1206@gmail.com",
         school: "명지대학교",
         photo: "dae5d6590ed4",
       },
       도리: {
         nickname: "도리",
         name: "김도연",
+        email: "kimdoyeon123@swu.ac.kr",
         school: "서울여자대학교",
         photo: "7f3508bfb12b",
       },
