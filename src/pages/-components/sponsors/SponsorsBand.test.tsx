@@ -2,11 +2,11 @@ import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
 import { SPONSORS, SPONSORS_COPY } from "./constants"
-import { SponsorsSection } from "./SponsorsSection"
+import { SponsorsBand } from "./SponsorsBand"
 
-describe("SponsorsSection", () => {
+describe("SponsorsBand", () => {
   it("줄바꿈 항목은 접근성 트리에서 빠지고 로고 7개만 목록 항목으로 읽힌다", () => {
-    render(<SponsorsSection />)
+    render(<SponsorsBand />)
 
     expect(screen.getAllByRole("listitem")).toHaveLength(7)
     expect(
@@ -15,7 +15,7 @@ describe("SponsorsSection", () => {
   })
 
   it("설명은 로고 목록 뒤에 온다", () => {
-    render(<SponsorsSection />)
+    render(<SponsorsBand />)
     const list = screen.getByRole("list")
     const description = screen.getByText(
       SPONSORS_COPY.descriptionLines.join(" "),

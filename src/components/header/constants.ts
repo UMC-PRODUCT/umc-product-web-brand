@@ -23,7 +23,6 @@ const NAV_ID_BY_SECTION = {
   hero: null,
   about: "about",
   stats: "about",
-  sponsors: "about",
   values: "about",
   preview: "about",
   universities: "about",

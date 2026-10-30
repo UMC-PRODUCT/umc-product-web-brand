@@ -6,7 +6,6 @@ export type SectionId =
   | "hero"
   | "about"
   | "stats"
-  | "sponsors"
   | "values"
   | "preview"
   | "universities"
