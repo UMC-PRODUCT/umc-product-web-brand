@@ -19,4 +19,12 @@ describe("SectionHeading", () => {
       screen.getByRole("region", { name: "새로운 가능성을 UMC에서" }),
     ).toHaveAttribute("data-header-tone", "light")
   })
+
+  it("제목 줄 높이 1.2가 글자 크기 클래스에 지워지지 않는다", () => {
+    render(<SectionHeading title="새로운 가능성을 UMC에서" titleId="title" />)
+
+    expect(screen.getByRole("heading", { level: 2 })).toHaveClass(
+      "leading-[1.2]",
+    )
+  })
 })

@@ -32,9 +32,10 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "font-bold text-brand-strong-800 leading-[1.2] tracking-[-0.02em]",
+          "font-bold text-brand-strong-800 tracking-[-0.02em]",
           // Figma 뷰포트별 제목 크기: Mobile 24, Pad 28, Small PC 36, PC 40
           "text-[24px] md:text-[28px] lg:text-[36px] xl:text-[40px]",
+          "leading-[1.2]",
         )}
         id={titleId}
       >
