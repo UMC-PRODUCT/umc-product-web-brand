@@ -13,7 +13,7 @@ const COMMIT_RATIO = 0.1
 const SHORT_MOVE_DURATION_MS = 500
 const SCROLL_IDLE_MS = 150
 const MIN_MOVE_PX = 1
-const VIEWPORT_CENTERED_SECTION_ID = "cta"
+const VIEWPORT_TOP_SECTION_ID = "cta"
 const INPUT_EVENTS = ["wheel", "keydown", "mousedown", "touchstart"] as const
 
 type ScrollDirection = 1 | -1
@@ -69,19 +69,7 @@ function measureSection(
     const stop = Math.min(Math.max(scrollTop, 0), pageEnd)
     return { start: stop, end: stop }
   }
-  if (section.id === VIEWPORT_CENTERED_SECTION_ID) {
-    const style = getComputedStyle(section)
-    const paddingTop = Number.parseFloat(style.paddingTop) || 0
-    const paddingBottom = Number.parseFloat(style.paddingBottom) || 0
-    return stopAt(
-      getCenteredScrollTop(
-        top + paddingTop,
-        rect.height - paddingTop - paddingBottom,
-        window.innerHeight,
-        0,
-      ),
-    )
-  }
+  if (section.id === VIEWPORT_TOP_SECTION_ID) return stopAt(top)
   if (rect.height <= window.innerHeight - headerHeight + MIN_MOVE_PX) {
     return stopAt(
       getCenteredScrollTop(top, rect.height, window.innerHeight, headerHeight),

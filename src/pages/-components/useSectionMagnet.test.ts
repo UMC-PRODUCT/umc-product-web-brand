@@ -94,7 +94,6 @@ describe("useSectionMagnet", () => {
     magnetAllowed = true,
     nextId = "values",
     nextHeight = SECTION_HEIGHT,
-    nextPadding = "0px",
   } = {}) {
     vi.stubGlobal(
       "matchMedia",
@@ -102,7 +101,7 @@ describe("useSectionMagnet", () => {
     )
     vi.stubGlobal("scrollY", CURRENT_TOP)
     vi.stubGlobal("innerHeight", VIEWPORT_HEIGHT)
-    document.body.innerHTML = `<header></header><main><section id="stats"></section><section id="${nextId}" style="padding: ${nextPadding}"></section></main>`
+    document.body.innerHTML = `<header></header><main><section id="stats"></section><section id="${nextId}"></section></main>`
     const header = document.querySelector("header") as HTMLElement
     header.getBoundingClientRect = () => ({ height: HEADER_HEIGHT }) as DOMRect
     placeSection("stats", STATS_TOP, SECTION_HEIGHT)
@@ -164,22 +163,12 @@ describe("useSectionMagnet", () => {
     expect(lastScrollTop()).toBe(NEXT_TOP)
   })
 
-  it("CTA는 화면보다 커도 헤더를 빼지 않고 패딩 안쪽 콘텐츠를 화면 정중앙에 둔다", () => {
-    const paddingTop = 200
-    const paddingBottom = 100
-    const ctaHeight = 900
-    renderOnPage({
-      nextId: "cta",
-      nextHeight: ctaHeight,
-      nextPadding: `${paddingTop}px 0 ${paddingBottom}px`,
-    })
+  it("CTA는 헤더와 상관없이 섹션 위쪽을 화면 맨 위에 맞춰 멈춘다", () => {
+    renderOnPage({ nextId: "cta" })
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
 
-    const contentHeight = ctaHeight - paddingTop - paddingBottom
-    expect(lastScrollTop()).toBe(
-      NEXT_TOP + paddingTop - (VIEWPORT_HEIGHT - contentHeight) / 2,
-    )
+    expect(lastScrollTop()).toBe(NEXT_TOP)
   })
 
   it("입력 없이 코드로 바뀐 스크롤에는 다시 끌어당기지 않는다", () => {
