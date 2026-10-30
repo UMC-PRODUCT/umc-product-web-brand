@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest"
 
 import { renderWithRouter } from "@/test/renderWithRouter"
 
-import { LOGIN_URL, NAV_ITEMS, type NavId } from "./constants"
+import { NAV_ITEMS, type NavId } from "./constants"
 import { MobileMenu } from "./MobileMenu"
 
 function Harness({ activeId = null }: { activeId?: NavId | null }) {
@@ -83,16 +83,12 @@ describe("MobileMenu", () => {
     )
   })
 
-  it("패널 아래쪽 링크는 로그인 하나다", async () => {
+  it("패널에는 섹션 링크만 있다", async () => {
     await renderWithRouter(<Harness />)
     openMenu()
 
-    expect(screen.getByRole("link", { name: "로그인" })).toHaveAttribute(
-      "href",
-      LOGIN_URL,
+    expect(screen.getAllByRole("link").map((link) => link.textContent)).toEqual(
+      NAV_ITEMS.map((item) => item.label),
     )
-    expect(
-      screen.queryByRole("link", { name: /지원하기/ }),
-    ).not.toBeInTheDocument()
   })
 })

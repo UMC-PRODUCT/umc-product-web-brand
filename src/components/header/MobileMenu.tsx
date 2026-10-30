@@ -1,7 +1,7 @@
 import { CloseIcon, MenuIcon } from "@umc-product/icons"
 import { useEffect, useId, useRef } from "react"
 
-import { LOGIN_URL, type NavId, type NavItem } from "./constants"
+import { type NavId, type NavItem } from "./constants"
 import { LandingSectionLink } from "./LandingSectionLink"
 
 interface MobileMenuProps {
@@ -63,7 +63,7 @@ export function MobileMenu({
       </button>
       {open && (
         <div
-          className="absolute inset-x-0 top-full flex max-h-[calc(100dvh_-_var(--umc-layout-header-height))] flex-col items-start gap-4 overflow-y-auto bg-[#0d1a19] px-6 pt-4 pb-6"
+          className="absolute inset-x-0 top-full flex max-h-[calc(100dvh_-_var(--umc-layout-header-height))] flex-col items-start overflow-y-auto bg-[#0d1a19] px-6 pt-4 pb-6"
           id={panelId}
         >
           <nav aria-label="주요 섹션">
@@ -82,13 +82,6 @@ export function MobileMenu({
               ))}
             </ul>
           </nav>
-          <a
-            className="flex h-10 min-w-16 items-center justify-center rounded-xl bg-[rgb(251_252_252/0.3)] px-4 text-label-3-medium text-white shadow-[inset_0_0_0_1px_white]"
-            href={LOGIN_URL}
-            onClick={close}
-          >
-            로그인
-          </a>
         </div>
       )}
     </div>

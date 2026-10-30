@@ -51,5 +51,3 @@ export const QUICK_LINKS: readonly QuickLink[] = [
   { label: "UPMS", href: "https://university.neordinary.com" },
   { label: "UMC 테크블로그", href: "https://tech.university.neordinary.com" },
 ]
-
-export const LOGIN_URL = "https://university.neordinary.com/login"
