@@ -14,21 +14,6 @@
   --color-part-spring: #ede3d9;
 }
 
-@utility bg-landing-page {
-  background:
-    linear-gradient(
-      115.65deg,
-      rgb(83 217 202 / 0.08) 9.351%,
-      transparent 30.604%
-    ),
-    linear-gradient(
-      -80.33deg,
-      rgb(46 209 190 / 0.08) 0.744%,
-      transparent 53.681%
-    ),
-    var(--color-teal-grey-75);
-}
-
 @layer base {
   html {
     overscroll-behavior: none;
