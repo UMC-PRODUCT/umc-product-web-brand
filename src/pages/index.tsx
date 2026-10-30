@@ -11,7 +11,6 @@ import { HeroSection } from "./-components/hero/HeroSection"
 import { PreviewSection } from "./-components/preview/PreviewSection"
 import { ProjectsSection } from "./-components/projects/ProjectsSection"
 import { RecruitmentSection } from "./-components/recruitment/RecruitmentSection"
-import { SponsorsSection } from "./-components/sponsors/SponsorsSection"
 import { StatsSection } from "./-components/stats/StatsSection"
 import { UniversitiesSection } from "./-components/universities/UniversitiesSection"
 import { useSectionMagnet } from "./-components/useSectionMagnet"
@@ -45,7 +44,6 @@ function LandingPage() {
         <HeroSection />
         <AboutSection />
         <StatsSection />
-        <SponsorsSection />
         <ValuesSection />
         <PreviewSection />
         <UniversitiesSection />

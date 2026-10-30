@@ -13,6 +13,7 @@ const COMMIT_RATIO = 0.1
 const SHORT_MOVE_DURATION_MS = 500
 const SCROLL_IDLE_MS = 150
 const MIN_MOVE_PX = 1
+const VIEWPORT_TOP_SECTION_ID = "cta"
 const INPUT_EVENTS = ["wheel", "keydown", "mousedown", "touchstart"] as const
 
 type ScrollDirection = 1 | -1
@@ -42,23 +43,49 @@ export function findSnapTarget(
   return committed ? previous.end : next.start
 }
 
+export function getCenteredScrollTop(
+  sectionTop: number,
+  sectionHeight: number,
+  viewportHeight: number,
+  headerHeight: number,
+) {
+  const visibleHeight = viewportHeight - headerHeight
+  return sectionTop - headerHeight - (visibleHeight - sectionHeight) / 2
+}
+
 function getWheelDirection(event: Event): ScrollDirection | null {
   if (!(event instanceof WheelEvent) || event.deltaY === 0) return null
   return event.deltaY > 0 ? 1 : -1
 }
 
+function measureSection(
+  section: Element,
+  headerHeight: number,
+  pageEnd: number,
+): SectionRange {
+  const rect = section.getBoundingClientRect()
+  const top = window.scrollY + rect.top
+  const stopAt = (scrollTop: number) => {
+    const stop = Math.min(Math.max(scrollTop, 0), pageEnd)
+    return { start: stop, end: stop }
+  }
+  if (section.id === VIEWPORT_TOP_SECTION_ID) return stopAt(top)
+  if (rect.height <= window.innerHeight - headerHeight + MIN_MOVE_PX) {
+    return stopAt(
+      getCenteredScrollTop(top, rect.height, window.innerHeight, headerHeight),
+    )
+  }
+  const start = getAnchorScrollTop(section)
+  return { start, end: Math.max(start, top + rect.height - window.innerHeight) }
+}
+
 function measureSections(container: HTMLElement): SectionRange[] {
   const pageEnd = document.documentElement.scrollHeight - window.innerHeight
+  const headerHeight =
+    document.querySelector("header")?.getBoundingClientRect().height ?? 0
   const sections = Array.from(
     container.querySelectorAll(":scope > section[id]"),
-    (section) => {
-      const start = getAnchorScrollTop(section)
-      const bottomAtViewportBottom =
-        window.scrollY +
-        section.getBoundingClientRect().bottom -
-        window.innerHeight
-      return { start, end: Math.max(start, bottomAtViewportBottom) }
-    },
+    (section) => measureSection(section, headerHeight, pageEnd),
   )
   return [...sections, { start: pageEnd, end: pageEnd }].sort(
     (a, b) => a.start - b.start,

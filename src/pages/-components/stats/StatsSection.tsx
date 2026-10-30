@@ -2,6 +2,7 @@ import { Container } from "@/components/layout/Container"
 import { Section } from "@/components/layout/Section"
 import { SectionHeading } from "@/components/layout/SectionHeading"
 
+import { SponsorsBand } from "../sponsors/SponsorsBand"
 import { STATS, STATS_COPY } from "./constants"
 import { StatCard } from "./StatCard"
 
@@ -13,7 +14,7 @@ export function StatsSection() {
       id="stats"
       labelledBy="stats-title"
     >
-      <Container className="flex flex-col items-center gap-10 md:gap-[60px]">
+      <Container className="flex flex-col items-center gap-10 md:gap-8 xl:gap-[60px]">
         <SectionHeading
           description={STATS_COPY.description}
           title={STATS_COPY.title}
@@ -36,6 +37,7 @@ export function StatsSection() {
           </dl>
         </div>
       </Container>
+      <SponsorsBand />
     </Section>
   )
 }
