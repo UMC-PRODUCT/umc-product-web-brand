@@ -71,10 +71,12 @@ describe("getCenteredScrollTop", () => {
 describe("useSectionMagnet", () => {
   const CURRENT_TOP = 1000
   const VIEWPORT_HEIGHT = 800
+  const HEADER_HEIGHT = 80
   const STATS_TOP = 700
-  const VALUES_TOP = 1500
+  const NEXT_TOP = 1500
   const SECTION_HEIGHT = 300
-  const CENTER_OFFSET = (VIEWPORT_HEIGHT - SECTION_HEIGHT) / 2
+  const CENTER_OFFSET =
+    HEADER_HEIGHT + (VIEWPORT_HEIGHT - HEADER_HEIGHT - SECTION_HEIGHT) / 2
   let frames: FrameRequestCallback[] = []
   let scrollTo = vi.fn()
 
@@ -90,7 +92,9 @@ describe("useSectionMagnet", () => {
 
   function renderOnPage({
     magnetAllowed = true,
-    valuesHeight = SECTION_HEIGHT,
+    nextId = "values",
+    nextHeight = SECTION_HEIGHT,
+    nextPadding = "0px",
   } = {}) {
     vi.stubGlobal(
       "matchMedia",
@@ -98,10 +102,11 @@ describe("useSectionMagnet", () => {
     )
     vi.stubGlobal("scrollY", CURRENT_TOP)
     vi.stubGlobal("innerHeight", VIEWPORT_HEIGHT)
-    document.body.innerHTML =
-      '<main><section id="stats"></section><section id="values"></section></main>'
+    document.body.innerHTML = `<header></header><main><section id="stats"></section><section id="${nextId}" style="padding: ${nextPadding}"></section></main>`
+    const header = document.querySelector("header") as HTMLElement
+    header.getBoundingClientRect = () => ({ height: HEADER_HEIGHT }) as DOMRect
     placeSection("stats", STATS_TOP, SECTION_HEIGHT)
-    placeSection("values", VALUES_TOP, valuesHeight)
+    placeSection(nextId, NEXT_TOP, nextHeight)
     const main = document.querySelector("main")
     renderHook(() => useSectionMagnet({ current: main }))
   }
@@ -145,18 +150,36 @@ describe("useSectionMagnet", () => {
     renderOnPage()
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
-    expect(lastScrollTop()).toBe(VALUES_TOP - CENTER_OFFSET)
+    expect(lastScrollTop()).toBe(NEXT_TOP - CENTER_OFFSET)
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: -100 }))
     expect(lastScrollTop()).toBe(STATS_TOP - CENTER_OFFSET)
   })
 
   it("화면보다 큰 섹션은 위쪽에 맞춰 멈춘다", () => {
-    renderOnPage({ valuesHeight: 1200 })
+    renderOnPage({ nextHeight: 1200 })
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
 
-    expect(lastScrollTop()).toBe(VALUES_TOP)
+    expect(lastScrollTop()).toBe(NEXT_TOP)
+  })
+
+  it("CTA는 화면보다 커도 헤더를 빼지 않고 패딩 안쪽 콘텐츠를 화면 정중앙에 둔다", () => {
+    const paddingTop = 200
+    const paddingBottom = 100
+    const ctaHeight = 900
+    renderOnPage({
+      nextId: "cta",
+      nextHeight: ctaHeight,
+      nextPadding: `${paddingTop}px 0 ${paddingBottom}px`,
+    })
+
+    stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
+
+    const contentHeight = ctaHeight - paddingTop - paddingBottom
+    expect(lastScrollTop()).toBe(
+      NEXT_TOP + paddingTop - (VIEWPORT_HEIGHT - contentHeight) / 2,
+    )
   })
 
   it("입력 없이 코드로 바뀐 스크롤에는 다시 끌어당기지 않는다", () => {
