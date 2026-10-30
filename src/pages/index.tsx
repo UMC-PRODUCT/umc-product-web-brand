@@ -28,7 +28,7 @@ function LandingPage() {
   useSectionMagnet(mainRef)
 
   return (
-    <div className="min-h-dvh overflow-x-clip bg-landing-page">
+    <div className="min-h-dvh overflow-x-clip bg-background-neutral-weak">
       <a
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-70 focus:bg-white focus:px-4 focus:py-2"
         href="#main"
