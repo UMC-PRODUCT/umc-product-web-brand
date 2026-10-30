@@ -5,8 +5,9 @@ import { Section } from "@/components/layout/Section"
 import { SPONSORS, SPONSORS_COPY } from "./constants"
 
 const LINE_BREAK_CLASS = {
-  mobile: "h-2 basis-full md:hidden",
-  tablet: "hidden h-2.5 basis-full md:block lg:h-4 xl:hidden",
+  mobile: "h-[calc(12px*var(--sponsor-scale))] basis-full md:hidden",
+  tablet:
+    "hidden h-[calc(12px*var(--sponsor-scale))] basis-full md:block xl:hidden",
 } as const
 
 export function SponsorsSection() {
@@ -17,8 +18,8 @@ export function SponsorsSection() {
       <h2 className="sr-only" id="sponsors-title">
         {SPONSORS_COPY.title}
       </h2>
-      <div className="bg-white px-8 pt-[30px] pb-7 md:pt-[50px] md:pb-[30px] lg:pt-[60px] lg:pb-9">
-        <ul className="mx-auto flex max-w-[1376px] flex-wrap items-center justify-center gap-x-1.5 [--sponsor-scale:0.6] xl:flex-nowrap md:[--sponsor-scale:0.84] lg:[--sponsor-scale:1]">
+      <div className="bg-white px-8 pt-6 pb-[22px] md:pt-7 md:pb-7 lg:pt-10">
+        <ul className="mx-auto flex max-w-[1376px] flex-wrap items-center justify-center gap-x-[calc(6px*var(--sponsor-scale))] [--sponsor-scale:0.49] xl:flex-nowrap md:[--sponsor-scale:0.67] lg:[--sponsor-scale:0.92] xl:[--sponsor-scale:0.83]">
           {SPONSORS.map((sponsor) => (
             <Fragment key={sponsor.id}>
               <li
@@ -49,8 +50,8 @@ export function SponsorsSection() {
             </Fragment>
           ))}
         </ul>
-        <p className="mt-7 break-keep text-center text-base text-neutral-medium-600 leading-[1.4] tracking-[-0.02em] md:text-xl lg:text-[22px] xl:mt-8 xl:text-2xl">
-          {firstLine} <br className="hidden md:inline xl:hidden" />
+        <p className="mt-5 break-keep text-center text-base text-neutral-medium-600 leading-[1.4] tracking-[-0.02em] md:mt-4 md:text-[18px] lg:mt-5 lg:text-[22px] xl:mt-6 xl:text-[26px]">
+          {firstLine} <br className="hidden md:inline lg:hidden" />
           {secondLine}
         </p>
       </div>

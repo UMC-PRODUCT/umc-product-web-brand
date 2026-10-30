@@ -8,7 +8,7 @@ export interface StatItem {
 export const STATS_COPY = {
   title: "새로운 가능성을 UMC에서",
   description:
-    "매칭된 팀원들과 함께 실제 서비스 런칭을 목표로 완성도 높은 서비스를 만들어요.",
+    "팀원들과 함께 제품 출시를 목표로 완성도 높은 서비스를 만들어요.",
 } as const
 
 export const STATS: readonly StatItem[] = [

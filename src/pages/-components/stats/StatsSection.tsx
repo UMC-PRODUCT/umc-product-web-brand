@@ -24,7 +24,7 @@ export function StatsSection() {
             aria-hidden
             className="stats-glow pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[1750px] w-[2400px] -translate-x-1/2 translate-y-[calc(-50%+30px)]"
           />
-          <dl className="flex w-full flex-col items-center gap-4 md:flex-row md:justify-center">
+          <dl className="flex w-full flex-col items-center gap-2.5 md:flex-row md:justify-center md:gap-4">
             {STATS.map((stat) => (
               <StatCard
                 key={stat.id}
