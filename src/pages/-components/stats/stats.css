@@ -1,11 +1,36 @@
 .stat-card {
-  background:
-    linear-gradient(
-      122.16deg,
-      rgb(46 209 190 / 0.12) 8.49%,
-      rgb(46 209 190 / 0) 61.52%
-    ),
-    rgb(12 42 37 / 0.86);
+  --stat-card-sheen:
+    114.81deg, rgb(46 209 190 / 0.12) 8.59%, rgb(46 209 190 / 0) 61.37%;
+  --stat-card-edge:
+    298.12deg, rgb(46 209 190 / 0.24) -14.83%, rgb(46 209 190 / 0) 21.14%;
+  background: linear-gradient(var(--stat-card-sheen)), rgb(12 42 37 / 0.86);
+}
+
+@media (width >= 48rem) {
+  .stat-card {
+    --stat-card-sheen:
+      129.44deg, rgb(46 209 190 / 0.12) 8.32%, rgb(46 209 190 / 0) 61.79%;
+    --stat-card-edge:
+      313.57deg, rgb(46 209 190 / 0.24) -18.05%, rgb(46 209 190 / 0) 19.75%;
+  }
+}
+
+@media (width >= 64rem) {
+  .stat-card {
+    --stat-card-sheen:
+      127.44deg, rgb(46 209 190 / 0.12) 8.36%, rgb(46 209 190 / 0) 61.73%;
+    --stat-card-edge:
+      311.52deg, rgb(46 209 190 / 0.24) -17.57%, rgb(46 209 190 / 0) 19.96%;
+  }
+}
+
+@media (width >= 90rem) {
+  .stat-card {
+    --stat-card-sheen:
+      120.79deg, rgb(46 209 190 / 0.12) 8.49%, rgb(46 209 190 / 0) 61.53%;
+    --stat-card-edge:
+      304.56deg, rgb(46 209 190 / 0.24) -16.06%, rgb(46 209 190 / 0) 20.61%;
+  }
 }
 
 .stat-card::before,
@@ -22,11 +47,7 @@
 }
 
 .stat-card::after {
-  background: linear-gradient(
-    -53.76deg,
-    rgb(46 209 190 / 0.24) 16.06%,
-    rgb(46 209 190 / 0) 20.61%
-  );
+  background: linear-gradient(var(--stat-card-edge));
 }
 
 .stat-card-value {
