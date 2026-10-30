@@ -42,6 +42,16 @@ export function findSnapTarget(
   return committed ? previous.end : next.start
 }
 
+export function getCenteredScrollTop(
+  sectionTop: number,
+  sectionHeight: number,
+  viewportHeight: number,
+  headerHeight: number,
+) {
+  const visibleHeight = viewportHeight - headerHeight
+  return sectionTop - headerHeight - (visibleHeight - sectionHeight) / 2
+}
+
 function getWheelDirection(event: Event): ScrollDirection | null {
   if (!(event instanceof WheelEvent) || event.deltaY === 0) return null
   return event.deltaY > 0 ? 1 : -1
@@ -49,14 +59,26 @@ function getWheelDirection(event: Event): ScrollDirection | null {
 
 function measureSections(container: HTMLElement): SectionRange[] {
   const pageEnd = document.documentElement.scrollHeight - window.innerHeight
+  const headerHeight =
+    document.querySelector("header")?.getBoundingClientRect().height ?? 0
+  const visibleHeight = window.innerHeight - headerHeight
   const sections = Array.from(
     container.querySelectorAll(":scope > section[id]"),
     (section) => {
+      const rect = section.getBoundingClientRect()
+      if (rect.height <= visibleHeight + MIN_MOVE_PX) {
+        const centered = getCenteredScrollTop(
+          window.scrollY + rect.top,
+          rect.height,
+          window.innerHeight,
+          headerHeight,
+        )
+        const stop = Math.min(Math.max(centered, 0), pageEnd)
+        return { start: stop, end: stop }
+      }
       const start = getAnchorScrollTop(section)
       const bottomAtViewportBottom =
-        window.scrollY +
-        section.getBoundingClientRect().bottom -
-        window.innerHeight
+        window.scrollY + rect.bottom - window.innerHeight
       return { start, end: Math.max(start, bottomAtViewportBottom) }
     },
   )

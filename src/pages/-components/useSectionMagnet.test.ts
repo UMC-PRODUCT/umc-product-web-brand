@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import {
   findSnapTarget,
+  getCenteredScrollTop,
   type SectionRange,
   useSectionMagnet,
 } from "./useSectionMagnet"
@@ -57,33 +58,50 @@ describe("findSnapTarget", () => {
   })
 })
 
+describe("getCenteredScrollTop", () => {
+  it("섹션이 헤더 아래 보이는 영역의 세로 가운데에 오는 스크롤 위치를 준다", () => {
+    expect(getCenteredScrollTop(1000, 600, 900, 80)).toBe(810)
+  })
+
+  it("섹션 높이가 보이는 영역과 같으면 섹션 위쪽이 헤더 바로 아래에 온다", () => {
+    expect(getCenteredScrollTop(1000, 820, 900, 80)).toBe(920)
+  })
+})
+
 describe("useSectionMagnet", () => {
   const CURRENT_TOP = 1000
+  const VIEWPORT_HEIGHT = 800
   const STATS_TOP = 700
-  const SPONSORS_TOP = 1300
+  const VALUES_TOP = 1500
   const SECTION_HEIGHT = 300
+  const CENTER_OFFSET = (VIEWPORT_HEIGHT - SECTION_HEIGHT) / 2
   let frames: FrameRequestCallback[] = []
   let scrollTo = vi.fn()
 
-  function placeSection(id: string, top: number) {
+  function placeSection(id: string, top: number, height: number) {
     const element = document.getElementById(id) as HTMLElement
     element.getBoundingClientRect = () =>
       ({
         top: top - CURRENT_TOP,
-        bottom: top + SECTION_HEIGHT - CURRENT_TOP,
+        bottom: top + height - CURRENT_TOP,
+        height,
       }) as DOMRect
   }
 
-  function renderOnPage({ magnetAllowed = true } = {}) {
+  function renderOnPage({
+    magnetAllowed = true,
+    valuesHeight = SECTION_HEIGHT,
+  } = {}) {
     vi.stubGlobal(
       "matchMedia",
       vi.fn(() => ({ matches: magnetAllowed })),
     )
     vi.stubGlobal("scrollY", CURRENT_TOP)
+    vi.stubGlobal("innerHeight", VIEWPORT_HEIGHT)
     document.body.innerHTML =
-      '<main><section id="stats"></section><section id="sponsors"></section></main>'
-    placeSection("stats", STATS_TOP)
-    placeSection("sponsors", SPONSORS_TOP)
+      '<main><section id="stats"></section><section id="values"></section></main>'
+    placeSection("stats", STATS_TOP, SECTION_HEIGHT)
+    placeSection("values", VALUES_TOP, valuesHeight)
     const main = document.querySelector("main")
     renderHook(() => useSectionMagnet({ current: main }))
   }
@@ -123,14 +141,22 @@ describe("useSectionMagnet", () => {
     document.body.innerHTML = ""
   })
 
-  it("휠을 아래로 굴려 멈추면 아래 섹션, 위로 굴려 멈추면 위 섹션 시작으로 옮긴다", () => {
+  it("휠을 아래로 굴려 멈추면 아래 섹션, 위로 굴려 멈추면 위 섹션을 화면 세로 가운데에 둔다", () => {
     renderOnPage()
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
-    expect(lastScrollTop()).toBe(SPONSORS_TOP)
+    expect(lastScrollTop()).toBe(VALUES_TOP - CENTER_OFFSET)
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: -100 }))
-    expect(lastScrollTop()).toBe(STATS_TOP)
+    expect(lastScrollTop()).toBe(STATS_TOP - CENTER_OFFSET)
+  })
+
+  it("화면보다 큰 섹션은 위쪽에 맞춰 멈춘다", () => {
+    renderOnPage({ valuesHeight: 1200 })
+
+    stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
+
+    expect(lastScrollTop()).toBe(VALUES_TOP)
   })
 
   it("입력 없이 코드로 바뀐 스크롤에는 다시 끌어당기지 않는다", () => {
