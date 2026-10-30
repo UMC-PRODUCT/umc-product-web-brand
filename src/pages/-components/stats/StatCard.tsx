@@ -8,14 +8,14 @@ interface StatCardProps {
 
 export function StatCard({ label, value, unit }: StatCardProps) {
   return (
-    <div className="stat-card relative isolate flex w-full max-w-[356px] flex-col items-end justify-between gap-5 overflow-hidden rounded-3xl p-6 md:h-[180px] md:flex-1 md:pt-7 md:pb-8 lg:h-[220px] lg:px-8 lg:pt-8 lg:pb-9">
-      <dt className="w-full text-lg text-white leading-[1.3] tracking-[-0.04em] lg:text-[26px]">
+    <div className="stat-card relative isolate flex w-full max-w-[356px] flex-col items-end justify-between gap-2.5 overflow-hidden rounded-3xl p-5 md:h-[179px] md:flex-1 md:gap-5 md:px-6 md:pt-7 md:pb-8 lg:h-[200px] lg:px-8 xl:pt-8 xl:pb-9">
+      <dt className="w-full text-lg text-white leading-[1.3] tracking-[-0.04em] lg:text-[20px] xl:text-[26px]">
         {label}
       </dt>
       <dd>
         <span className="sr-only">{`${value}${unit} 이상`}</span>
         <span aria-hidden className="flex items-end gap-1">
-          <span className="stat-card-value font-bold text-[40px] text-teal-50 leading-[1.4] tracking-[-0.047em] lg:text-[64px]">
+          <span className="stat-card-value font-bold text-[40px] text-teal-50 leading-[1.4] tracking-[-0.047em] lg:text-[60px] xl:text-[64px]">
             {value}
           </span>
           <span className="flex items-end self-stretch">
