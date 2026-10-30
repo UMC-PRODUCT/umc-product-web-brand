@@ -1,17 +1,15 @@
 /*
  * 섹션 사이 세로 간격
- * Figma 반응형 프레임(768:21185)에서 앞 섹션 콘텐츠 끝부터 다음 섹션 콘텐츠 시작까지 잰 값이다
- * (절대 위치 장식, 숨긴 레이어 제외). 360·390·767은 값이 같고 768·1023도 같다. 1440 이상은 1440 프레임 값을 쓴다
- * 미디어 쿼리 폭은 index.css의 --breakpoint-md(48rem), lg(64rem), xl(90rem)과 같다
+ * Figma 반응형 프레임(768:21185)에서 1023 이하는 앞 섹션 콘텐츠 끝부터 다음 섹션 콘텐츠 시작까지 잰 값이다
+ * (절대 위치 장식, 숨긴 레이어 제외). 360·390·767은 값이 같고 768·1023도 같다
+ * 1024 이상은 스크롤 스냅용 화면 프레임(749:23069, 1137:38073, 749:24263)의 최소 높이·패딩·간격을 쓴다
+ * 미디어 쿼리 폭은 index.css의 --breakpoint-md(48rem), lg(64rem), xl(90rem), 2xl(120rem)과 같다
  */
 .landing-main > #about {
   margin-top: 150px;
 }
 .landing-main > #stats {
   margin-top: 122px;
-}
-.landing-main > #sponsors {
-  margin-top: 40px;
 }
 .landing-main > #values {
   margin-top: 122px;
@@ -40,9 +38,6 @@
   .landing-main > #stats {
     margin-top: 180px;
   }
-  .landing-main > #sponsors {
-    margin-top: 50px;
-  }
   .landing-main > #values {
     margin-top: 206px;
   }
@@ -67,56 +62,89 @@
 }
 
 @media (width >= 64rem) {
-  .landing-main > #stats {
-    margin-top: 180px;
+  .landing-main > :is(#stats, #values, #preview, #projects, #recruit) {
+    min-height: calc(100svh - var(--umc-layout-header-height));
   }
-  .landing-main > #sponsors {
-    margin-top: 50px;
+  .landing-main > #stats {
+    margin-top: 120px;
+    padding-top: 60px;
   }
   .landing-main > #values {
-    margin-top: 207px;
+    margin-top: 120px;
+    padding-block: 20px;
   }
   .landing-main > #preview {
-    margin-top: 155px;
+    margin-top: 120px;
+    padding-block: 16px;
   }
   .landing-main > #universities {
-    margin-top: 169px;
+    margin-top: 152px;
   }
   .landing-main > #projects {
-    margin-top: 248px;
+    margin-top: 200px;
+    padding-top: 48px;
   }
   .landing-main > #recruit {
-    margin-top: 221px;
+    margin-top: 120px;
+    padding-top: 48px;
   }
   .landing-main > #faq {
-    margin-top: 249px;
+    margin-top: 180px;
   }
 }
 
 @media (width >= 90rem) {
   .landing-main > #stats {
-    margin-top: 260px;
-  }
-  .landing-main > #sponsors {
-    margin-top: 60px;
+    margin-top: 130px;
+    padding-top: 80px;
   }
   .landing-main > #values {
-    margin-top: 260px;
+    margin-top: 130px;
+    padding-block: 60px 0;
   }
   .landing-main > #preview {
-    margin-top: 320px;
+    margin-top: 130px;
+    padding-block: 60px 0;
   }
   .landing-main > #universities {
-    margin-top: 280px;
+    margin-top: 162px;
   }
   .landing-main > #projects {
-    margin-top: 312px;
+    margin-top: 210px;
+    padding-top: 60px;
   }
   .landing-main > #recruit {
-    margin-top: 264px;
+    margin-top: 130px;
+    padding-top: 80px;
   }
   .landing-main > #faq {
-    margin-top: 292px;
+    margin-top: 150px;
+  }
+  .landing-main > #cta {
+    margin-top: 210px;
+  }
+}
+
+@media (width >= 120rem) {
+  .landing-main > :is(#stats, #values, #preview, #projects, #recruit) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .landing-main > #values {
+    padding-top: 0;
+  }
+  .landing-main > #preview {
+    padding-top: 30px;
+  }
+  .landing-main > #recruit {
+    padding-block: 60px 20px;
+  }
+  .landing-main > #faq {
+    margin-top: 190px;
+  }
+  .landing-main > #cta {
+    margin-top: 196px;
   }
 }
 

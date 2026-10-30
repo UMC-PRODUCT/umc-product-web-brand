@@ -13,7 +13,7 @@ export function ValuesSection() {
 
   return (
     <Section headerTone="light" id="values" labelledBy="values-title">
-      <Container className="flex flex-col items-center gap-[34px] md:gap-12 lg:gap-[50px]">
+      <Container className="flex flex-col items-center gap-[34px] md:gap-12 lg:gap-8 xl:gap-[50px]">
         <SectionHeading
           description={VALUES_DESCRIPTION}
           title={
