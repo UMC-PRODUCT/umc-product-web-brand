@@ -481,7 +481,7 @@ done
 ### 도메인 전환 전에 정할 것
 
 - `university.neordinary.com`과 `dev.university.neordinary.com`은 지금 v2(UPMS)의 운영·개발 도메인입니다. v2를 어느 주소로 옮길지 정하고, v2 Amplify 앱에서 도메인 연결을 뗀 뒤 이 앱에 연결합니다
-- 헤더의 로그인·UPMS·지원 안내 링크와 CTA 링크가 `university.neordinary.com`을 가리킵니다(`src/components/header/constants.ts`, `src/pages/-components/cta/constants.ts`). 랜딩이 이 도메인을 쓰면 v2의 새 주소로 바꿔야 합니다. 그대로 두면 rewrite 규칙 때문에 랜딩 첫 화면이 뜹니다
+- 헤더의 UPMS·지원 안내 링크와 CTA 링크가 `university.neordinary.com`을 가리킵니다(`src/components/header/constants.ts`, `src/pages/-components/cta/constants.ts`). 랜딩이 이 도메인을 쓰면 v2의 새 주소로 바꿔야 합니다. 그대로 두면 rewrite 규칙 때문에 랜딩 첫 화면이 뜹니다
 - 검색 노출용 프리렌더 필요 여부: `index.html`에 메타 태그가 없고, 페이지 제목도 브라우저에서 설정합니다
 - 패키지 토큰을 30일마다 교체할 담당자
 
