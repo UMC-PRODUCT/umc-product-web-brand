@@ -1,14 +1,14 @@
 /*
  * 섹션 사이 세로 간격
  * Figma 반응형 프레임(768:21185)에서 앞 섹션 콘텐츠 끝부터 다음 섹션 콘텐츠 시작까지 잰 값이다
- * (절대 위치 장식, 숨긴 레이어 제외). 360과 390, 1440과 1920은 값이 같다
+ * (절대 위치 장식, 숨긴 레이어 제외). 360·390·767은 값이 같고 768·1023도 같다. 1440 이상은 1440 프레임 값을 쓴다
  * 미디어 쿼리 폭은 index.css의 --breakpoint-md(48rem), lg(64rem), xl(90rem)과 같다
  */
 .landing-main > #about {
   margin-top: 150px;
 }
 .landing-main > #stats {
-  margin-top: 142px;
+  margin-top: 122px;
 }
 .landing-main > #sponsors {
   margin-top: 40px;
@@ -17,19 +17,19 @@
   margin-top: 122px;
 }
 .landing-main > #preview {
-  margin-top: 174px;
+  margin-top: 154px;
 }
 .landing-main > #universities {
-  margin-top: 142px;
+  margin-top: 122px;
 }
 .landing-main > #projects {
-  margin-top: 202px;
+  margin-top: 182px;
 }
 .landing-main > #recruit {
-  margin-top: 174px;
+  margin-top: 154px;
 }
 .landing-main > #faq {
-  margin-top: 174px;
+  margin-top: 154px;
 }
 /* FAQ 섹션 아래 여백 32 + 본문 묶음 아래 여백 120 */
 .landing-main > #cta {
@@ -38,28 +38,28 @@
 
 @media (width >= 48rem) {
   .landing-main > #stats {
-    margin-top: 190px;
+    margin-top: 180px;
   }
   .landing-main > #sponsors {
-    margin-top: 81px;
+    margin-top: 50px;
   }
   .landing-main > #values {
-    margin-top: 162px;
+    margin-top: 206px;
   }
   .landing-main > #preview {
-    margin-top: 202px;
+    margin-top: 212px;
   }
   .landing-main > #universities {
-    margin-top: 162px;
+    margin-top: 172px;
   }
   .landing-main > #projects {
-    margin-top: 242px;
+    margin-top: 232px;
   }
   .landing-main > #recruit {
-    margin-top: 194px;
+    margin-top: 184px;
   }
   .landing-main > #faq {
-    margin-top: 222px;
+    margin-top: 212px;
   }
   .landing-main > #cta {
     margin-top: 180px;
@@ -68,28 +68,28 @@
 
 @media (width >= 64rem) {
   .landing-main > #stats {
-    margin-top: 220px;
+    margin-top: 180px;
   }
   .landing-main > #sponsors {
-    margin-top: 60px;
+    margin-top: 50px;
   }
   .landing-main > #values {
-    margin-top: 220px;
+    margin-top: 207px;
   }
   .landing-main > #preview {
-    margin-top: 280px;
+    margin-top: 155px;
   }
   .landing-main > #universities {
-    margin-top: 192px;
+    margin-top: 169px;
   }
   .landing-main > #projects {
-    margin-top: 272px;
+    margin-top: 248px;
   }
   .landing-main > #recruit {
-    margin-top: 224px;
+    margin-top: 221px;
   }
   .landing-main > #faq {
-    margin-top: 252px;
+    margin-top: 249px;
   }
 }
 
