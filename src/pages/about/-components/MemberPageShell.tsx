@@ -1,7 +1,7 @@
 import { type ReactNode } from "react"
 
 import { Footer } from "@/components/footer/Footer"
-import { SiteHeader } from "@/components/header/SiteHeader"
+import { LogoHeader } from "@/components/header/LogoHeader"
 import { Container } from "@/components/layout/Container"
 import { cn } from "@/utils/cn"
 
@@ -25,8 +25,8 @@ export function MemberPageShell({
       >
         본문으로 건너뛰기
       </a>
-      <SiteHeader />
-      <main data-header-tone="light" id="main" tabIndex={-1}>
+      <LogoHeader />
+      <main id="main" tabIndex={-1}>
         <MemberHero description={heroDescription} />
         <Container className={cn(MEMBER_CONTAINER_CLASS, "pt-12 pb-20")}>
           {children}

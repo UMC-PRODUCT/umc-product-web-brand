@@ -70,6 +70,16 @@
   --header-menu-item-hover-shadow: none;
 }
 
+@media (width >= 64rem) {
+  .site-header-translucent {
+    --header-bg: color-mix(
+      in srgb,
+      var(--umc-color-fill-neutral-weaker-50) 80%,
+      transparent
+    );
+  }
+}
+
 @media (width < 64rem) {
   .site-header[data-menu-open="true"] {
     --header-shadow: 0 4px 16px rgb(65 70 69 / 0.3);
