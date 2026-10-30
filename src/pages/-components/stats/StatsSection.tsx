@@ -9,7 +9,7 @@ import { StatCard } from "./StatCard"
 export function StatsSection() {
   return (
     <Section
-      className="relative isolate overflow-clip"
+      className="relative"
       headerTone="light"
       id="stats"
       labelledBy="stats-title"
@@ -23,7 +23,7 @@ export function StatsSection() {
         <div className="relative flex w-full justify-center">
           <div
             aria-hidden
-            className="stats-glow pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[1750px] w-[2400px] -translate-x-1/2 translate-y-[calc(-50%+30px)]"
+            className="stats-glow pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[348px] w-[977px] -translate-x-1/2 translate-y-[calc(-50%+15px)] lg:translate-y-[calc(-50%+9px)] xl:translate-y-[calc(-50%-14px)]"
           />
           <dl className="flex w-full flex-col items-center gap-2.5 md:flex-row md:justify-center md:gap-4">
             {STATS.map((stat) => (
