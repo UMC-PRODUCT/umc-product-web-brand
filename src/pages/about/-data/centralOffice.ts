@@ -3,7 +3,8 @@ import { type OfficeGeneration } from "../-components/memberTypes"
 export const OFFICE_COPY = {
   title: "중앙사무국",
   description: "더 나은 교육과 운영으로, 함께 성장하는 UMC를 만듭니다.",
-  heroDescription: "UMC의 활동과 운영을 더 편리하게 만드는 제품팀이에요.",
+  heroDescription:
+    "UMC의 새로운 변화를 만들어가는 중앙운영사무국 멤버들을 소개합니다.",
 }
 
 export const OFFICE_GENERATIONS: readonly [
