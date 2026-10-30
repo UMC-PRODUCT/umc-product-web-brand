@@ -13,7 +13,7 @@ export function ValuesSection() {
 
   return (
     <Section headerTone="light" id="values" labelledBy="values-title">
-      <Container className="flex flex-col items-center gap-7 md:gap-12 lg:gap-[50px]">
+      <Container className="flex flex-col items-center gap-[34px] md:gap-12 lg:gap-[50px]">
         <SectionHeading
           description={VALUES_DESCRIPTION}
           title={
@@ -24,7 +24,7 @@ export function ValuesSection() {
           }
           titleId="values-title"
         />
-        <ul className="flex w-full flex-col items-center gap-1.5 md:grid md:grid-cols-[repeat(2,270px)] md:justify-center md:gap-4 lg:flex lg:flex-row lg:justify-center">
+        <ul className="flex w-full flex-col items-center gap-3 md:grid md:grid-cols-[repeat(2,270px)] md:justify-center md:gap-4 lg:flex lg:flex-row lg:items-start lg:justify-center">
           {VALUES.map((value) => (
             <ValueCard
               description={value.description}
