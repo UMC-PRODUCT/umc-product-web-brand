@@ -15,14 +15,13 @@
   --header-item-active-fg: var(--umc-color-text-brand-default-600);
   --header-item-active-shadow: none;
   --header-quick-bg: transparent;
-  --header-quick-hover-bg: var(--umc-color-teal-75);
+  --header-quick-hover-bg: var(--umc-color-teal-grey-75);
+  --header-quick-open-bg: var(--umc-color-teal-grey-75);
   --header-quick-fg: var(--umc-color-text-brand-default-600);
-  --header-quick-border: transparent;
+  --header-quick-icon: var(--umc-color-teal-500);
+  --header-quick-border: var(--umc-color-teal-grey-100);
   --header-focus: var(--umc-color-border-primary-strong-500);
   --header-menu-bg: white;
-  --header-menu-border: transparent;
-  --header-menu-backdrop: none;
-  --header-menu-title: #98938f;
   --header-menu-item-fg: var(--umc-color-text-neutral-default-900);
   --header-menu-item-hover-bg: var(--umc-color-teal-grey-50);
   --header-menu-item-hover-shadow: var(--umc-shadow-inner-neutral-2);
@@ -52,13 +51,12 @@
   --header-item-active-shadow: inset 0 0 0 1px white;
   --header-quick-bg: rgb(251 252 252 / 0.3);
   --header-quick-hover-bg: rgb(251 252 252 / 0.4);
+  --header-quick-open-bg: rgb(251 252 252 / 0.3);
   --header-quick-fg: white;
-  --header-quick-border: white;
+  --header-quick-icon: white;
+  --header-quick-border: transparent;
   --header-focus: white;
-  --header-menu-bg: rgb(16 40 37 / 0.72);
-  --header-menu-border: rgb(255 255 255 / 0.2);
-  --header-menu-backdrop: blur(21px);
-  --header-menu-title: var(--umc-color-teal-grey-300);
+  --header-menu-bg: rgb(255 255 255 / 0.1);
   --header-menu-item-fg: white;
   --header-menu-item-hover-bg: rgb(255 255 255 / 0.12);
   --header-menu-item-hover-shadow: none;
@@ -128,6 +126,38 @@
     box-shadow 150ms ease;
 }
 
+.site-header-quick[data-state="open"] {
+  background-color: var(--header-quick-open-bg);
+}
+
+.site-header-quick-icon {
+  color: var(--header-quick-icon);
+}
+
+.site-header[data-tone="dark"]
+  :is(.site-header-quick, .site-header-menu)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      86.8% 86.8% at 60.8% 2.1%,
+      rgb(255 255 255 / 0.5),
+      rgb(255 255 255 / 0)
+    ),
+    radial-gradient(
+      50% 50% at 60.8% 101.1%,
+      rgb(255 255 255 / 0.5),
+      rgb(255 255 255 / 0)
+    );
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
 @media (hover: hover) {
   .site-header-logo:hover {
     color: var(--header-logo-hover);
@@ -151,14 +181,7 @@
 
 .site-header-menu {
   background-color: var(--header-menu-bg);
-  box-shadow:
-    inset 0 0 0 1px var(--header-menu-border),
-    var(--umc-shadow-drop-neutral-1);
-  backdrop-filter: var(--header-menu-backdrop);
-}
-
-.site-header-menu-title {
-  color: var(--header-menu-title);
+  box-shadow: var(--umc-shadow-drop-neutral-1);
 }
 
 .site-header-menu-item {
