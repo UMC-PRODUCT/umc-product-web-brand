@@ -47,6 +47,7 @@ vi.mock("embla-carousel-react", () => ({
 const SLIDES: AboutSlide[] = [1, 2, 3].map((number) => ({
   id: `slide-${number}`,
   src: `/slide-${number}.webp`,
+  srcSet: `/slide-${number}.webp 800w`,
   alt: `사진 ${number}`,
 }))
 

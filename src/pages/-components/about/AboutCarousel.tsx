@@ -18,6 +18,8 @@ import { type AboutSlide } from "./constants"
 import "./about.css"
 
 const AUTO_ADVANCE_DELAY = 2000
+const SLIDE_IMAGE_SIZES =
+  "(min-width: 90rem) 900px, (min-width: 64rem) 684px, (min-width: 48rem) 600px, 373px"
 
 interface AboutCarouselProps {
   slides: readonly AboutSlide[]
@@ -129,7 +131,9 @@ export function AboutCarousel({
                   decoding="async"
                   fetchPriority="low"
                   height={500}
+                  sizes={SLIDE_IMAGE_SIZES}
                   src={slide.src}
+                  srcSet={slide.srcSet}
                   width={900}
                 />
                 <div aria-hidden className="about-slide-dim absolute inset-0" />
