@@ -13,6 +13,8 @@ export interface Sponsor {
   width: number
   height: number
   slotWidth: number
+  slotWidthXl?: number
+  slotHeight: number
   lineBreakAfter?: "mobile" | "tablet"
 }
 
@@ -32,6 +34,7 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 193,
     height: 65,
     slotWidth: 193,
+    slotHeight: 110,
   },
   {
     id: "soft-squared",
@@ -40,6 +43,7 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 222,
     height: 86,
     slotWidth: 222,
+    slotHeight: 110,
     lineBreakAfter: "mobile",
   },
   {
@@ -48,7 +52,9 @@ export const SPONSORS: readonly Sponsor[] = [
     logo: comgongSunbae,
     width: 110,
     height: 110,
-    slotWidth: 122,
+    slotWidth: 110,
+    slotWidthXl: 122,
+    slotHeight: 110,
     lineBreakAfter: "tablet",
   },
   {
@@ -58,6 +64,7 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 223,
     height: 82,
     slotWidth: 235,
+    slotHeight: 132,
     lineBreakAfter: "mobile",
   },
   {
@@ -67,6 +74,7 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 172,
     height: 132,
     slotWidth: 172,
+    slotHeight: 132,
   },
   {
     id: "jober",
@@ -75,6 +83,7 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 177,
     height: 68,
     slotWidth: 177,
+    slotHeight: 68,
     lineBreakAfter: "mobile",
   },
   {
@@ -84,5 +93,6 @@ export const SPONSORS: readonly Sponsor[] = [
     width: 225,
     height: 63,
     slotWidth: 225,
+    slotHeight: 63,
   },
 ]
