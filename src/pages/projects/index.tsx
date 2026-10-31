@@ -114,14 +114,16 @@ function ProjectsPage() {
               {PROJECT_LIST_COPY.empty}
             </p>
           )}
-          <ProjectPagination
-            className="mt-8"
-            onPageChange={(next) =>
-              changeSearch({ ...search, page: next > 1 ? next : undefined })
-            }
-            page={page}
-            pageCount={pageCount}
-          />
+          {projects.length > 0 && (
+            <ProjectPagination
+              className="mt-8"
+              onPageChange={(next) =>
+                changeSearch({ ...search, page: next > 1 ? next : undefined })
+              }
+              page={page}
+              pageCount={pageCount}
+            />
+          )}
         </Container>
       </main>
       <Footer tone="light" />

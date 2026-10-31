@@ -4,12 +4,16 @@ import { describe, expect, it, vi } from "vitest"
 import { ProjectPagination } from "./ProjectPagination"
 
 describe("ProjectPagination", () => {
-  it("페이지가 하나면 그리지 않는다", () => {
-    const { container } = render(
-      <ProjectPagination onPageChange={vi.fn()} page={1} pageCount={1} />,
-    )
+  it("페이지가 하나여도 번호를 보여주고 화살표는 숨긴다", () => {
+    render(<ProjectPagination onPageChange={vi.fn()} page={1} pageCount={1} />)
 
-    expect(container).toBeEmptyDOMElement()
+    expect(screen.getByRole("button", { name: "1 페이지" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    )
+    expect(
+      screen.queryByRole("button", { name: /이전 페이지|다음 페이지/ }),
+    ).not.toBeInTheDocument()
   })
 
   it("첫 페이지에는 이전 화살표가 없고 현재 페이지를 표시한다", () => {
