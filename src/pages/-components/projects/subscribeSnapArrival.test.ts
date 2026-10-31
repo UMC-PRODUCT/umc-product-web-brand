@@ -7,14 +7,23 @@ type EmblaCarouselType = NonNullable<UseEmblaCarouselType[1]>
 
 function createFakeEmbla() {
   const listeners = new Map<string, Set<() => void>>()
-  const state = { target: 400, location: 0, pointerDown: false }
-  const engine = {
-    target: { get: () => state.target },
-    offsetLocation: { get: () => state.location },
-    dragHandler: { pointerDown: () => state.pointerDown },
+  const createEngine = () => {
+    const engineState = { target: 400, location: 0, pointerDown: false }
+    const engine = {
+      target: { get: () => engineState.target },
+      offsetLocation: { get: () => engineState.location },
+      dragHandler: { pointerDown: () => engineState.pointerDown },
+    }
+    return { engine, engineState }
+  }
+  let current = createEngine()
+  const state = current.engineState
+  const reInit = () => {
+    current = createEngine()
+    return current.engineState
   }
   const api = {
-    internalEngine: () => engine,
+    internalEngine: () => current.engine,
     on: (event: string, callback: () => void) => {
       const set = listeners.get(event) ?? new Set()
       set.add(callback)
@@ -31,7 +40,13 @@ function createFakeEmbla() {
   }
   const count = () =>
     [...listeners.values()].reduce((sum, set) => sum + set.size, 0)
-  return { embla: api as unknown as EmblaCarouselType, state, emit, count }
+  return {
+    embla: api as unknown as EmblaCarouselType,
+    state,
+    emit,
+    count,
+    reInit,
+  }
 }
 
 describe("subscribeSnapArrival", () => {
@@ -80,6 +95,21 @@ describe("subscribeSnapArrival", () => {
     expect(onArrive).not.toHaveBeenCalled()
 
     emit("select")
+    expect(onArrive).toHaveBeenCalledTimes(1)
+  })
+
+  it("Embla가 다시 초기화되면 새 엔진의 위치로 도착을 판정한다", () => {
+    const { embla, state, emit, reInit } = createFakeEmbla()
+    const onArrive = vi.fn()
+    subscribeSnapArrival(embla, onArrive)
+
+    state.location = 400
+    const next = reInit()
+    emit("select")
+    expect(onArrive).not.toHaveBeenCalled()
+
+    next.location = 400
+    emit("scroll")
     expect(onArrive).toHaveBeenCalledTimes(1)
   })
 
