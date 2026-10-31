@@ -7,7 +7,7 @@ interface ValueCardProps {
   subtitle: string
   image: string
   icon: ReactNode
-  description: readonly string[]
+  description: string
 }
 
 export function ValueCard({
@@ -22,11 +22,11 @@ export function ValueCard({
 
   return (
     <li
-      className="value-card-slot h-[204px] w-full max-w-[310px] max-md:data-[expanded=true]:h-auto md:h-[363px] md:w-auto md:max-w-none lg:h-[460px] lg:min-w-0 lg:flex-1 xl:h-[400px] xl:max-w-[310px]"
+      className="value-card-slot h-[204px] w-full max-w-[310px] md:h-[363px] md:w-auto md:max-w-none lg:h-[460px] lg:min-w-0 lg:flex-1 xl:h-[400px] xl:max-w-[310px]"
       data-expanded={expanded}
     >
-      <div className="value-card relative isolate flex h-full flex-col justify-between gap-5 overflow-hidden rounded-3xl border-[#0b6b64] border-t-6 px-9 pt-12 pb-[38px] text-white md:pb-[50px]">
-        <div aria-hidden className="absolute inset-0 -z-10">
+      <div className="value-card relative isolate flex h-full flex-col gap-2 overflow-hidden rounded-3xl border-t-6 px-5 pt-6 pb-5 text-white md:justify-between md:gap-0 md:px-9 md:pt-[58px] md:pb-[60px]">
+        <div aria-hidden className="value-card-layers absolute inset-0 -z-10">
           <div className="value-card-base absolute inset-0" />
           <img
             alt=""
@@ -44,7 +44,7 @@ export function ValueCard({
           aria-hidden
           className="value-card-summary pointer-events-none absolute inset-x-9 bottom-[38px] flex items-center gap-4 md:bottom-[50px] md:flex-col md:items-start md:gap-5"
         >
-          <span className="value-card-badge flex size-[60px] shrink-0 items-center justify-center rounded-lg border border-[#15e7cf]">
+          <span className="value-card-badge flex size-[60px] shrink-0 items-center justify-center rounded-lg backdrop-blur-[4px]">
             {icon}
           </span>
           <span className="flex flex-col gap-1 md:gap-[7px]">
@@ -60,7 +60,7 @@ export function ValueCard({
           <button
             aria-controls={descriptionId}
             aria-expanded={expanded}
-            className="flex cursor-pointer flex-col items-start gap-[7px] text-left after:absolute after:inset-0 after:rounded-3xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-white focus-visible:after:-outline-offset-4"
+            className="flex cursor-pointer flex-col items-start gap-1 text-left after:absolute after:inset-0 after:rounded-3xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-white focus-visible:after:-outline-offset-4 md:gap-[7px]"
             onClick={() => setExpanded((isExpanded) => !isExpanded)}
             type="button"
           >
@@ -75,15 +75,13 @@ export function ValueCard({
             </span>
           </button>
         </h3>
-        <div
+        <p
           aria-hidden={!expanded}
-          className="value-card-detail flex flex-col gap-[1.45em] whitespace-normal text-sm leading-[1.45] tracking-[-0.01em] md:text-[18px] xl:whitespace-pre-line"
+          className="value-card-detail max-w-[238px] whitespace-pre-line text-sm leading-[1.45] tracking-[-0.01em] md:text-[18px]"
           id={descriptionId}
         >
-          {description.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </div>
+          {description}
+        </p>
       </div>
     </li>
   )

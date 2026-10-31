@@ -26,40 +26,39 @@
   }
 }
 
-.value-card-slot[data-expanded="true"] {
+.value-card-slot[data-expanded="true"],
+.value-card-slot:has(:focus-visible) {
   --value-card-active: 1;
 }
 
-@media (width >= 48rem) {
-  .value-card-slot:has(:focus-visible) {
-    --value-card-active: 1;
-  }
-}
-
-@media (hover: hover) and (width >= 48rem) {
+@media (hover: hover) {
   .value-card-slot:hover {
     --value-card-active: 1;
   }
 }
 
 .value-card {
-  --value-card-shade-angle: 10.5deg;
   translate: 0 calc(var(--value-card-active) * var(--value-card-shift));
-  transition: translate var(--value-card-transition);
+  border-top-color: color-mix(
+    in srgb,
+    #04978c calc(var(--value-card-active) * 100%),
+    #0b6b64
+  );
+  transition:
+    translate var(--value-card-transition),
+    border-color var(--value-card-transition);
 }
 
-@media (width >= 48rem) {
-  .value-card {
-    --value-card-shade-angle: 20deg;
-  }
+.value-card-layers {
+  container-type: size;
 }
 
 .value-card-base {
   background-color: color-mix(
     in srgb,
-    color-mix(in srgb, rgb(185 253 233) 26%, #adadad)
+    color-mix(in srgb, #b9fde9 50%, #adadad)
       calc(var(--value-card-active) * 100%),
-    #e2e3e3
+    rgb(226 227 227 / 0.2)
   );
   transition: background-color var(--value-card-transition);
 }
@@ -89,7 +88,7 @@
       rgb(56 213 195 / 0) 56.731%
     ),
     linear-gradient(
-      var(--value-card-shade-angle),
+      atan2(calc(0.3456 * 100cqh), calc(1.2236 * 100cqw)),
       rgb(7 36 34 / 0.8) 11.498%,
       rgb(7 26 25 / 0) 61.131%
     ),
@@ -108,7 +107,12 @@
       rgb(137 231 220 / 0.09) 0%,
       rgb(137 231 220 / 0) 100%
     ),
-    linear-gradient(0deg, rgb(7 26 25 / 0.6) 25.5%, rgb(7 26 25 / 0) 100%);
+    linear-gradient(
+      0deg,
+      rgb(6 72 67 / 0.7) 25.5%,
+      rgb(7 49 46 / 0.35) 62.75%,
+      rgb(7 26 25 / 0) 100%
+    );
   opacity: var(--value-card-active);
 }
 
@@ -121,9 +125,24 @@
 }
 
 .value-card-badge {
+  position: relative;
   background-image:
     linear-gradient(135deg, rgb(46 209 190 / 0.24) 0%, rgb(46 209 190 / 0) 50%),
     linear-gradient(rgb(46 209 190 / 0.04), rgb(46 209 190 / 0.04));
+}
+
+.value-card-badge::before {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background-image:
+    linear-gradient(135deg, #15e7cf 0%, rgb(21 231 207 / 0) 50%),
+    linear-gradient(315deg, #15e7cf 0%, rgb(21 231 207 / 0) 100%);
+  content: "";
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
