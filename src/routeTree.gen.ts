@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './pages/__root'
 import { Route as IndexRouteImport } from './pages/index'
+import { Route as ProjectsIndexRouteImport } from './pages/projects/index'
 import { Route as AboutUmcProductRouteImport } from './pages/about/umc-product'
 import { Route as AboutCentralOfficeRouteImport } from './pages/about/central-office'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutUmcProductRoute = AboutUmcProductRouteImport.update({
@@ -33,30 +39,39 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about/central-office': typeof AboutCentralOfficeRoute
   '/about/umc-product': typeof AboutUmcProductRoute
+  '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about/central-office': typeof AboutCentralOfficeRoute
   '/about/umc-product': typeof AboutUmcProductRoute
+  '/projects': typeof ProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about/central-office': typeof AboutCentralOfficeRoute
   '/about/umc-product': typeof AboutUmcProductRoute
+  '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about/central-office' | '/about/umc-product'
+  fullPaths: '/' | '/about/central-office' | '/about/umc-product' | '/projects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about/central-office' | '/about/umc-product'
-  id: '__root__' | '/' | '/about/central-office' | '/about/umc-product'
+  to: '/' | '/about/central-office' | '/about/umc-product' | '/projects'
+  id:
+    | '__root__'
+    | '/'
+    | '/about/central-office'
+    | '/about/umc-product'
+    | '/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutCentralOfficeRoute: typeof AboutCentralOfficeRoute
   AboutUmcProductRoute: typeof AboutUmcProductRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +81,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/': {
+      id: '/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof ProjectsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about/umc-product': {
@@ -89,6 +111,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutCentralOfficeRoute: AboutCentralOfficeRoute,
   AboutUmcProductRoute: AboutUmcProductRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
