@@ -1,12 +1,23 @@
 import useEmblaCarousel from "embla-carousel-react"
-import { useEffect, useId, useRef, useState } from "react"
+import {
+  type FocusEvent,
+  type PointerEvent,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react"
 
+import { useAutoAdvance } from "@/hooks/useAutoAdvance"
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion"
 import { cn } from "@/utils/cn"
 
 import { CarouselPagination } from "./CarouselPagination"
 import { type AboutSlide } from "./constants"
 
 import "./about.css"
+
+const AUTO_ADVANCE_DELAY = 2000
 
 interface AboutCarouselProps {
   slides: readonly AboutSlide[]
@@ -35,6 +46,14 @@ export function AboutCarousel({
     watchDrag: () => interactiveRef.current,
   })
   const [selectedIndex, setSelectedIndex] = useState(startIndex)
+  const [hovering, setHovering] = useState(false)
+  const [keyboardFocused, setKeyboardFocused] = useState(false)
+  const reduceMotion = usePrefersReducedMotion()
+
+  useAutoAdvance(emblaApi, {
+    delay: AUTO_ADVANCE_DELAY,
+    paused: zooming || hovering || keyboardFocused || reduceMotion,
+  })
 
   useEffect(() => {
     interactiveRef.current = !zooming
@@ -66,11 +85,24 @@ export function AboutCarousel({
   const scrollTo = (index: number) =>
     emblaApi?.scrollTo(index, prefersReducedMotion())
 
+  const onPointerEnter = (event: PointerEvent) => {
+    if (event.pointerType === "mouse") setHovering(true)
+  }
+  const onPointerLeave = (event: PointerEvent) => {
+    if (event.pointerType === "mouse") setHovering(false)
+  }
+  const onFocus = (event: FocusEvent) =>
+    setKeyboardFocused(event.target.matches(":focus-visible"))
+
   return (
     <section
       aria-label={label}
       aria-roledescription="carousel"
       className={cn("flex flex-col items-center gap-3 md:gap-8", className)}
+      onBlur={() => setKeyboardFocused(false)}
+      onFocus={onFocus}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
     >
       <div
         className="about-carousel-viewport -my-12 w-full overflow-hidden py-12"
