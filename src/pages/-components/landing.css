@@ -3,6 +3,7 @@
  * Figma 반응형 프레임(768:21185)에서 1023 이하는 앞 섹션 콘텐츠 끝부터 다음 섹션 콘텐츠 시작까지 잰 값이다
  * (절대 위치 장식, 숨긴 레이어 제외). 360·390·767은 값이 같고 768·1023도 같다
  * 1024 이상은 스크롤 스냅용 화면 프레임(749:23069, 1137:38073, 749:24263)의 최소 높이·패딩·간격을 쓴다
+ * 자석은 Preview까지만 걸려서 프로젝트·모집 프레임은 화면 높이 대신 시안 프레임 높이(688, 820)를 쓴다
  * 미디어 쿼리 폭은 index.css의 --breakpoint-md(48rem), lg(64rem), xl(90rem), 2xl(120rem)과 같다
  */
 .landing-main > #about {
@@ -65,8 +66,11 @@
 }
 
 @media (width >= 64rem) {
-  .landing-main > :is(#stats, #values, #preview, #projects, #recruit) {
+  .landing-main > :is(#stats, #values, #preview) {
     min-height: calc(100svh - var(--umc-layout-header-height));
+  }
+  .landing-main > :is(#projects, #recruit) {
+    min-height: 688px;
   }
   .landing-main > #about {
     margin-top: 70px;
@@ -103,6 +107,9 @@
 }
 
 @media (width >= 90rem) {
+  .landing-main > :is(#projects, #recruit) {
+    min-height: 820px;
+  }
   .landing-main > #about {
     margin-top: 108px;
   }
