@@ -11,6 +11,7 @@ import { cn } from "@/utils/cn"
 
 import { type Project } from "./constants"
 import { ProjectCard } from "./ProjectCard"
+import { subscribeSnapArrival } from "./subscribeSnapArrival"
 import { useAutoAdvance } from "./useAutoAdvance"
 
 import "./projects.css"
@@ -57,10 +58,7 @@ export function ProjectCarousel({
     const syncSelectedIndex = () =>
       setSelectedIndex(emblaApi.selectedScrollSnap())
     syncSelectedIndex()
-    emblaApi.on("select", syncSelectedIndex)
-    return () => {
-      emblaApi.off("select", syncSelectedIndex)
-    }
+    return subscribeSnapArrival(emblaApi, syncSelectedIndex)
   }, [emblaApi])
 
   // 마우스를 올려 둔 동안에는 넘기지 않는다. 터치는 손을 떼면 바로 다시 센다

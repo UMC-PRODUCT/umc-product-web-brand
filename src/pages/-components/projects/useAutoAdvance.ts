@@ -1,6 +1,8 @@
 import { type UseEmblaCarouselType } from "embla-carousel-react"
 import { useEffect } from "react"
 
+import { subscribeSnapArrival } from "./subscribeSnapArrival"
+
 type EmblaCarouselType = NonNullable<UseEmblaCarouselType[1]>
 
 interface UseAutoAdvanceOptions {
@@ -25,13 +27,12 @@ export function useAutoAdvance(
     }
 
     schedule()
-    emblaApi.on("settle", schedule)
+    const unsubscribeArrival = subscribeSnapArrival(emblaApi, schedule)
     emblaApi.on("pointerDown", stop)
-    // 끌지 않고 누르기만 하면 settle이 오지 않으므로 손을 뗄 때도 다시 센다
     emblaApi.on("pointerUp", schedule)
     return () => {
       stop()
-      emblaApi.off("settle", schedule)
+      unsubscribeArrival()
       emblaApi.off("pointerDown", stop)
       emblaApi.off("pointerUp", schedule)
     }

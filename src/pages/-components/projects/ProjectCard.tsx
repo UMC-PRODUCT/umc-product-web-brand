@@ -45,7 +45,7 @@ export function ProjectCard({
               {name}
             </h3>
             {/* Figma Tag/Basic Weak·Md·Brand: 높이 26, 좌우 7, Medium 14 줄 높이 145% */}
-            <span className="flex h-[26px] shrink-0 items-center rounded-(--umc-radius-6) bg-fill-primary-medium-100 px-[7px] font-medium text-[14px] text-brand-default-600 leading-[1.45]">
+            <span className="flex h-[26px] shrink-0 items-center rounded-(--umc-radius-6) bg-fill-primary-medium-100 px-[7px] font-medium text-[14px] text-brand-default-600 leading-[1.45] shadow-drop-neutral-3">
               {award}
             </span>
           </div>

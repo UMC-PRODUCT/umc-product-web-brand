@@ -8,7 +8,7 @@ import slateTo from "@/assets/landing/projects/slate-to.webp"
 import teaching from "@/assets/landing/projects/teaching.webp"
 
 export const PROJECTS_COPY = {
-  title: "UMC 챌린저들의 프로젝트 목록 둘러보기",
+  title: "UMC 챌린저들의\n프로젝트 목록 둘러보기",
   description: "치열하게 고민하고 만들어 낸 데모데이 수상작들을 만나보세요.",
   cta: "챌린저들 프로젝트 구경하기",
 } as const
