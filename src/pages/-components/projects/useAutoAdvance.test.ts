@@ -6,11 +6,16 @@ import { useAutoAdvance } from "./useAutoAdvance"
 
 type EmblaCarouselType = NonNullable<UseEmblaCarouselType[1]>
 
-// Embla의 on/off/emit만 흉내 내는 가짜 API
 function createFakeEmbla() {
   const listeners = new Map<string, Set<() => void>>()
+  const engine = {
+    target: { get: () => 0 },
+    offsetLocation: { get: () => 0 },
+    dragHandler: { pointerDown: () => false },
+  }
   const api = {
     scrollNext: vi.fn(),
+    internalEngine: () => engine,
     on: (event: string, callback: () => void) => {
       const set = listeners.get(event) ?? new Set()
       set.add(callback)
@@ -49,12 +54,12 @@ describe("useAutoAdvance", () => {
     expect(api.scrollNext).toHaveBeenCalledTimes(1)
   })
 
-  it("카드가 멈추면 처음부터 다시 센다", () => {
+  it("카드가 가운데에 도착하면 처음부터 다시 센다", () => {
     const { api, embla, emit } = createFakeEmbla()
     renderHook(() => useAutoAdvance(embla, { delay: 2000, paused: false }))
 
     vi.advanceTimersByTime(1500)
-    emit("settle")
+    emit("select")
     vi.advanceTimersByTime(1500)
     expect(api.scrollNext).not.toHaveBeenCalled()
     vi.advanceTimersByTime(500)
