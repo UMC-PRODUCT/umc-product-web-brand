@@ -15,24 +15,26 @@ export function FaqSection() {
       {/* Figma 섹션 좌우 여백: Mobile 32, Pad 이상 80 (공용 Container의 Pad 60을 덮는다) */}
       <Container className="md:px-20">
         <SectionHeading
+          className={cn(
+            "[&>p:first-child]:mb-0 [&>p:first-child]:text-[20px]",
+            "md:[&>p:first-child]:mb-2 md:[&>p:first-child]:text-[22px]",
+            "xl:[&>p:first-child]:mb-3",
+          )}
           eyebrow={FAQ_COPY.eyebrow}
           title={FAQ_COPY.title}
           titleId="faq-title"
         />
         <Tabs.Root
-          // Figma 제목·칩·목록 사이 간격: Mobile 32, Pad 28, Small PC 이상 32
-          className="mt-8 flex flex-col gap-8 md:mt-7 md:gap-7 lg:mt-8 lg:gap-8"
+          className="mt-8 flex flex-col gap-8 md:mt-7 md:gap-7 lg:mt-5 lg:gap-6 xl:gap-8 2xl:mt-8"
           defaultValue={FAQ_CATEGORIES[0]?.id}
         >
           <Tabs.List
             aria-label={FAQ_COPY.categoriesLabel}
-            // Figma 칩 간격 14. 시안보다 칩이 하나 많아 좁은 화면에서는 줄을 바꾼다
-            className="flex flex-wrap justify-center gap-x-[14px] gap-y-(--umc-spacing-gap-8)"
+            className="flex flex-wrap justify-center gap-x-3 gap-y-(--umc-spacing-gap-8) md:gap-x-[14px]"
           >
             {FAQ_CATEGORIES.map(({ id, label, lang }) => (
               <FaqChip
-                // Figma 칩 크기: PC 이상 Lg, 그 아래 Md. Size 변형은 반응형을 받지 않아 Lg 값을 덮는다
-                className="xl:h-[42px] xl:px-(--umc-spacing-padding-16) xl:text-title-2-medium"
+                className="h-[34px] md:h-[38px] xl:h-[42px] xl:px-(--umc-spacing-padding-16) xl:text-title-2-medium"
                 key={id}
                 lang={lang}
                 size="md"
