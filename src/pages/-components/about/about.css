@@ -1,6 +1,7 @@
 .about-carousel-viewport {
   --about-slide-w: 344px;
   --about-slide-h: 280px;
+  --about-slide-ratio: 344 / 280;
   --about-slide-gap: -6px;
   --about-clip-y: 13px;
   --about-clip-x: 16px;
@@ -15,6 +16,7 @@
   .about-carousel-viewport {
     --about-slide-w: 600px;
     --about-slide-h: 334px;
+    --about-slide-ratio: 600 / 334;
     --about-slide-gap: 0.91px;
     --about-clip-y: 20.5px;
     --about-clip-x: 10px;
@@ -26,6 +28,7 @@
   .about-carousel-viewport {
     --about-slide-w: 683.3px;
     --about-slide-h: 379.6px;
+    --about-slide-ratio: 683.3 / 379.6;
     --about-slide-gap: 12.38px;
     --about-clip-y: 16.85px;
     --about-clip-x: 0px;
@@ -49,6 +52,7 @@
   .about-carousel-viewport {
     --about-slide-w: 900px;
     --about-slide-h: 500px;
+    --about-slide-ratio: 900 / 500;
     --about-slide-gap: 12.5px;
     --about-clip-y: 24px;
     --about-clip-x: 3.5px;
@@ -155,6 +159,8 @@
 }
 
 .about-zoom .about-slide {
+  width: auto;
+  aspect-ratio: var(--about-slide-ratio);
   height: min(
     var(--about-slide-h),
     calc(
