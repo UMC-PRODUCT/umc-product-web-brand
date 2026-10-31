@@ -8,13 +8,13 @@ import {
   PROJECT_CONTAINER_CLASS,
   PROJECT_LIST_COPY,
 } from "./-components/constants"
-import { ProjectDetailHeader } from "./-components/ProjectDetailHeader"
-import { ProjectDetailInfo } from "./-components/ProjectDetailInfo"
-import { ProjectDetailTabs } from "./-components/ProjectDetailTabs"
-import { ProjectImageStack } from "./-components/ProjectImageStack"
+import { ProjectDetailHeader } from "./-components/detail/ProjectDetailHeader"
+import { ProjectDetailInfo } from "./-components/detail/ProjectDetailInfo"
+import { ProjectDetailTabs } from "./-components/detail/ProjectDetailTabs"
+import { ProjectImageStack } from "./-components/detail/ProjectImageStack"
+import { PROJECT_DETAILS } from "./-components/detail/projectDetails"
+import { getProjectIntroImages } from "./-components/detail/projectImageData"
 import { ProjectPageShell } from "./-components/ProjectPageShell"
-import { PROJECT_DETAILS } from "./-components/projectDetails"
-import { getProjectIntroImages } from "./-components/projectImageData"
 import { parseProjectDetailSearch } from "./-components/projectSearch"
 
 export const Route = createFileRoute("/projects/$projectId")({

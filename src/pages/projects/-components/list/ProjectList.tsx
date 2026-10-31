@@ -2,11 +2,11 @@ import { Link } from "@tanstack/react-router"
 
 import { cn } from "@/utils/cn"
 
-import { type Project } from "../../-components/projects/constants"
-import { ProjectCard } from "../../-components/projects/ProjectCard"
-import { PROJECT_LIST_COPY } from "./constants"
+import { type Project } from "../../../-components/projects/constants"
+import { ProjectCard } from "../../../-components/projects/ProjectCard"
+import { PROJECT_LIST_COPY } from "../constants"
+import { PROJECT_PAGE_SIZE } from "../projectSearch"
 import { ProjectCardSkeleton } from "./ProjectCardSkeleton"
-import { PROJECT_PAGE_SIZE } from "./projectSearch"
 
 interface ProjectListProps {
   projects: readonly Project[]

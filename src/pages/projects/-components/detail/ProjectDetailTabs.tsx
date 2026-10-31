@@ -1,8 +1,8 @@
 import { Tabs } from "radix-ui"
 import { type ReactNode } from "react"
 
-import { PROJECT_LIST_COPY } from "./constants"
-import { type ProjectDetailTab } from "./projectSearch"
+import { PROJECT_LIST_COPY } from "../constants"
+import { type ProjectDetailTab } from "../projectSearch"
 
 interface ProjectDetailTabsProps {
   value: ProjectDetailTab

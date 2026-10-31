@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { PROJECT_LIST } from "./constants"
+import { PROJECT_LIST } from "../constants"
 import { ProjectImageStack } from "./ProjectImageStack"
 import {
   getProjectDetailImages,

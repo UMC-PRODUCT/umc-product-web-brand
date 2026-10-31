@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest"
 
 import { renderWithRouter } from "@/test/renderWithRouter"
 
-import { PROJECTS } from "../../-components/projects/constants"
+import { PROJECTS } from "../../../-components/projects/constants"
 import { ProjectList } from "./ProjectList"
 
 describe("ProjectList", () => {

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest"
 
 import { findProject, PROJECT_LIST } from "./constants"
-import { PROJECT_DETAILS } from "./projectDetails"
-import { getProjectIntroImages } from "./projectImageData"
+import { PROJECT_DETAILS } from "./detail/projectDetails"
+import { getProjectIntroImages } from "./detail/projectImageData"
 
 describe("findProject", () => {
   it("id로 프로젝트를 찾고 없으면 undefined를 준다", () => {

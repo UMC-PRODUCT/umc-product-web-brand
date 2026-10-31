@@ -1,5 +1,5 @@
-import { PROJECT_LIST_COPY } from "./constants"
-import { ProjectBreadcrumbs } from "./ProjectBreadcrumbs"
+import { PROJECT_LIST_COPY } from "../constants"
+import { ProjectBreadcrumbs } from "../ProjectBreadcrumbs"
 
 export function ProjectsPageHeader() {
   return (
