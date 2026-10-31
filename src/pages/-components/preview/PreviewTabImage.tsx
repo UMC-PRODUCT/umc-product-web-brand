@@ -27,7 +27,7 @@ export function PreviewTabImage({
   return (
     <div
       className={cn(
-        "relative aspect-[1021/600] w-full overflow-hidden",
+        "relative aspect-[1021/600] w-full overflow-hidden lg:aspect-auto lg:h-[415.4px] xl:h-[500px]",
         className,
       )}
     >

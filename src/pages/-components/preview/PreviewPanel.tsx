@@ -60,10 +60,10 @@ export function PreviewPanel({ className }: PreviewPanelProps) {
             value={tab.id}
           >
             {tab.image && (
-              // 사진 모서리: 1440 미만 16, 이상 0
+              // 사진 모서리: 1024 미만 16, 이상 0
               <PreviewTabImage
                 alt={tab.image.alt}
-                className="rounded-(--umc-radius-16) xl:rounded-none"
+                className="rounded-(--umc-radius-16) lg:rounded-none"
                 loading={preloadAll ? "eager" : "lazy"}
                 onLoad={() => setPreloadAll(true)}
                 src={tab.image.src}
