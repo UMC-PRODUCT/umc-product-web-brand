@@ -36,7 +36,7 @@ function LandingPage() {
       </a>
       <SiteHeader />
       <main
-        className="landing-main flex flex-col"
+        className="landing-main isolate flex flex-col"
         id="main"
         ref={mainRef}
         tabIndex={-1}

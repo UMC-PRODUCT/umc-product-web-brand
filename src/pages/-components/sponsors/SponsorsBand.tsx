@@ -15,11 +15,11 @@ export function SponsorsBand() {
     <div className="mt-10 md:mt-[50px] xl:mt-[60px]">
       <h3 className="sr-only">{SPONSORS_COPY.title}</h3>
       <div className="bg-white px-8 pt-6 pb-[22px] md:pt-8 md:pb-6 xl:pt-10 xl:pb-7">
-        <ul className="mx-auto flex max-w-[1376px] flex-wrap items-center justify-center gap-x-[calc(6px*var(--sponsor-scale))] [--sponsor-scale:0.49] lg:flex-nowrap md:[--sponsor-scale:0.67] lg:[--sponsor-scale:0.65] xl:[--sponsor-scale:0.83]">
+        <ul className="mx-auto flex max-w-[1376px] flex-wrap items-center justify-center gap-x-[calc(6px*var(--sponsor-scale))] [--sponsor-scale:0.49] lg:flex-nowrap md:[--sponsor-scale:0.65] xl:[--sponsor-scale:0.83]">
           {SPONSORS.map((sponsor) => (
             <Fragment key={sponsor.id}>
               <li
-                className="flex min-w-0 shrink justify-center"
+                className="flex min-h-[calc(110px*var(--sponsor-scale))] min-w-0 shrink items-center justify-center"
                 style={{
                   flexBasis: `calc(${sponsor.slotWidth}px * var(--sponsor-scale))`,
                 }}
@@ -46,9 +46,8 @@ export function SponsorsBand() {
             </Fragment>
           ))}
         </ul>
-        <p className="mt-5 break-keep text-center text-base text-neutral-medium-600 leading-[1.4] tracking-[-0.02em] md:text-[18px] lg:text-[22px] xl:mt-6 xl:text-[26px]">
-          {firstLine} <br className="hidden md:inline lg:hidden" />
-          {secondLine}
+        <p className="mt-5 break-keep text-center text-base text-neutral-medium-600 leading-[1.4] tracking-[-0.02em] lg:text-[22px] xl:mt-6 xl:text-[26px]">
+          {firstLine} {secondLine}
         </p>
       </div>
     </div>
