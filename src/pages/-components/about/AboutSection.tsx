@@ -50,8 +50,9 @@ function AboutContent({ zooming }: { zooming: boolean }) {
 
   return (
     <>
-      <Container className="about-heading">
+      <Container className="about-heading px-4">
         <SectionHeading
+          className="mx-auto max-w-[322px] md:max-w-none md:max-lg:[&>p:last-child]:text-[18px]"
           description={ABOUT_COPY.description}
           eyebrow={ABOUT_COPY.eyebrow}
           title={
@@ -65,7 +66,7 @@ function AboutContent({ zooming }: { zooming: boolean }) {
         />
       </Container>
       <AboutCarousel
-        className="mt-8 md:mt-9 lg:mt-[50px]"
+        className="mt-8 md:mt-[39px] lg:mt-[50px]"
         label={ABOUT_COPY.carouselLabel}
         slides={ABOUT_SLIDES}
         startIndex={ABOUT_START_INDEX}

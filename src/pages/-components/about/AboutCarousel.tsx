@@ -100,7 +100,10 @@ export function AboutCarousel({
     <section
       aria-label={label}
       aria-roledescription="carousel"
-      className={cn("flex flex-col items-center gap-3 md:gap-8", className)}
+      className={cn(
+        "flex flex-col items-center gap-3 md:gap-[35px] lg:gap-8",
+        className,
+      )}
       onBlur={() => setKeyboardFocused(false)}
       onFocus={onFocus}
       onPointerEnter={onPointerEnter}

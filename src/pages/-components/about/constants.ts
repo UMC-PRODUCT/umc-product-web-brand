@@ -30,10 +30,9 @@ export const ABOUT_COPY = {
   eyebrow: "ABOUT UMC",
   titleLines: [
     "기획자, 디자이너, 개발자가",
-    "함께 아이디어를 현실로 만드는 대학생 IT 연합 동아리입니다",
+    "함께 아이디어를 현실로 만드는 대학생 IT 연합 동아리",
   ],
-  description:
-    "다양한 사람들과 만나고, 새로운 도전을 시작해요. 우리가 함께 만들어 온 순간들을 만나보세요.",
+  description: "같은 목표를 향해 도전하고 함께 성장하는 경험을 만들어요.",
   carouselLabel: "UMC 활동 사진",
 } as const
 

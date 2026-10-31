@@ -6,7 +6,7 @@
  * 미디어 쿼리 폭은 index.css의 --breakpoint-md(48rem), lg(64rem), xl(90rem), 2xl(120rem)과 같다
  */
 .landing-main > #about {
-  margin-top: 150px;
+  margin-top: 120px;
 }
 .landing-main > #stats {
   margin-top: 122px;
@@ -35,6 +35,9 @@
 }
 
 @media (width >= 48rem) {
+  .landing-main > #about {
+    margin-top: 150px;
+  }
   .landing-main > #stats {
     margin-top: 180px;
   }
@@ -64,6 +67,9 @@
 @media (width >= 64rem) {
   .landing-main > :is(#stats, #values, #preview, #projects, #recruit) {
     min-height: calc(100svh - var(--umc-layout-header-height));
+  }
+  .landing-main > #about {
+    margin-top: 70px;
   }
   .landing-main > #stats {
     margin-top: 120px;
@@ -97,6 +103,9 @@
 }
 
 @media (width >= 90rem) {
+  .landing-main > #about {
+    margin-top: 108px;
+  }
   .landing-main > #stats {
     margin-top: 130px;
     padding-top: 80px;
