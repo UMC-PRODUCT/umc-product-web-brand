@@ -91,6 +91,9 @@
   .landing-main > #faq {
     margin-top: 180px;
   }
+  .landing-main > #cta {
+    margin-top: 120px;
+  }
 }
 
 @media (width >= 90rem) {
