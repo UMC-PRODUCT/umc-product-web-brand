@@ -6,6 +6,7 @@ interface ProjectCardProps {
   parts: readonly string[]
   award: string
   thumbnailSrc: string
+  titleAs?: "h2" | "h3"
   className?: string
 }
 
@@ -15,6 +16,7 @@ export function ProjectCard({
   parts,
   award,
   thumbnailSrc,
+  titleAs: Title = "h3",
   className,
 }: ProjectCardProps) {
   return (
@@ -41,9 +43,9 @@ export function ProjectCard({
         <div className="flex flex-col gap-(--umc-spacing-gap-6)">
           <div className="flex items-center gap-(--umc-spacing-gap-6)">
             {/* Figma 제목: SemiBold 22, 줄 높이 140%, 자간 -1%. 같은 텍스트 스타일 토큰이 없다 */}
-            <h3 className="min-w-0 flex-1 truncate font-semibold text-[22px] text-neutral-default-900 leading-[1.4] tracking-[-0.22px]">
+            <Title className="min-w-0 flex-1 truncate font-semibold text-[22px] text-neutral-default-900 leading-[1.4] tracking-[-0.22px]">
               {name}
-            </h3>
+            </Title>
             {/* Figma Tag/Basic Weak·Md·Brand: 높이 26, 좌우 7, Medium 14 줄 높이 145% */}
             <span className="flex h-[26px] shrink-0 items-center rounded-(--umc-radius-6) bg-fill-primary-medium-100 px-[7px] font-medium text-[14px] text-brand-default-600 leading-[1.45] shadow-drop-neutral-3">
               {award}
