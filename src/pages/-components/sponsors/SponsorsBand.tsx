@@ -1,12 +1,18 @@
-import { Fragment } from "react"
+import { type CSSProperties, Fragment } from "react"
 
-import { SPONSORS, SPONSORS_COPY } from "./constants"
+import { SPONSORS, SPONSORS_COPY, type Sponsor } from "./constants"
 
 const LINE_BREAK_CLASS = {
-  mobile: "h-[calc(12px*var(--sponsor-scale))] basis-full md:hidden",
-  tablet:
-    "hidden h-[calc(12px*var(--sponsor-scale))] basis-full md:block lg:hidden",
+  mobile: "h-[6.5px] basis-full md:hidden",
+  tablet: "hidden h-1 basis-full md:block lg:hidden",
 } as const
+
+const slotSize = (sponsor: Sponsor) =>
+  ({
+    "--slot-width": `${sponsor.slotWidth}px`,
+    "--slot-width-xl": `${sponsor.slotWidthXl ?? sponsor.slotWidth}px`,
+    "--slot-height": `${sponsor.slotHeight}px`,
+  }) as CSSProperties
 
 export function SponsorsBand() {
   const [firstLine, secondLine] = SPONSORS_COPY.descriptionLines
@@ -19,10 +25,8 @@ export function SponsorsBand() {
           {SPONSORS.map((sponsor) => (
             <Fragment key={sponsor.id}>
               <li
-                className="flex min-h-[calc(110px*var(--sponsor-scale))] min-w-0 shrink items-center justify-center"
-                style={{
-                  flexBasis: `calc(${sponsor.slotWidth}px * var(--sponsor-scale))`,
-                }}
+                className="flex min-h-[calc(var(--slot-height)*var(--sponsor-scale))] min-w-0 shrink basis-[calc(var(--slot-width)*var(--sponsor-scale))] items-center justify-center xl:basis-[calc(var(--slot-width-xl)*var(--sponsor-scale))]"
+                style={slotSize(sponsor)}
               >
                 <img
                   alt={sponsor.name}
