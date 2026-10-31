@@ -6,8 +6,9 @@
  */
 .project-carousel {
   --project-card-scale: 0.669;
-  /* 가운데 카드 확대 비율: Figma 408.1 / 372 */
-  --project-card-active-scale: 1.097;
+  --project-card-active-scale: 1.1;
+  --project-card-gap: 16px;
+  --project-card-hover-lift: 4px;
 }
 
 @media (width >= 48rem) {
@@ -19,13 +20,13 @@
 @media (width >= 90rem) {
   .project-carousel {
     --project-card-scale: 1;
+    /* 가운데 카드 확대 비율: Figma 408.1 / 372 */
+    --project-card-active-scale: 1.097;
   }
 }
 
 /*
  * 슬라이드 상자는 카드 위치만 잡는다. Embla가 상자 크기로 위치를 계산하므로 상자 크기는 바꾸지 않고 안쪽 카드만 키운다
- * Figma 카드 중심 간격 406(확대 카드 408 + 간격 16 + 기본 카드 372의 반씩)을 맞추려고 오른쪽 여백을 34로 둔다
- * 높이는 확대된 카드 높이(356 × 1.097 ≈ 390)
  */
 .project-slide {
   position: relative;
@@ -36,25 +37,51 @@
     var(--project-card-active-scale) *
     var(--project-card-scale)
   );
-  margin-right: calc(34px * var(--project-card-scale));
+  margin-right: calc(
+    (
+      372px *
+      (var(--project-card-active-scale) - 1) /
+      2 +
+      var(--project-card-gap)
+    ) *
+    var(--project-card-scale)
+  );
 }
 
 .project-slide-card {
+  --project-card-current-scale: var(--project-card-scale);
   position: absolute;
   top: 50%;
   left: 50%;
   width: 372px;
-  transform: translate(-50%, -50%) scale(var(--project-card-scale));
+  translate: 0
+    calc(var(--project-card-hover-lift) / 2 * var(--project-card-current-scale));
+  transform: translate(-50%, -50%) scale(var(--project-card-current-scale));
 }
 
 .project-slide[data-active="true"] .project-slide-card {
-  transform: translate(-50%, -50%)
-    scale(calc(var(--project-card-scale) * var(--project-card-active-scale)));
+  --project-card-current-scale: calc(
+    var(--project-card-scale) *
+    var(--project-card-active-scale)
+  );
+}
+
+@media (hover: hover) {
+  .project-slide:hover .project-slide-card {
+    translate: 0
+      calc(
+        var(--project-card-hover-lift) /
+        -2 *
+        var(--project-card-current-scale)
+      );
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .project-slide-card {
-    transition: transform 500ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition:
+      transform 500ms cubic-bezier(0.25, 1, 0.5, 1),
+      translate 300ms ease-in;
   }
 }
 
