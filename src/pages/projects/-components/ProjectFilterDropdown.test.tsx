@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { beforeAll, describe, expect, it, vi } from "vitest"
 
 import { ProjectFilterDropdown } from "./ProjectFilterDropdown"
@@ -74,6 +74,26 @@ describe("ProjectFilterDropdown", () => {
 
     expect(onValueChange).toHaveBeenCalledWith(["merit"])
     expect(screen.queryByRole("menu")).not.toBeInTheDocument()
+  })
+
+  it("마우스로 고른 뒤에도 포커스를 트리거로 돌려준다", async () => {
+    render(
+      <ProjectFilterDropdown
+        label="기수"
+        onValueChange={vi.fn()}
+        options={AWARDS}
+        value={[]}
+      />,
+    )
+
+    openMenu(/기수 필터/)
+    const menu = screen.getByRole("menu")
+    fireEvent.pointerDown(menu)
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "우수상" }))
+
+    await waitFor(() =>
+      expect(screen.getByRole("button", { name: /기수 필터/ })).toHaveFocus(),
+    )
   })
 
   it("복수 선택은 항목을 더하고 빼며 메뉴를 열어 둔다", () => {

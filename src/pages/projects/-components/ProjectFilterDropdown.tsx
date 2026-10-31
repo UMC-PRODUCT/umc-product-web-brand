@@ -1,7 +1,7 @@
 import { CheckIcon, ExpandMoreIcon } from "@umc-product/icons"
 import { cva } from "class-variance-authority"
 import { DropdownMenu } from "radix-ui"
-import { type ReactNode } from "react"
+import { type ReactNode, useRef } from "react"
 
 import { cn } from "@/utils/cn"
 
@@ -22,6 +22,10 @@ interface ProjectFilterDropdownProps {
 
 const ALL_LABEL = "전체"
 const ICON_SIZE = 16
+// TypeScript의 FocusOptions에 아직 focusVisible이 없다
+const NO_FOCUS_RING: FocusOptions & { focusVisible: boolean } = {
+  focusVisible: false,
+}
 
 const triggerVariants = cva(
   cn(
@@ -33,7 +37,7 @@ const triggerVariants = cva(
     variants: {
       filtered: {
         false:
-          "border-neutral-medium-300 bg-white text-neutral-default-900 [&_svg]:text-icon-neutral-medium-500",
+          "border-neutral-medium-300 bg-white text-neutral-default-900 hover:bg-teal-grey-50 [&_svg]:text-icon-neutral-medium-500",
         true: "border-teal-300 bg-teal-50 text-brand-default-600 [&_svg]:text-icon-brand-medium-500",
       },
     },
@@ -83,12 +87,15 @@ export function ProjectFilterDropdown({
   const selected = options.filter((option) => value.includes(option.value))
   const filtered = selected.length > 0
   const triggerText = getTriggerText(selected, placeholder)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const selectedByPointerRef = useRef(false)
 
   return (
     <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger
         aria-label={`${label} 필터: ${filtered ? triggerText : ALL_LABEL}`}
         className={cn(triggerVariants({ filtered }), className)}
+        ref={triggerRef}
       >
         {triggerText}
         <ExpandMoreIcon size={ICON_SIZE} />
@@ -101,6 +108,16 @@ export function ProjectFilterDropdown({
             // Figma 기수 메뉴: 항목 6.5개 높이에서 잘리고 나머지는 스크롤. 스크롤바는 시안에 없다
             "max-h-[294px] overflow-y-auto [scrollbar-width:none]",
           )}
+          onCloseAutoFocus={(event) => {
+            if (!selectedByPointerRef.current) return
+            // 마우스로 고른 뒤 돌아오는 포커스에는 링을 그리지 않는다. 키보드는 그대로 둔다
+            selectedByPointerRef.current = false
+            event.preventDefault()
+            triggerRef.current?.focus(NO_FOCUS_RING)
+          }}
+          onPointerDown={() => {
+            selectedByPointerRef.current = true
+          }}
         >
           <DropdownMenu.Item
             className={ITEM_CLASS}
