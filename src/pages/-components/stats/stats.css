@@ -1,53 +1,27 @@
-.stat-card {
-  --stat-card-sheen:
-    114.81deg, rgb(46 209 190 / 0.12) 8.59%, rgb(46 209 190 / 0) 61.37%;
-  --stat-card-edge:
-    298.12deg, rgb(46 209 190 / 0.24) -14.83%, rgb(46 209 190 / 0) 21.14%;
-  background: linear-gradient(var(--stat-card-sheen)), rgb(12 42 37 / 0.86);
+.stat-card-layers {
+  container-type: size;
+  background-color: rgb(12 42 37 / 0.86);
 }
 
-@media (width >= 48rem) {
-  .stat-card {
-    --stat-card-sheen:
-      129.44deg, rgb(46 209 190 / 0.12) 8.32%, rgb(46 209 190 / 0) 61.79%;
-    --stat-card-edge:
-      313.57deg, rgb(46 209 190 / 0.24) -18.05%, rgb(46 209 190 / 0) 19.75%;
-  }
+.stat-card-sheen {
+  background: linear-gradient(
+    atan2(calc(1.415 * 100cqh), calc(-0.4706 * 100cqw)),
+    rgb(46 209 190 / 0.12) 8.49%,
+    rgb(46 209 190 / 0) 61.52%
+  );
 }
 
-@media (width >= 64rem) {
-  .stat-card {
-    --stat-card-sheen:
-      127.44deg, rgb(46 209 190 / 0.12) 8.36%, rgb(46 209 190 / 0) 61.73%;
-    --stat-card-edge:
-      311.52deg, rgb(46 209 190 / 0.24) -17.57%, rgb(46 209 190 / 0) 19.96%;
-  }
-}
-
-@media (width >= 90rem) {
-  .stat-card {
-    --stat-card-sheen:
-      120.79deg, rgb(46 209 190 / 0.12) 8.49%, rgb(46 209 190 / 0) 61.53%;
-    --stat-card-edge:
-      304.56deg, rgb(46 209 190 / 0.24) -16.06%, rgb(46 209 190 / 0) 20.61%;
-  }
-}
-
-.stat-card::before,
-.stat-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
-
-.stat-card::before {
+.stat-card-dodge {
   background: rgb(38 38 38 / 0.2);
   mix-blend-mode: color-dodge;
 }
 
-.stat-card::after {
-  background: linear-gradient(var(--stat-card-edge));
+.stat-card-edge {
+  background: linear-gradient(
+    atan2(calc(-1.2654 * 100cqh), calc(0.4904 * 100cqw)),
+    rgb(46 209 190 / 0.24) -16.06%,
+    rgb(46 209 190 / 0) 20.62%
+  );
 }
 
 .stat-card-value {
