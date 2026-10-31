@@ -14,6 +14,7 @@ const SHORT_MOVE_DURATION_MS = 500
 const SCROLL_IDLE_MS = 150
 const MIN_MOVE_PX = 1
 const VIEWPORT_TOP_SECTION_ID = "cta"
+const HEADING_SELECTOR = "hgroup, h2"
 const INPUT_EVENTS = ["wheel", "keydown", "mousedown", "touchstart"] as const
 
 type ScrollDirection = 1 | -1
@@ -40,22 +41,29 @@ export function findSnapTarget(
   const travelled = direction > 0 ? top - previous.end : next.start - top
   const committed = travelled >= pageHeight * COMMIT_RATIO
   if (direction > 0) return committed ? next.start : previous.end
-  return committed ? previous.end : next.start
+  return committed ? previous.start : next.start
 }
 
 export function getCenteredScrollTop(
   sectionTop: number,
   sectionHeight: number,
   viewportHeight: number,
-  headerHeight: number,
 ) {
-  const visibleHeight = viewportHeight - headerHeight
-  return sectionTop - headerHeight - (visibleHeight - sectionHeight) / 2
+  return sectionTop - (viewportHeight - sectionHeight) / 2
 }
 
 function getWheelDirection(event: Event): ScrollDirection | null {
   if (!(event instanceof WheelEvent) || event.deltaY === 0) return null
   return event.deltaY > 0 ? 1 : -1
+}
+
+function getHeadingBelowHeaderScrollTop(
+  section: Element,
+  headerHeight: number,
+) {
+  const heading = section.querySelector(HEADING_SELECTOR)
+  if (!heading) return Number.POSITIVE_INFINITY
+  return window.scrollY + heading.getBoundingClientRect().top - headerHeight
 }
 
 function measureSection(
@@ -65,17 +73,26 @@ function measureSection(
 ): SectionRange {
   const rect = section.getBoundingClientRect()
   const top = window.scrollY + rect.top
+  const clampToPage = (scrollTop: number) =>
+    Math.min(Math.max(scrollTop, 0), pageEnd)
   const stopAt = (scrollTop: number) => {
-    const stop = Math.min(Math.max(scrollTop, 0), pageEnd)
+    const stop = clampToPage(scrollTop)
     return { start: stop, end: stop }
   }
   if (section.id === VIEWPORT_TOP_SECTION_ID) return stopAt(top)
-  if (rect.height <= window.innerHeight - headerHeight + MIN_MOVE_PX) {
-    return stopAt(
-      getCenteredScrollTop(top, rect.height, window.innerHeight, headerHeight),
-    )
-  }
-  const start = getAnchorScrollTop(section)
+  const anchorTop = getAnchorScrollTop(section)
+  const hasAnchorInsideSection = anchorTop > top
+  if (hasAnchorInsideSection) return stopAt(anchorTop)
+  const fitsViewport = rect.height <= window.innerHeight + MIN_MOVE_PX
+  const preferredTop = fitsViewport
+    ? getCenteredScrollTop(top, rect.height, window.innerHeight)
+    : top
+  const start = clampToPage(
+    Math.min(
+      preferredTop,
+      getHeadingBelowHeaderScrollTop(section, headerHeight),
+    ),
+  )
   return { start, end: Math.max(start, top + rect.height - window.innerHeight) }
 }
 
@@ -91,12 +108,6 @@ function measureSections(container: HTMLElement): SectionRange[] {
     (a, b) => a.start - b.start,
   )
 }
-
-const visiblePageHeight = () =>
-  window.innerHeight -
-  (Number.parseFloat(
-    getComputedStyle(document.documentElement).scrollPaddingTop,
-  ) || 0)
 
 export function useSectionMagnet(containerRef: RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -118,7 +129,7 @@ export function useSectionMagnet(containerRef: RefObject<HTMLElement | null>) {
         !window.matchMedia(MAGNET_QUERY).matches
       )
         return
-      const pageHeight = visiblePageHeight()
+      const pageHeight = window.innerHeight
       const target = findSnapTarget(
         window.scrollY,
         direction,

@@ -40,8 +40,8 @@ describe("findSnapTarget", () => {
     expect(findSnapTarget(2800, 1, sections, PAGE_HEIGHT)).toBe(3400)
   })
 
-  it("아래 섹션에서 위로 10% 넘게 굴리면 큰 섹션의 아래 끝 화면에 붙는다", () => {
-    expect(findSnapTarget(3300, -1, sections, PAGE_HEIGHT)).toBe(2700)
+  it("아래 섹션에서 위로 10% 넘게 굴리면 큰 섹션도 내려올 때와 같은 시작 위치에 붙는다", () => {
+    expect(findSnapTarget(3300, -1, sections, PAGE_HEIGHT)).toBe(2400)
   })
 
   it("Hero와 소개 정착 화면처럼 먼 구간도 같은 기준으로 한 번에 넘긴다", () => {
@@ -59,12 +59,12 @@ describe("findSnapTarget", () => {
 })
 
 describe("getCenteredScrollTop", () => {
-  it("섹션이 헤더 아래 보이는 영역의 세로 가운데에 오는 스크롤 위치를 준다", () => {
-    expect(getCenteredScrollTop(1000, 600, 900, 80)).toBe(810)
+  it("섹션이 화면 세로 가운데에 오는 스크롤 위치를 준다", () => {
+    expect(getCenteredScrollTop(1000, 600, 900)).toBe(850)
   })
 
-  it("섹션 높이가 보이는 영역과 같으면 섹션 위쪽이 헤더 바로 아래에 온다", () => {
-    expect(getCenteredScrollTop(1000, 820, 900, 80)).toBe(920)
+  it("섹션 높이가 화면과 같으면 섹션 위쪽이 화면 맨 위에 온다", () => {
+    expect(getCenteredScrollTop(1000, 900, 900)).toBe(1000)
   })
 })
 
@@ -72,11 +72,13 @@ describe("useSectionMagnet", () => {
   const CURRENT_TOP = 1000
   const VIEWPORT_HEIGHT = 800
   const HEADER_HEIGHT = 80
+  const ANCHOR_SCROLL_PADDING_PX = 90
+  const ABOUT_SCROLL_MARGIN_PX = -500
   const STATS_TOP = 700
   const NEXT_TOP = 1500
   const SECTION_HEIGHT = 300
-  const CENTER_OFFSET =
-    HEADER_HEIGHT + (VIEWPORT_HEIGHT - HEADER_HEIGHT - SECTION_HEIGHT) / 2
+  const TALL_SECTION_HEIGHT = 1200
+  const CENTER_OFFSET = (VIEWPORT_HEIGHT - SECTION_HEIGHT) / 2
   let frames: FrameRequestCallback[] = []
   let scrollTo = vi.fn()
 
@@ -94,6 +96,8 @@ describe("useSectionMagnet", () => {
     magnetAllowed = true,
     nextId = "values",
     nextHeight = SECTION_HEIGHT,
+    nextScrollMargin = "0px",
+    nextHeadingOffset = null as number | null,
   } = {}) {
     vi.stubGlobal(
       "matchMedia",
@@ -101,11 +105,21 @@ describe("useSectionMagnet", () => {
     )
     vi.stubGlobal("scrollY", CURRENT_TOP)
     vi.stubGlobal("innerHeight", VIEWPORT_HEIGHT)
-    document.body.innerHTML = `<header></header><main><section id="stats"></section><section id="${nextId}"></section></main>`
+    document.documentElement.style.setProperty(
+      "scroll-padding-top",
+      `${ANCHOR_SCROLL_PADDING_PX}px`,
+    )
+    document.body.innerHTML = `<header></header><main><section id="stats"></section><section id="${nextId}" style="scroll-margin-top: ${nextScrollMargin}"></section></main>`
     const header = document.querySelector("header") as HTMLElement
     header.getBoundingClientRect = () => ({ height: HEADER_HEIGHT }) as DOMRect
     placeSection("stats", STATS_TOP, SECTION_HEIGHT)
     placeSection(nextId, NEXT_TOP, nextHeight)
+    if (nextHeadingOffset !== null) {
+      const heading = document.createElement("hgroup")
+      heading.getBoundingClientRect = () =>
+        ({ top: NEXT_TOP + nextHeadingOffset - CURRENT_TOP }) as DOMRect
+      document.getElementById(nextId)?.append(heading)
+    }
     const main = document.querySelector("main")
     renderHook(() => useSectionMagnet({ current: main }))
   }
@@ -142,10 +156,11 @@ describe("useSectionMagnet", () => {
   afterEach(() => {
     vi.useRealTimers()
     vi.unstubAllGlobals()
+    document.documentElement.style.removeProperty("scroll-padding-top")
     document.body.innerHTML = ""
   })
 
-  it("휠을 아래로 굴려 멈추면 아래 섹션, 위로 굴려 멈추면 위 섹션을 화면 세로 가운데에 둔다", () => {
+  it("휠을 아래로 굴려 멈추면 아래 섹션, 위로 굴려 멈추면 위 섹션을 헤더와 상관없이 화면 세로 가운데에 둔다", () => {
     renderOnPage()
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
@@ -155,15 +170,49 @@ describe("useSectionMagnet", () => {
     expect(lastScrollTop()).toBe(STATS_TOP - CENTER_OFFSET)
   })
 
-  it("화면보다 큰 섹션은 위쪽에 맞춰 멈춘다", () => {
-    renderOnPage({ nextHeight: 1200 })
+  it("화면보다 큰 섹션은 헤더와 상관없이 섹션 위쪽을 화면 맨 위에 맞춰 멈춘다", () => {
+    renderOnPage({ nextHeight: TALL_SECTION_HEIGHT })
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
 
     expect(lastScrollTop()).toBe(NEXT_TOP)
   })
 
-  it("CTA는 헤더와 상관없이 섹션 위쪽을 화면 맨 위에 맞춰 멈춘다", () => {
+  it("가운데에 두면 제목이 헤더에 가려지는 섹션은 제목이 헤더 바로 아래에 올 만큼만 내려 멈춘다", () => {
+    const fittingHeight = 700
+    const headingOffset = 20
+    renderOnPage({
+      nextHeight: fittingHeight,
+      nextHeadingOffset: headingOffset,
+    })
+
+    stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
+
+    expect(lastScrollTop()).toBe(NEXT_TOP + headingOffset - HEADER_HEIGHT)
+  })
+
+  it("화면보다 큰 섹션도 위쪽 제목이 헤더에 가려지지 않게 내려 멈춘다", () => {
+    renderOnPage({ nextHeight: TALL_SECTION_HEIGHT, nextHeadingOffset: 0 })
+
+    stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
+
+    expect(lastScrollTop()).toBe(NEXT_TOP - HEADER_HEIGHT)
+  })
+
+  it("앵커가 섹션 안쪽에 있는 큰 섹션(소개 확대 구간)은 앵커 위치에 멈춘다", () => {
+    renderOnPage({
+      nextHeight: TALL_SECTION_HEIGHT,
+      nextScrollMargin: `${ABOUT_SCROLL_MARGIN_PX}px`,
+    })
+
+    stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
+
+    expect(lastScrollTop()).toBe(
+      NEXT_TOP - ANCHOR_SCROLL_PADDING_PX - ABOUT_SCROLL_MARGIN_PX,
+    )
+  })
+
+  it("CTA는 가운데가 아니라 섹션 위쪽을 화면 맨 위에 맞춰 멈춘다", () => {
     renderOnPage({ nextId: "cta" })
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
