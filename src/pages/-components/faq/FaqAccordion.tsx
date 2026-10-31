@@ -79,7 +79,7 @@ export function FaqAccordionItem({
       </Accordion.Header>
       <Accordion.Content className="faq-accordion-content overflow-hidden">
         <div className="pr-[29px] pb-[15px] pl-[23px] md:pr-[43px] md:pb-[23px] md:pl-[39px]">
-          <p className="relative whitespace-pre-line text-[13px] text-neutral-medium-600 leading-[1.6] tracking-[-0.01em] md:text-[16px] xl:text-[18px]">
+          <p className="whitespace-pre-line text-[13px] text-neutral-medium-600 leading-[1.6] tracking-[-0.01em] md:text-[16px] xl:text-[18px]">
             {children}
           </p>
         </div>
