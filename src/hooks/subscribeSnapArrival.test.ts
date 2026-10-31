@@ -85,16 +85,27 @@ describe("subscribeSnapArrival", () => {
     expect(onArrive).toHaveBeenCalledTimes(1)
   })
 
-  it("움직임 없이 바로 옮겨지면 선택되는 즉시 알린다", () => {
+  it("멈춰 있을 때 구독하면 알리지 않고, 움직임 없이 바로 옮겨지면 선택되는 즉시 알린다", () => {
     const { embla, state, emit } = createFakeEmbla()
     const onArrive = vi.fn()
+    state.location = 400
     subscribeSnapArrival(embla, onArrive)
 
-    state.location = 400
     emit("settle")
     expect(onArrive).not.toHaveBeenCalled()
 
     emit("select")
+    expect(onArrive).toHaveBeenCalledTimes(1)
+  })
+
+  it("움직이는 도중에 구독하면 가운데에 도착할 때 알린다", () => {
+    const { embla, state, emit } = createFakeEmbla()
+    const onArrive = vi.fn()
+    state.location = 200
+    subscribeSnapArrival(embla, onArrive)
+
+    state.location = 400
+    emit("scroll")
     expect(onArrive).toHaveBeenCalledTimes(1)
   })
 

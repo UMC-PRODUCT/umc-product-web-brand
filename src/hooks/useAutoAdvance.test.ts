@@ -99,6 +99,25 @@ describe("useAutoAdvance", () => {
     expect(count()).toBe(0)
   })
 
+  it("넘어가는 도중에 멈춤이 풀리면 도착한 순간부터 다시 센다", () => {
+    const { api, embla, emit, position } = createFakeEmbla()
+    const { rerender } = renderHook(
+      ({ paused }) => useAutoAdvance(embla, { delay: 2000, paused }),
+      { initialProps: { paused: true } },
+    )
+
+    position.target = 400
+    position.location = 200
+    rerender({ paused: false })
+    vi.advanceTimersByTime(1000)
+    position.location = 400
+    emit("scroll")
+    vi.advanceTimersByTime(1999)
+    expect(api.scrollNext).not.toHaveBeenCalled()
+    vi.advanceTimersByTime(1)
+    expect(api.scrollNext).toHaveBeenCalledTimes(1)
+  })
+
   it("멈춤이 풀리면 다시 센다", () => {
     const { api, embla } = createFakeEmbla()
     const { rerender } = renderHook(

@@ -8,8 +8,6 @@ export function subscribeSnapArrival(
   emblaApi: EmblaCarouselType,
   onArrive: () => void,
 ) {
-  let arrived = true
-
   const isAtTarget = () => {
     const engine = emblaApi.internalEngine()
     return (
@@ -18,6 +16,8 @@ export function subscribeSnapArrival(
         ARRIVAL_DISTANCE_PX
     )
   }
+
+  let arrived = isAtTarget()
 
   const checkArrival = () => {
     if (arrived || !isAtTarget()) return
