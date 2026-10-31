@@ -32,7 +32,7 @@ export function RecruitmentSection() {
           )}
         >
           {RECRUITMENT_FIELDS.map(({ field, title, description }) => (
-            <li key={field}>
+            <li className="@container" key={field}>
               <FeatureCard
                 description={description}
                 field={field}

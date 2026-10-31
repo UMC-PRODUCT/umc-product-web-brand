@@ -3,9 +3,13 @@
  * - 아래부터 베이스(PM e9f7f5, 나머지 #fff) → eaf9f6 100% → 선형 2겹 → 방사형 1겹
  * - eaf9f6이 100%로 베이스를 덮어 베이스 색은 보이지 않으므로 background-color만 eaf9f6으로 둔다
  * - 레이어 투명도는 각 색의 알파(8자리 hex)에 곱해 넣었다
- * - 각도·지점은 Dev Mode CSS 값(gradientTransform 역변환 결과와 같음)
  * - 방사형은 중심 (152.5, 9.5), 반경 가로 294.73·세로 272.5 (305×282 기준)를 %로 옮겨 카드 폭이 바뀌어도 비율을 지킨다
  */
+.feature-card {
+  --feature-card-height: 282px;
+  height: var(--feature-card-height);
+}
+
 .feature-card-pm {
   background-color: #eaf9f6;
   background-image:
@@ -13,13 +17,27 @@
     radial-gradient(
       96.63% 96.63% at 50% 3.37%,
       #7904cc24 1.44%,
+      #a640e41e 12.26%,
       #d37cfb19 23.08%,
+      #e0b0fc0c 61.54%,
       #eee3fc00 100%
     ),
     /* 선형 6%: eee3fc → 2ed1be 0% */
-    linear-gradient(121.46deg, #eee3fc0f 8.35%, #2ed1be00 48.63%),
+    linear-gradient(
+      atan2(calc(1.58544 * var(--feature-card-height)), calc(-0.897 * 100cqw)),
+      #eee3fc0f 8.35%,
+      #8edadd08 28.49%,
+      #2ed1be00 48.63%
+    ),
     /* 선형 4%: 2ed1be → 2ed1be 0% */
-    linear-gradient(-66.18deg, #2ed1be0a 16.53%, #2ed1be00 37.28%);
+    linear-gradient(
+      atan2(
+        calc(-1.31981 * var(--feature-card-height)),
+        calc(0.53868 * 100cqw)
+      ),
+      #2ed1be0a -16.53%,
+      #2ed1be00 37.28%
+    );
 }
 
 .feature-card-design {
@@ -29,13 +47,27 @@
     radial-gradient(
       96.63% 96.63% at 50% 3.37%,
       #fb267129 1.44%,
+      #fa449323 12.26%,
       #fa61b51d 23.08%,
+      #fb7dba0e 61.54%,
       #fc99bf00 100%
     ),
     /* 선형 20%: 2ed1be 40% → 0% */
-    linear-gradient(121.46deg, #2ed1be14 8.35%, #2ed1be00 48.63%),
+    linear-gradient(
+      atan2(calc(1.58544 * var(--feature-card-height)), calc(-0.897 * 100cqw)),
+      #2ed1be14 8.35%,
+      #2ed1be00 48.63%
+    ),
     /* 선형 10%: 98ebeb → 0afcfc 0% */
-    linear-gradient(-49.72deg, #98ebeb1a 12.21%, #0afcfc00 35.65%);
+    linear-gradient(
+      atan2(
+        calc(-1.17143 * var(--feature-card-height)),
+        calc(0.91777 * 100cqw)
+      ),
+      #98ebeb1a -12.21%,
+      #51f4f40d 11.72%,
+      #0afcfc00 35.65%
+    );
 }
 
 .feature-card-web {
@@ -45,13 +77,27 @@
     radial-gradient(
       96.63% 96.63% at 50% 3.37%,
       #f2c92924 1.44%,
+      #f4d82f1e 12.26%,
       #f7e73519 23.08%,
+      #fbec7c0c 61.54%,
       #fff0c200 100%
     ),
     /* 선형 30%: 2ed1be 40% → 0% */
-    linear-gradient(121.46deg, #2ed1be1f 8.35%, #2ed1be00 48.63%),
+    linear-gradient(
+      atan2(calc(1.58544 * var(--feature-card-height)), calc(-0.897 * 100cqw)),
+      #2ed1be1f 8.35%,
+      #2ed1be00 48.63%
+    ),
     /* 선형 10%: 98ebeb → 0afcfc 0% */
-    linear-gradient(-49.72deg, #98ebeb1a 12.21%, #0afcfc00 35.65%);
+    linear-gradient(
+      atan2(
+        calc(-1.17143 * var(--feature-card-height)),
+        calc(0.91777 * 100cqw)
+      ),
+      #98ebeb1a -12.21%,
+      #51f4f40d 11.72%,
+      #0afcfc00 35.65%
+    );
 }
 
 .feature-card-mobile {
@@ -61,11 +107,25 @@
     radial-gradient(
       96.63% 96.63% at 50% 3.37%,
       #0844ed24 1.44%,
+      #3668f420 12.26%,
       #658cfb1d 23.08%,
+      #a2bafd0e 61.54%,
       #e0e8ff00 100%
     ),
     /* 선형 24%: 2ed1be 40% → 0% */
-    linear-gradient(121.46deg, #2ed1be18 8.35%, #2ed1be00 48.63%),
+    linear-gradient(
+      atan2(calc(1.58544 * var(--feature-card-height)), calc(-0.897 * 100cqw)),
+      #2ed1be18 8.35%,
+      #2ed1be00 48.63%
+    ),
     /* 선형 10%: 98ebeb → 0afcfc 0% */
-    linear-gradient(-49.72deg, #98ebeb1a 12.21%, #0afcfc00 35.65%);
+    linear-gradient(
+      atan2(
+        calc(-1.17143 * var(--feature-card-height)),
+        calc(0.91777 * 100cqw)
+      ),
+      #98ebeb1a -12.21%,
+      #51f4f40d 11.72%,
+      #0afcfc00 35.65%
+    );
 }

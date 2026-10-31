@@ -7,7 +7,7 @@ import "./recruitment.css"
 
 const featureCardVariants = cva(
   // Figma 테두리는 안쪽에 그려지므로 위 여백은 36px에서 테두리 4px를 뺀 32px. Glass 효과는 블러(반경 4)만 옮긴다
-  "flex h-[282px] flex-col rounded-[30px] border-t-4 border-t-primary-strong-500 px-(--umc-spacing-padding-28) pt-(--umc-spacing-padding-32) backdrop-blur-[4px]",
+  "feature-card flex flex-col rounded-[30px] border-t-4 border-t-primary-strong-500 px-(--umc-spacing-padding-28) pt-(--umc-spacing-padding-32) backdrop-blur-[4px]",
   {
     variants: {
       // Figma Property 1 (PM, Design, web, Mobile). 배경은 recruitment.css
