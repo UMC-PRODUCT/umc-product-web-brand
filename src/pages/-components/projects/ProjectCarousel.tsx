@@ -19,6 +19,14 @@ import "./projects.css"
 // 가운데 카드가 확대된 채 멈춰 있는 시간
 const AUTO_ADVANCE_DELAY = 2000
 
+const distanceFromCenter = (index: number, center: number, count: number) => {
+  const half = Math.floor(count / 2)
+  return ((((index - center + half) % count) + count) % count) - half
+}
+
+const slideSize = (index: number, center: number, count: number) =>
+  distanceFromCenter(index, center, count) % 2 === 0 ? "large" : "small"
+
 interface ProjectCarouselProps {
   projects: readonly Project[]
   label: string
@@ -94,7 +102,7 @@ export function ProjectCarousel({
               aria-label={`${index + 1} / ${projects.length}`}
               aria-roledescription="slide"
               className="project-slide"
-              data-active={index === selectedIndex}
+              data-size={slideSize(index, selectedIndex, projects.length)}
               key={project.name}
             >
               <ProjectCard
