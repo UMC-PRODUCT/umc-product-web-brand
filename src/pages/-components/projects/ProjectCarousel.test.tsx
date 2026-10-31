@@ -47,6 +47,7 @@ vi.mock("embla-carousel-react", () => ({
 
 const createProjects = (count: number): Project[] =>
   Array.from({ length: count }, (_, index) => ({
+    id: `프로젝트 ${index + 1}`,
     name: `프로젝트 ${index + 1}`,
     description: "소개",
     parts: ["Web"],
