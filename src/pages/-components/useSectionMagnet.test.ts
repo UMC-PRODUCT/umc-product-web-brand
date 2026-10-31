@@ -94,6 +94,7 @@ describe("useSectionMagnet", () => {
 
   function renderOnPage({
     magnetAllowed = true,
+    previousId = "stats",
     nextId = "values",
     nextHeight = SECTION_HEIGHT,
     nextScrollMargin = "0px",
@@ -109,10 +110,10 @@ describe("useSectionMagnet", () => {
       "scroll-padding-top",
       `${ANCHOR_SCROLL_PADDING_PX}px`,
     )
-    document.body.innerHTML = `<header></header><main><section id="stats"></section><section id="${nextId}" style="scroll-margin-top: ${nextScrollMargin}"></section></main>`
+    document.body.innerHTML = `<header></header><main><section id="${previousId}"></section><section id="${nextId}" style="scroll-margin-top: ${nextScrollMargin}"></section></main>`
     const header = document.querySelector("header") as HTMLElement
     header.getBoundingClientRect = () => ({ height: HEADER_HEIGHT }) as DOMRect
-    placeSection("stats", STATS_TOP, SECTION_HEIGHT)
+    placeSection(previousId, STATS_TOP, SECTION_HEIGHT)
     placeSection(nextId, NEXT_TOP, nextHeight)
     if (nextHeadingOffset !== null) {
       const heading = document.createElement("hgroup")
@@ -212,12 +213,21 @@ describe("useSectionMagnet", () => {
     )
   })
 
-  it("CTA는 가운데가 아니라 섹션 위쪽을 화면 맨 위에 맞춰 멈춘다", () => {
-    renderOnPage({ nextId: "cta" })
+  it("Preview까지는 끌어당긴다", () => {
+    renderOnPage({ previousId: "values", nextId: "preview" })
 
     stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
 
-    expect(lastScrollTop()).toBe(NEXT_TOP)
+    expect(lastScrollTop()).toBe(NEXT_TOP - CENTER_OFFSET)
+  })
+
+  it("Preview 아래에서는 어느 방향으로 굴려도 끌어당기지 않는다", () => {
+    renderOnPage({ previousId: "preview", nextId: "universities" })
+
+    stopScrollingAfter(new WheelEvent("wheel", { deltaY: 100 }))
+    stopScrollingAfter(new WheelEvent("wheel", { deltaY: -100 }))
+
+    expect(scrollTo).not.toHaveBeenCalled()
   })
 
   it("입력 없이 코드로 바뀐 스크롤에는 다시 끌어당기지 않는다", () => {

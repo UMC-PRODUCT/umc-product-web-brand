@@ -13,7 +13,8 @@ const COMMIT_RATIO = 0.1
 const SHORT_MOVE_DURATION_MS = 500
 const SCROLL_IDLE_MS = 150
 const MIN_MOVE_PX = 1
-const VIEWPORT_TOP_SECTION_ID = "cta"
+const LAST_SNAP_SECTION_ID = "preview"
+const SNAP_SECTION_SELECTOR = `:scope > section[id]:not(#${LAST_SNAP_SECTION_ID} ~ section)`
 const HEADING_SELECTOR = "hgroup, h2"
 const INPUT_EVENTS = ["wheel", "keydown", "mousedown", "touchstart"] as const
 
@@ -79,7 +80,6 @@ function measureSection(
     const stop = clampToPage(scrollTop)
     return { start: stop, end: stop }
   }
-  if (section.id === VIEWPORT_TOP_SECTION_ID) return stopAt(top)
   const anchorTop = getAnchorScrollTop(section)
   const hasAnchorInsideSection = anchorTop > top
   if (hasAnchorInsideSection) return stopAt(anchorTop)
@@ -100,13 +100,10 @@ function measureSections(container: HTMLElement): SectionRange[] {
   const pageEnd = document.documentElement.scrollHeight - window.innerHeight
   const headerHeight =
     document.querySelector("header")?.getBoundingClientRect().height ?? 0
-  const sections = Array.from(
-    container.querySelectorAll(":scope > section[id]"),
+  return Array.from(
+    container.querySelectorAll(SNAP_SECTION_SELECTOR),
     (section) => measureSection(section, headerHeight, pageEnd),
-  )
-  return [...sections, { start: pageEnd, end: pageEnd }].sort(
-    (a, b) => a.start - b.start,
-  )
+  ).sort((a, b) => a.start - b.start)
 }
 
 export function useSectionMagnet(containerRef: RefObject<HTMLElement | null>) {
