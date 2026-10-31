@@ -4,28 +4,20 @@ import {
   type PointerEvent,
   useEffect,
   useState,
-  useSyncExternalStore,
 } from "react"
 
+import { subscribeSnapArrival } from "@/hooks/subscribeSnapArrival"
+import { useAutoAdvance } from "@/hooks/useAutoAdvance"
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion"
 import { cn } from "@/utils/cn"
 
 import { type Project } from "./constants"
 import { ProjectCard } from "./ProjectCard"
-import { subscribeSnapArrival } from "./subscribeSnapArrival"
-import { useAutoAdvance } from "./useAutoAdvance"
 
 import "./projects.css"
 
 // 가운데 카드가 확대된 채 멈춰 있는 시간
 const AUTO_ADVANCE_DELAY = 2000
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)"
-
-const subscribeReducedMotion = (onChange: () => void) => {
-  const query = window.matchMedia(REDUCED_MOTION_QUERY)
-  query.addEventListener("change", onChange)
-  return () => query.removeEventListener("change", onChange)
-}
-const getReducedMotion = () => window.matchMedia(REDUCED_MOTION_QUERY).matches
 
 interface ProjectCarouselProps {
   projects: readonly Project[]
@@ -45,10 +37,7 @@ export function ProjectCarousel({
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [hovering, setHovering] = useState(false)
   const [focused, setFocused] = useState(false)
-  const reduceMotion = useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotion,
-  )
+  const reduceMotion = usePrefersReducedMotion()
   const paused = hovering || focused || reduceMotion
 
   useAutoAdvance(emblaApi, { delay: AUTO_ADVANCE_DELAY, paused })
