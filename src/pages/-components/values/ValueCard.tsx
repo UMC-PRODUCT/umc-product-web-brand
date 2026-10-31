@@ -22,7 +22,7 @@ export function ValueCard({
 
   return (
     <li
-      className="value-card-slot h-[204px] w-full max-w-[310px] md:h-[363px] md:w-auto md:max-w-none lg:h-[460px] lg:min-w-0 lg:flex-1 xl:h-[400px] xl:max-w-[310px]"
+      className="value-card-slot h-[204px] w-[310px] md:h-[363px] md:w-auto lg:h-[460px] lg:min-w-0 lg:flex-1 xl:h-[400px] xl:max-w-[310px]"
       data-expanded={expanded}
     >
       <div className="value-card relative isolate flex h-full flex-col gap-2 overflow-hidden rounded-3xl border-t-6 px-5 pt-6 pb-5 text-white md:justify-between md:gap-0 md:px-9 md:pt-[58px] md:pb-[60px]">
