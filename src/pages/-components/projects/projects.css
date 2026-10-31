@@ -59,7 +59,7 @@
   transform: translate(-50%, -50%) scale(var(--project-card-current-scale));
 }
 
-.project-slide[data-active="true"] .project-slide-card {
+.project-slide[data-size="large"] .project-slide-card {
   --project-card-current-scale: calc(
     var(--project-card-scale) *
     var(--project-card-active-scale)
