@@ -12,8 +12,8 @@ const cardVariants = cva(
   {
     variants: {
       size: {
-        lg: "py-[22px]",
-        md: "py-(--umc-spacing-padding-20)",
+        lg: "min-h-[144px] py-[22px]",
+        md: "min-h-[114px] py-(--umc-spacing-padding-20)",
       },
     },
     defaultVariants: { size: "lg" },
@@ -56,7 +56,9 @@ export function ProjectSummaryCard({
     <li className={cardVariants({ size })}>
       <h3 className={titleVariants({ size })}>{title}</h3>
       <div className="flex flex-col gap-(--umc-spacing-gap-4)">
-        <p className={descriptionVariants({ size })}>{description}</p>
+        <p className={descriptionVariants({ size })} title={description}>
+          {description}
+        </p>
         {apiCount !== undefined && (
           <p className="font-medium text-[14px] text-neutral-medium-600 leading-[1.5]">
             API 수 : {apiCount}
