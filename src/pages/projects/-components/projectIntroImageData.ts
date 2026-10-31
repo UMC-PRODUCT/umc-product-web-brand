@@ -5,7 +5,7 @@ const PIECE_HEIGHT = 3200
 const LAST_PIECE_HEIGHTS: Readonly<Record<string, number>> = {
   "pop-it": 2952,
   muffin: 253,
-  teaching: 2883,
+  teaching: 2940,
   boogle: 1922,
   brifo: 1147,
   bookshelves: 1992,
