@@ -4,7 +4,7 @@ import heroGlow from "@/assets/projects/hero-glow.webp"
 import { Container } from "@/components/layout/Container"
 import { Section } from "@/components/layout/Section"
 
-import { PROJECT_LIST_COPY } from "./constants"
+import { PROJECT_LIST_COPY } from "../constants"
 
 export function ProjectsHero() {
   return (

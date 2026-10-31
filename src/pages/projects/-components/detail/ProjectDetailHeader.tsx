@@ -1,5 +1,5 @@
-import { PROJECT_LIST_COPY } from "./constants"
-import { ProjectBreadcrumbs } from "./ProjectBreadcrumbs"
+import { PROJECT_LIST_COPY } from "../constants"
+import { ProjectBreadcrumbs } from "../ProjectBreadcrumbs"
 
 interface ProjectDetailHeaderProps {
   name: string
@@ -7,6 +7,7 @@ interface ProjectDetailHeaderProps {
   award: string
   generation: number
   parts: readonly string[]
+  tabLabel: string
 }
 
 export function ProjectDetailHeader({
@@ -15,6 +16,7 @@ export function ProjectDetailHeader({
   award,
   generation,
   parts,
+  tabLabel,
 }: ProjectDetailHeaderProps) {
   return (
     <header className="pl-3">
@@ -23,7 +25,7 @@ export function ProjectDetailHeader({
           { label: "홈", to: "/" },
           { label: PROJECT_LIST_COPY.title, to: "/projects" },
           { label: name },
-          { label: PROJECT_LIST_COPY.detailIntro },
+          { label: tabLabel },
         ]}
       />
       <h1

@@ -9,13 +9,13 @@ import {
   PROJECT_LIST,
   PROJECT_LIST_COPY,
 } from "./-components/constants"
-import { ProjectFilterDropdown } from "./-components/ProjectFilterDropdown"
-import { ProjectList } from "./-components/ProjectList"
+import { ProjectFilterDropdown } from "./-components/list/ProjectFilterDropdown"
+import { ProjectList } from "./-components/list/ProjectList"
+import { ProjectPagination } from "./-components/list/ProjectPagination"
+import { ProjectSearchField } from "./-components/list/ProjectSearchField"
+import { ProjectsHero } from "./-components/list/ProjectsHero"
+import { ProjectsPageHeader } from "./-components/list/ProjectsPageHeader"
 import { ProjectPageShell } from "./-components/ProjectPageShell"
-import { ProjectPagination } from "./-components/ProjectPagination"
-import { ProjectSearchField } from "./-components/ProjectSearchField"
-import { ProjectsHero } from "./-components/ProjectsHero"
-import { ProjectsPageHeader } from "./-components/ProjectsPageHeader"
 import {
   getProjectPage,
   type ProjectAward,

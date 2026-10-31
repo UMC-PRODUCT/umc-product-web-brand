@@ -3,13 +3,22 @@ import { createFileRoute, notFound } from "@tanstack/react-router"
 import { Container } from "@/components/layout/Container"
 import { Section } from "@/components/layout/Section"
 
-import { findProject, PROJECT_CONTAINER_CLASS } from "./-components/constants"
-import { ProjectDetailHeader } from "./-components/ProjectDetailHeader"
-import { ProjectIntroImages } from "./-components/ProjectIntroImages"
+import {
+  findProject,
+  PROJECT_CONTAINER_CLASS,
+  PROJECT_LIST_COPY,
+} from "./-components/constants"
+import { ProjectDetailHeader } from "./-components/detail/ProjectDetailHeader"
+import { ProjectDetailInfo } from "./-components/detail/ProjectDetailInfo"
+import { ProjectDetailTabs } from "./-components/detail/ProjectDetailTabs"
+import { ProjectImageStack } from "./-components/detail/ProjectImageStack"
+import { PROJECT_DETAILS } from "./-components/detail/projectDetails"
+import { getProjectIntroImages } from "./-components/detail/projectImageData"
 import { ProjectPageShell } from "./-components/ProjectPageShell"
-import { getProjectIntroImages } from "./-components/projectIntroImageData"
+import { parseProjectDetailSearch } from "./-components/projectSearch"
 
 export const Route = createFileRoute("/projects/$projectId")({
+  validateSearch: parseProjectDetailSearch,
   loader: ({ params }) => {
     const project = findProject(params.projectId)
     if (!project) throw notFound()
@@ -23,6 +32,8 @@ export const Route = createFileRoute("/projects/$projectId")({
 
 function ProjectDetailPage() {
   const project = Route.useLoaderData()
+  const { tab = "intro" } = Route.useSearch()
+  const navigate = Route.useNavigate()
 
   return (
     <ProjectPageShell>
@@ -35,10 +46,35 @@ function ProjectDetailPage() {
             generation={project.generation}
             name={project.name}
             parts={project.parts}
+            tabLabel={
+              tab === "detail"
+                ? PROJECT_LIST_COPY.detailInfo
+                : PROJECT_LIST_COPY.detailIntro
+            }
           />
-          <ProjectIntroImages
-            images={getProjectIntroImages(project.id)}
-            name={project.name}
+          <ProjectDetailTabs
+            detail={
+              <ProjectDetailInfo
+                detail={PROJECT_DETAILS[project.id]}
+                name={project.name}
+                projectId={project.id}
+              />
+            }
+            intro={
+              <ProjectImageStack
+                eagerFirst
+                images={getProjectIntroImages(project.id)}
+                label={`${project.name} 소개 이미지`}
+              />
+            }
+            onValueChange={(next) =>
+              navigate({
+                search: next === "detail" ? { tab: next } : {},
+                replace: true,
+                resetScroll: false,
+              })
+            }
+            value={tab}
           />
         </Container>
       </Section>
