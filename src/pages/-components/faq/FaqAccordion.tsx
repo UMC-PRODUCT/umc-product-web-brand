@@ -40,7 +40,7 @@ export function FaqAccordionItem({
         "rounded-(--umc-radius-24) border border-neutral-weaker-100 bg-[#fcfcfc]/20 shadow-drop-neutral-3 data-[state=open]:bg-fill-primary-weak-75 motion-safe:transition-[background-color,border-color,box-shadow]",
         // Hover(State3): 안쪽 테두리 2px. 레이아웃이 밀리지 않도록 1px 테두리에 안쪽 그림자 1px를 더한다
         "data-[state=closed]:hover:border-primary-medium-300 data-[state=closed]:hover:shadow-[inset_0_0_0_1px_var(--umc-color-border-primary-medium-300),var(--umc-shadow-drop-neutral-3)]",
-        "outline-teal-500 outline-offset-4 has-focus-visible:outline-2",
+        "relative outline-teal-500 outline-offset-4 has-focus-visible:outline-2",
         className,
       )}
       value={value}
@@ -48,7 +48,7 @@ export function FaqAccordionItem({
       <Accordion.Header>
         <Accordion.Trigger
           className={cn(
-            "group flex w-full items-center justify-between gap-(--umc-spacing-gap-10) text-left focus-visible:outline-none",
+            "group flex w-full items-center justify-between gap-(--umc-spacing-gap-10) text-left after:absolute after:inset-0 focus-visible:outline-none",
             // Figma 테두리는 안쪽에 그려지므로 여백에서 1px씩 뺀다
             "py-[15px] pr-[15px] pl-[23px] data-[state=open]:pb-(--umc-spacing-gap-24) md:py-[19px] md:pr-[29px] md:pl-[39px] md:data-[state=open]:pt-[23px] lg:py-[23px]",
           )}
@@ -78,9 +78,11 @@ export function FaqAccordionItem({
         </Accordion.Trigger>
       </Accordion.Header>
       <Accordion.Content className="faq-accordion-content overflow-hidden">
-        <p className="whitespace-pre-line pr-[29px] pb-[15px] pl-[23px] text-[13px] text-neutral-medium-600 leading-[1.6] tracking-[-0.01em] md:pr-[43px] md:pb-[23px] md:pl-[39px] md:text-[16px] xl:text-[18px]">
-          {children}
-        </p>
+        <div className="pr-[29px] pb-[15px] pl-[23px] md:pr-[43px] md:pb-[23px] md:pl-[39px]">
+          <p className="relative whitespace-pre-line text-[13px] text-neutral-medium-600 leading-[1.6] tracking-[-0.01em] md:text-[16px] xl:text-[18px]">
+            {children}
+          </p>
+        </div>
       </Accordion.Content>
     </Accordion.Item>
   )
