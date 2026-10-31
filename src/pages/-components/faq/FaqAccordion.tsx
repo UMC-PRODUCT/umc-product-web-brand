@@ -11,7 +11,10 @@ type FaqAccordionProps = ComponentProps<typeof Accordion.Root>
 export function FaqAccordion({ className, ...props }: FaqAccordionProps) {
   return (
     <Accordion.Root
-      className={cn("flex flex-col gap-(--umc-spacing-gap-20)", className)}
+      className={cn(
+        "flex flex-col gap-(--umc-spacing-gap-12) md:gap-(--umc-spacing-gap-20) xl:gap-(--umc-spacing-gap-16) 2xl:gap-(--umc-spacing-gap-20)",
+        className,
+      )}
       {...props}
     />
   )
@@ -47,14 +50,12 @@ export function FaqAccordionItem({
           className={cn(
             "group flex w-full items-center justify-between gap-(--umc-spacing-gap-10) text-left focus-visible:outline-none",
             // Figma 테두리는 안쪽에 그려지므로 여백에서 1px씩 뺀다
-            // Mobile 20/16/20/24, Pad 닫힘 20/30/20/40·열림 32/30/32/40, Small PC 이상 32/30/32/40
-            "py-[19px] pr-[15px] pl-[23px] data-[state=open]:pb-(--umc-spacing-gap-24) md:pr-[29px] md:pl-[39px] md:data-[state=open]:pt-[31px] lg:py-[31px]",
+            "py-[15px] pr-[15px] pl-[23px] data-[state=open]:pb-(--umc-spacing-gap-24) md:py-[19px] md:pr-[29px] md:pl-[39px] md:data-[state=open]:pt-[23px] lg:py-[23px]",
           )}
         >
           <span
             className={cn(
-              // Figma 질문 크기: Pad 이하 18, Small PC 24, PC 이상 26. 토큰에 같은 텍스트 스타일이 없다
-              "text-[18px] lg:text-[24px] xl:text-[26px]",
+              "text-[14px] md:text-[18px] lg:text-[20px] xl:text-[22px]",
               // 줄 높이는 글자 크기 뒤에 둔다. cn()이 뒤에 오는 글자 크기 클래스를 보고 앞의 leading을 지운다
               "flex items-center gap-(--umc-spacing-gap-10) font-semibold leading-[1.3] tracking-[-0.02em]",
             )}
@@ -62,23 +63,22 @@ export function FaqAccordionItem({
             {/* Figma Q는 줄 높이 35지만 34 높이 행 가운데에 놓인다. 행이 1px 커지지 않도록 34로 맞춘다 */}
             <span
               aria-hidden
-              className="text-[27px] text-brand-default-600 leading-[34px]"
+              className="text-[18px] text-brand-default-600 leading-[34px] md:text-[27px] lg:text-[24px] xl:text-[27px]"
             >
               Q
             </span>
-            <span className="text-neutral-strong-800">{question}</span>
+            <span className="-my-px text-neutral-strong-800">{question}</span>
           </span>
           <span className="flex shrink-0 px-(--umc-spacing-padding-16)">
             <ChevronDown
               aria-hidden
-              className="size-[24px] text-icon-neutral-medium-500 group-data-[state=open]:rotate-180 motion-safe:transition-transform"
+              className="size-[24px] text-[#47413c] group-data-[state=open]:rotate-180 motion-safe:transition-transform"
             />
           </span>
         </Accordion.Trigger>
       </Accordion.Header>
       <Accordion.Content className="faq-accordion-content overflow-hidden">
-        {/* Figma 질문과 답변 간격 24, 답변 오른쪽 여백 14. 답변 크기: Pad 이하 16, Small PC 이상 20 */}
-        <p className="whitespace-pre-line pr-[29px] pb-[19px] pl-[23px] text-[16px] text-neutral-medium-600 leading-[1.6] tracking-[-0.01em] md:pr-[43px] md:pb-[31px] md:pl-[39px] lg:text-[20px]">
+        <p className="whitespace-pre-line pr-[29px] pb-[15px] pl-[23px] text-[13px] text-neutral-medium-600 leading-[1.6] tracking-[-0.01em] md:pr-[43px] md:pb-[23px] md:pl-[39px] md:text-[16px] xl:text-[18px]">
           {children}
         </p>
       </Accordion.Content>
