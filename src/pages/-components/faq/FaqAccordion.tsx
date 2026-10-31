@@ -37,15 +37,20 @@ export function FaqAccordionItem({
         "rounded-(--umc-radius-24) border border-neutral-weaker-100 bg-[#fcfcfc]/20 shadow-drop-neutral-3 data-[state=open]:bg-fill-primary-weak-75 motion-safe:transition-[background-color,border-color,box-shadow]",
         // Hover(State3): 안쪽 테두리 2px. 레이아웃이 밀리지 않도록 1px 테두리에 안쪽 그림자 1px를 더한다
         "data-[state=closed]:hover:border-primary-medium-300 data-[state=closed]:hover:shadow-[inset_0_0_0_1px_var(--umc-color-border-primary-medium-300),var(--umc-shadow-drop-neutral-3)]",
-        // Figma 테두리는 안쪽에 그려지므로 여백에서 1px씩 뺀다
-        // Mobile 20/16/20/24, Pad 닫힘 20/30/20/40·열림 32/30/32/40, Small PC 이상 32/30/32/40
-        "py-[19px] pr-[15px] pl-[23px] md:pr-[29px] md:pl-[39px] md:data-[state=open]:py-[31px] lg:py-[31px]",
+        "outline-teal-500 outline-offset-4 has-focus-visible:outline-2",
         className,
       )}
       value={value}
     >
       <Accordion.Header>
-        <Accordion.Trigger className="group flex min-h-[34px] w-full items-center justify-between gap-(--umc-spacing-gap-10) text-left outline-teal-500 outline-offset-4 focus-visible:outline-2">
+        <Accordion.Trigger
+          className={cn(
+            "group flex w-full items-center justify-between gap-(--umc-spacing-gap-10) text-left focus-visible:outline-none",
+            // Figma 테두리는 안쪽에 그려지므로 여백에서 1px씩 뺀다
+            // Mobile 20/16/20/24, Pad 닫힘 20/30/20/40·열림 32/30/32/40, Small PC 이상 32/30/32/40
+            "py-[19px] pr-[15px] pl-[23px] data-[state=open]:pb-(--umc-spacing-gap-24) md:pr-[29px] md:pl-[39px] md:data-[state=open]:pt-[31px] lg:py-[31px]",
+          )}
+        >
           <span
             className={cn(
               // Figma 질문 크기: Pad 이하 18, Small PC 24, PC 이상 26. 토큰에 같은 텍스트 스타일이 없다
@@ -73,7 +78,7 @@ export function FaqAccordionItem({
       </Accordion.Header>
       <Accordion.Content className="faq-accordion-content overflow-hidden">
         {/* Figma 질문과 답변 간격 24, 답변 오른쪽 여백 14. 답변 크기: Pad 이하 16, Small PC 이상 20 */}
-        <p className="whitespace-pre-line pt-(--umc-spacing-gap-24) pr-[14px] text-[16px] text-neutral-medium-600 leading-[1.6] tracking-[-0.01em] lg:text-[20px]">
+        <p className="whitespace-pre-line pr-[29px] pb-[19px] pl-[23px] text-[16px] text-neutral-medium-600 leading-[1.6] tracking-[-0.01em] md:pr-[43px] md:pb-[31px] md:pl-[39px] lg:text-[20px]">
           {children}
         </p>
       </Accordion.Content>
