@@ -4,6 +4,8 @@
  * (절대 위치 장식, 숨긴 레이어 제외). 360·390·767은 값이 같고 768·1023도 같다
  * 1024 이상은 스크롤 스냅용 화면 프레임(749:23069, 1137:38073, 749:24263)의 최소 높이·패딩·간격을 쓴다
  * 자석은 Preview까지만 걸려서 프로젝트·모집 프레임은 화면 높이 대신 시안 프레임 높이(688, 820)를 쓴다
+ * 프로젝트·모집은 앵커 이동이 제목에서 멈추도록 프레임 위 여백만큼 scroll-margin-top을 뺀다
+ * 2xl의 세로 가운데 정렬도 같은 이유로 정렬 결과(위 여백 94, 131)를 고정값으로 둔다
  * 미디어 쿼리 폭은 index.css의 --breakpoint-md(48rem), lg(64rem), xl(90rem), 2xl(120rem)과 같다
  */
 .landing-main > #about {
@@ -71,6 +73,8 @@
   }
   .landing-main > :is(#projects, #recruit) {
     min-height: 688px;
+    padding-top: var(--frame-padding-top);
+    scroll-margin-top: calc(-1 * var(--frame-padding-top));
   }
   .landing-main > #about {
     margin-top: 70px;
@@ -91,12 +95,12 @@
     margin-top: 152px;
   }
   .landing-main > #projects {
+    --frame-padding-top: 48px;
     margin-top: 200px;
-    padding-top: 48px;
   }
   .landing-main > #recruit {
+    --frame-padding-top: 48px;
     margin-top: 120px;
-    padding-top: 48px;
   }
   .landing-main > #faq {
     margin-top: 180px;
@@ -129,12 +133,12 @@
     margin-top: 162px;
   }
   .landing-main > #projects {
+    --frame-padding-top: 60px;
     margin-top: 210px;
-    padding-top: 60px;
   }
   .landing-main > #recruit {
+    --frame-padding-top: 80px;
     margin-top: 130px;
-    padding-top: 80px;
   }
   .landing-main > #faq {
     margin-top: 150px;
@@ -145,7 +149,7 @@
 }
 
 @media (width >= 120rem) {
-  .landing-main > :is(#stats, #values, #preview, #projects, #recruit) {
+  .landing-main > :is(#stats, #values, #preview) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -156,8 +160,12 @@
   .landing-main > #preview {
     padding-top: 30px;
   }
+  .landing-main > #projects {
+    --frame-padding-top: 94px;
+  }
   .landing-main > #recruit {
-    padding-block: 60px 20px;
+    --frame-padding-top: 131px;
+    padding-bottom: 20px;
   }
   .landing-main > #faq {
     margin-top: 190px;
