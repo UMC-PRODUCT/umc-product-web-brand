@@ -1,28 +1,56 @@
-.value-card {
-  --value-card-transition: 250ms cubic-bezier(0.22, 1, 0.36, 1);
+.value-card-slot {
+  --value-card-transition: 300ms ease-out;
   --value-card-active: 0;
-  --value-card-shade-angle: 10.5deg;
+  --value-card-shift: -6px;
 }
 
-@media (width >= 48rem) {
-  .value-card {
-    --value-card-shade-angle: 20deg;
+@media (48rem <= width < 64rem) {
+  .value-card-slot {
+    --value-card-shift: 20px;
+  }
+
+  .value-card-slot:nth-child(-n + 2) {
+    --value-card-shift: -20px;
+    margin-top: 20px;
   }
 }
 
-.value-card[data-expanded="true"] {
+@media (width >= 64rem) {
+  .value-card-slot {
+    --value-card-shift: 20px;
+  }
+
+  .value-card-slot:nth-child(even) {
+    --value-card-shift: -20px;
+    margin-top: 20px;
+  }
+}
+
+.value-card-slot[data-expanded="true"] {
   --value-card-active: 1;
 }
 
 @media (width >= 48rem) {
-  .value-card:has(:focus-visible) {
+  .value-card-slot:has(:focus-visible) {
     --value-card-active: 1;
   }
 }
 
 @media (hover: hover) and (width >= 48rem) {
-  .value-card:hover {
+  .value-card-slot:hover {
     --value-card-active: 1;
+  }
+}
+
+.value-card {
+  --value-card-shade-angle: 10.5deg;
+  translate: 0 calc(var(--value-card-active) * var(--value-card-shift));
+  transition: translate var(--value-card-transition);
+}
+
+@media (width >= 48rem) {
+  .value-card {
+    --value-card-shade-angle: 20deg;
   }
 }
 
@@ -99,6 +127,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .value-card,
   .value-card-base,
   .value-card-photo,
   .value-card-shade,
