@@ -5,7 +5,7 @@ import { Container } from "@/components/layout/Container"
 import { Section } from "@/components/layout/Section"
 import { cn } from "@/utils/cn"
 
-import { CTA_APPLY_URL, CTA_COPY } from "./constants"
+import { CTA_COPY } from "./constants"
 import "./cta.css"
 
 export function CtaSection() {
@@ -45,21 +45,15 @@ export function CtaSection() {
         <Button
           asChild
           className={cn(
-            // 랜딩 인스턴스 값: 모든 뷰포트에서 채우기를 Brand-Inverse/Strong-600으로 덮었다
-            "bg-fill-primary-inverse-strong-600",
-            // Figma 버튼 크기: Mobile Lg, Pad Xl, Small PC Lg, PC 이상 Xl. Size 변형은 반응형을 받지 않아 값을 덮는다
-            "md:h-[68px] md:px-(--umc-spacing-padding-32) md:text-[24px] md:tracking-[-0.24px]",
-            "lg:h-[62px] lg:px-(--umc-spacing-padding-28) lg:text-[22px] lg:tracking-[-0.22px]",
+            "pointer-events-none h-12 rounded-(--umc-radius-14) bg-fill-neutral-inverse-strong-600 px-(--umc-spacing-padding-16) text-[17px] leading-[1.4] tracking-[-0.34px]",
+            "md:h-[62px] md:rounded-(--umc-radius-18) md:bg-fill-neutral-inverse-medium-500 md:px-(--umc-spacing-padding-28) md:text-[22px] md:leading-[1.35] md:tracking-[-0.22px]",
             "xl:h-[68px] xl:px-(--umc-spacing-padding-32) xl:text-[24px] xl:tracking-[-0.24px]",
           )}
-          color="brand"
+          color="neutral"
           size="lg"
           variant="fill"
         >
-          <a href={CTA_APPLY_URL} rel="noopener noreferrer" target="_blank">
-            {CTA_COPY.cta}
-            <span className="sr-only"> (새 창)</span>
-          </a>
+          <p>{CTA_COPY.status}</p>
         </Button>
       </Container>
     </Section>
