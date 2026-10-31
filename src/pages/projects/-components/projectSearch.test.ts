@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest"
 import {
   filterProjects,
   getProjectPage,
+  parseProjectDetailSearch,
   parseProjectSearch,
 } from "./projectSearch"
 
@@ -28,6 +29,15 @@ describe("parseProjectSearch", () => {
         page: 0,
       }),
     ).toEqual({ q: "머핀" })
+  })
+})
+
+describe("parseProjectDetailSearch", () => {
+  it("상세정보 탭만 남기고 잘못된 값은 버린다", () => {
+    expect(parseProjectDetailSearch({ tab: "detail" })).toEqual({
+      tab: "detail",
+    })
+    expect(parseProjectDetailSearch({ tab: "nope" })).toEqual({})
   })
 })
 

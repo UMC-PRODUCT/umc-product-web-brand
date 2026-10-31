@@ -27,6 +27,16 @@ const AWARD_LABELS: Record<ProjectAward, string> = {
   merit: "우수상",
 }
 
+const detailSearchSchema = z.object({
+  tab: z.literal("detail").optional().catch(undefined),
+})
+
+export type ProjectDetailTab = "intro" | "detail"
+
+export function parseProjectDetailSearch(search: Record<string, unknown>) {
+  return detailSearchSchema.parse(search)
+}
+
 export function parseProjectSearch(search: Record<string, unknown>) {
   return searchSchema.parse(search)
 }
