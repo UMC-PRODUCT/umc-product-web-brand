@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
+import { renderWithRouter } from "@/test/renderWithRouter"
+
 import { PROJECTS } from "../../-components/projects/constants"
 import { ProjectList } from "./ProjectList"
 
@@ -20,11 +22,15 @@ describe("ProjectList", () => {
     ).toBeInTheDocument()
   })
 
-  it("불러온 프로젝트를 카드로 보여준다", () => {
-    render(<ProjectList projects={PROJECTS} />)
+  it("불러온 프로젝트를 상세로 이어지는 카드로 보여준다", async () => {
+    await renderWithRouter(<ProjectList projects={PROJECTS} />)
 
     expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(
       PROJECTS.length,
+    )
+    expect(screen.getAllByRole("link")[0]).toHaveAttribute(
+      "href",
+      expect.stringContaining("/projects/pop-it"),
     )
   })
 })

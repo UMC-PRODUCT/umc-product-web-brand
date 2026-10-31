@@ -14,6 +14,7 @@ export const PROJECTS_COPY = {
 } as const
 
 export interface Project {
+  id: string
   name: string
   description: string
   parts: readonly string[]
@@ -26,6 +27,7 @@ const SPRING_PARTS = ["Plan", "Design", "Web", "SpringBoot"] as const
 // 10기 데모데이 수상작. 소개는 각 프로젝트 랜딩페이지 첫 화면의 문구다
 export const PROJECTS: readonly Project[] = [
   {
+    id: "pop-it",
     name: "POP-IT",
     description: "빈 공간을 빛나는 기회로",
     parts: SPRING_PARTS,
@@ -33,6 +35,7 @@ export const PROJECTS: readonly Project[] = [
     thumbnail: popit,
   },
   {
+    id: "muffin",
     name: "Muffin",
     description: "주린이들을 위한 매일 가볍게 즐기는 경제 학습 서비스",
     parts: SPRING_PARTS,
@@ -40,6 +43,7 @@ export const PROJECTS: readonly Project[] = [
     thumbnail: muffin,
   },
   {
+    id: "teaching",
     name: "TeachING",
     description: "흩어진 정보를 연결해 나만의 지식으로 만드는 AI 학습 서비스",
     parts: SPRING_PARTS,
@@ -47,6 +51,7 @@ export const PROJECTS: readonly Project[] = [
     thumbnail: teaching,
   },
   {
+    id: "boogle",
     name: "Boogle",
     description: "매일의 장 신호, 부글이 기록해요",
     parts: ["Plan", "Design", "Web", "Nest"],
@@ -54,6 +59,7 @@ export const PROJECTS: readonly Project[] = [
     thumbnail: boogle,
   },
   {
+    id: "brifo",
     name: "BRIFO",
     description: "게이미피케이션 기반 AI 투자 교육 플랫폼",
     parts: SPRING_PARTS,
@@ -61,6 +67,7 @@ export const PROJECTS: readonly Project[] = [
     thumbnail: brifo,
   },
   {
+    id: "bookshelves",
     name: "책장사이",
     description: "한 권의 책으로 이어지는 대화와 기록",
     parts: SPRING_PARTS,
@@ -68,6 +75,7 @@ export const PROJECTS: readonly Project[] = [
     thumbnail: bookshelves,
   },
   {
+    id: "slate-to",
     name: "SLATE-TO",
     description: "영상 제작자들을 위한 All In One 협업 플랫폼",
     parts: SPRING_PARTS,
@@ -75,6 +83,7 @@ export const PROJECTS: readonly Project[] = [
     thumbnail: slateTo,
   },
   {
+    id: "muse-review",
     name: "MuseReview",
     description: "흘러간 영감을 다시 듣다",
     parts: SPRING_PARTS,

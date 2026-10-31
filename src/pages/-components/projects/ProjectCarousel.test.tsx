@@ -46,6 +46,7 @@ vi.mock("embla-carousel-react", () => ({
 }))
 
 const PROJECTS: Project[] = [1, 2, 3].map((number) => ({
+  id: `프로젝트 ${number}`,
   name: `프로젝트 ${number}`,
   description: "소개",
   parts: ["Web"],
