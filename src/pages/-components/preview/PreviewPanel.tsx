@@ -22,9 +22,9 @@ export function PreviewPanel({ className }: PreviewPanelProps) {
     <Tabs.Root
       className={cn(
         // Figma 1440 미만: 스테퍼 아래 사진·설명. 간격 Mobile·Pad 12, Small PC 20. Pad 이상은 좌우 안쪽 32
-        "flex w-full flex-col gap-(--umc-spacing-gap-12) md:px-(--umc-spacing-padding-32) lg:gap-(--umc-spacing-gap-20)",
+        "flex w-full flex-col gap-(--umc-spacing-gap-12) md:px-(--umc-spacing-padding-32) lg:mx-auto lg:max-w-[864px] lg:gap-(--umc-spacing-gap-20)",
         // Figma 1440 이상 Frame 2087331771: 배경·테두리 없는 1280 폭, 여백 32. 1920 이상에서도 1280으로 가운데 둔다
-        "xl:mx-auto xl:max-w-[1280px] xl:gap-0 xl:p-(--umc-spacing-padding-32)",
+        "xl:max-w-[1280px] xl:gap-0 xl:p-(--umc-spacing-padding-32)",
         className,
       )}
       onValueChange={setSelectedId}
