@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-const PAGE_SIZE = 9
+export const PROJECT_PAGE_SIZE = 9
 
 const searchSchema = z.object({
   q: z.string().optional().catch(undefined),
@@ -50,11 +50,11 @@ export function getProjectPage<T extends FilterableProject>(
   search: ProjectSearch,
 ) {
   const filtered = filterProjects(projects, search)
-  const pageCount = Math.max(Math.ceil(filtered.length / PAGE_SIZE), 1)
+  const pageCount = Math.max(Math.ceil(filtered.length / PROJECT_PAGE_SIZE), 1)
   const page = Math.min(search.page ?? 1, pageCount)
-  const start = (page - 1) * PAGE_SIZE
+  const start = (page - 1) * PROJECT_PAGE_SIZE
   return {
-    projects: filtered.slice(start, start + PAGE_SIZE),
+    projects: filtered.slice(start, start + PROJECT_PAGE_SIZE),
     page,
     pageCount,
   }

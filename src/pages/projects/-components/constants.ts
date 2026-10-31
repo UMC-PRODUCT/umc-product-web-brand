@@ -8,6 +8,7 @@ export const PROJECT_LIST_COPY = {
   searchLabel: "프로젝트 이름 검색",
   searchPlaceholder: "프로젝트 명으로 검색하세요",
   empty: "조건에 맞는 프로젝트가 없어요.",
+  loading: "프로젝트를 불러오는 중이에요.",
 } as const
 
 // Figma 기수 드롭다운 값 (517:14100)
