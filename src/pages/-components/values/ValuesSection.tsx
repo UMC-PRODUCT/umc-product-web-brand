@@ -15,6 +15,7 @@ export function ValuesSection() {
     <Section headerTone="light" id="values" labelledBy="values-title">
       <Container className="flex flex-col items-center gap-[34px] md:gap-12 lg:gap-8 xl:gap-[50px]">
         <SectionHeading
+          className="[&>h2]:leading-[1.3]"
           description={VALUES_DESCRIPTION}
           title={
             <>

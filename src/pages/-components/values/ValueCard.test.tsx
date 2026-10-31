@@ -8,7 +8,7 @@ describe("ValueCard", () => {
     render(
       <ul>
         <ValueCard
-          description={["첫 문단", "둘째 문단"]}
+          description={"첫 줄\n둘째 줄"}
           icon={null}
           image="growth.webp"
           subtitle="Growth"
@@ -17,7 +17,7 @@ describe("ValueCard", () => {
       </ul>,
     )
     const toggle = screen.getByRole("button", { name: "성장 Growth" })
-    const description = screen.getByText("첫 문단").parentElement
+    const description = screen.getByText(/첫 줄/)
 
     expect(toggle).toHaveAttribute("aria-expanded", "false")
     expect(description).toHaveAttribute("aria-hidden", "true")
