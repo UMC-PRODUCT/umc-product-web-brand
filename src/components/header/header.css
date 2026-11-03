@@ -1,5 +1,6 @@
 .site-header {
   --header-bg: var(--umc-color-fill-neutral-weaker-50);
+  --header-bg-image: none;
   --header-shadow: var(--umc-shadow-drop-neutral-3);
   --header-logo: var(--umc-color-teal-grey-700);
   --header-logo-hover: var(--umc-color-text-brand-default-600);
@@ -26,6 +27,7 @@
   --header-menu-item-hover-shadow: var(--umc-shadow-inner-neutral-2);
 
   background-color: var(--header-bg);
+  background-image: var(--header-bg-image);
   box-shadow: var(--header-shadow);
   transition:
     background-color 150ms ease,
@@ -34,7 +36,11 @@
 
 .site-header[data-tone="dark"] {
   --header-bg: transparent;
-  --header-shadow: none;
+  --header-bg-image: linear-gradient(
+    rgb(7 33 30 / 0.6) 36.12%,
+    rgb(7 33 30 / 0)
+  );
+  --header-shadow: 0 4px 16px rgb(65 70 69 / 0.3);
   --header-logo: var(--umc-color-teal-50);
   --header-logo-hover: var(--umc-color-teal-200);
   --header-nav-bg: rgb(251 252 252 / 0.2);
