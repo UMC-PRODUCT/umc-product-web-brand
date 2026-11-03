@@ -66,7 +66,7 @@ export function HeroSection() {
                 <Rules className={WORD_CLASS} />
               </span>
             </h1>
-            <p className="hero-description mt-7 pt-0.5 pb-[18px] text-lg text-teal-grey-100 leading-[1.3] tracking-[-0.05em] md:text-2xl lg:text-[32px]">
+            <p className="hero-description mt-7 pt-0.5 pb-[18px] text-lg text-teal-grey-100 leading-[1.3] tracking-[-0.05em] md:text-[22px] lg:text-[28px]">
               기획부터 개발까지 대학생 IT 연합 동아리,{" "}
               <br className="md:hidden" />
               새로운 가능성을 UMC에서
