@@ -120,14 +120,10 @@ describe("AboutCarousel 자동 넘김", () => {
     expect(embla.api.scrollNext).toHaveBeenCalledTimes(1)
   })
 
-  it("마우스를 올린 동안에는 넘기지 않는다", () => {
+  it("마우스를 올려도 멈추지 않고 2초 뒤에 넘긴다", () => {
     renderCarousel()
 
     fireEvent.pointerEnter(carousel(), { pointerType: "mouse" })
-    act(() => vi.advanceTimersByTime(5000))
-    expect(embla.api.scrollNext).not.toHaveBeenCalled()
-
-    fireEvent.pointerLeave(carousel(), { pointerType: "mouse" })
     act(() => vi.advanceTimersByTime(2000))
     expect(embla.api.scrollNext).toHaveBeenCalledTimes(1)
   })

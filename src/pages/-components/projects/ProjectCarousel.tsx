@@ -1,10 +1,5 @@
 import useEmblaCarousel from "embla-carousel-react"
-import {
-  type KeyboardEvent,
-  type PointerEvent,
-  useEffect,
-  useState,
-} from "react"
+import { type KeyboardEvent, useEffect, useState } from "react"
 
 import { subscribeSnapArrival } from "@/hooks/subscribeSnapArrival"
 import { useAutoAdvance } from "@/hooks/useAutoAdvance"
@@ -43,10 +38,9 @@ export function ProjectCarousel({
     loop: true,
   })
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const [hovering, setHovering] = useState(false)
   const [focused, setFocused] = useState(false)
   const reduceMotion = usePrefersReducedMotion()
-  const paused = hovering || focused || reduceMotion
+  const paused = focused || reduceMotion
 
   useAutoAdvance(emblaApi, { delay: AUTO_ADVANCE_DELAY, paused })
 
@@ -57,14 +51,6 @@ export function ProjectCarousel({
     syncSelectedIndex()
     return subscribeSnapArrival(emblaApi, syncSelectedIndex)
   }, [emblaApi])
-
-  // 마우스를 올려 둔 동안에는 넘기지 않는다. 터치는 손을 떼면 바로 다시 센다
-  const onPointerEnter = (event: PointerEvent) => {
-    if (event.pointerType === "mouse") setHovering(true)
-  }
-  const onPointerLeave = (event: PointerEvent) => {
-    if (event.pointerType === "mouse") setHovering(false)
-  }
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.key === "ArrowLeft") {
@@ -89,8 +75,6 @@ export function ProjectCarousel({
       onBlur={() => setFocused(false)}
       onFocus={() => setFocused(true)}
       onKeyDown={onKeyDown}
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
       // biome-ignore lint/a11y/noNoninteractiveTabindex: 키보드로 캐러셀을 멈추고 넘길 유일한 수단이다
       tabIndex={0}
     >
