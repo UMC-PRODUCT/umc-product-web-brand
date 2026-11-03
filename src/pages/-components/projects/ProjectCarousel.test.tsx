@@ -152,4 +152,16 @@ describe("ProjectCarousel 자동 넘김", () => {
     act(() => vi.advanceTimersByTime(2000))
     expect(embla.api.scrollNext).toHaveBeenCalledTimes(1)
   })
+
+  it("키보드로 포커스한 동안에는 넘기지 않는다", () => {
+    render(<ProjectCarousel label="수상작" projects={PROJECTS} />)
+
+    act(() =>
+      screen
+        .getByRole("region", { name: "수상작, 좌우 화살표 키로 넘기기" })
+        .focus(),
+    )
+    act(() => vi.advanceTimersByTime(5000))
+    expect(embla.api.scrollNext).not.toHaveBeenCalled()
+  })
 })
