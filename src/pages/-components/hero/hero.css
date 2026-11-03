@@ -1,8 +1,13 @@
 .hero-backdrop {
   --lcp-visible-opacity: 0.01;
-  height: 1080px;
+  --hero-height: 1080px;
+  height: var(--hero-height);
   background:
-    linear-gradient(127.03deg, rgb(46 209 190 / 0.16) 8.35%, transparent 48.63%),
+    linear-gradient(
+      atan2(calc(1.58544 * var(--hero-height)), calc(-0.897 * 100vw)),
+      rgb(46 209 190 / 0.16) 8.35%,
+      transparent 48.63%
+    ),
     #020807;
 }
 
