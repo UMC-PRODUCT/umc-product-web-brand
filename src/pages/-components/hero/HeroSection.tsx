@@ -51,7 +51,7 @@ export function HeroSection() {
         <Container className="flex h-full flex-col items-center justify-center pt-20 pb-[120px]">
           <hgroup className="flex flex-col items-center text-center">
             <p
-              className="hero-eyebrow font-medium text-[#20c9bc] text-lg uppercase leading-[1.4] tracking-[1px] md:text-2xl"
+              className="hero-eyebrow whitespace-nowrap font-medium text-[#20c9bc] text-lg uppercase leading-[1.4] tracking-[1px] md:text-2xl"
               lang="en"
             >
               University MakeUs Challenge
