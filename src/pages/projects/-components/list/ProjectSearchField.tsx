@@ -1,4 +1,5 @@
 import { SearchIcon } from "@umc-product/icons"
+import { useEffect, useRef, useState } from "react"
 
 import { cn } from "@/utils/cn"
 
@@ -11,6 +12,7 @@ interface ProjectSearchFieldProps {
 }
 
 const ICON_SIZE = 24
+export const SEARCH_DELAY_MS = 300
 
 export function ProjectSearchField({
   label,
@@ -19,6 +21,25 @@ export function ProjectSearchField({
   onValueChange,
   className,
 }: ProjectSearchFieldProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined)
+
+  const [draft, setDraft] = useState(value)
+
+  useEffect(() => {
+    if (document.activeElement !== inputRef.current) {
+      clearTimeout(timerRef.current)
+      setDraft(value)
+    }
+  }, [value])
+
+  useEffect(() => () => clearTimeout(timerRef.current), [])
+
+  const commit = (next: string) => {
+    clearTimeout(timerRef.current)
+    onValueChange(next)
+  }
+
   return (
     <label
       className={cn(
@@ -29,10 +50,21 @@ export function ProjectSearchField({
       <span className="sr-only">{label}</span>
       <input
         className="min-w-0 flex-1 bg-transparent text-body-1-regular text-teal-grey-900 outline-none placeholder:text-teal-grey-400 [&::-webkit-search-cancel-button]:hidden"
-        onChange={(event) => onValueChange(event.target.value)}
+        onChange={(event) => {
+          const next = event.target.value
+          setDraft(next)
+          clearTimeout(timerRef.current)
+          timerRef.current = setTimeout(() => commit(next), SEARCH_DELAY_MS)
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" && !event.nativeEvent.isComposing) {
+            commit(draft)
+          }
+        }}
         placeholder={placeholder}
+        ref={inputRef}
         type="search"
-        value={value}
+        value={draft}
       />
       <SearchIcon
         aria-hidden
