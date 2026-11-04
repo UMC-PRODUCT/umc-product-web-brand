@@ -1,3 +1,5 @@
+import { cn } from "@/utils/cn"
+
 import { PROJECT_LIST_COPY } from "../constants"
 import { ProjectBreadcrumbs } from "../ProjectBreadcrumbs"
 
@@ -29,7 +31,7 @@ export function ProjectDetailHeader({
         ]}
       />
       <h1
-        className="mt-[26px] font-semibold text-[20px] text-teal-grey-900 leading-[1.4] tracking-[-0.2px] md:text-heading-2-semibold"
+        className="mt-[26px] text-heading-2-semibold text-teal-grey-900"
         id="project-title"
       >
         {name}
@@ -37,9 +39,15 @@ export function ProjectDetailHeader({
       <p className="mt-3 text-body-3-regular text-neutral-medium-600 md:text-body-1-regular">
         {description}
       </p>
-      <div className="mt-[10px] flex flex-wrap items-center gap-(--umc-spacing-gap-6) text-body-1-medium text-neutral-medium-600">
-        {/* Figma Tag/Basic Weak·Md·Brand: 프로젝트 카드의 태그와 같은 값 */}
-        <span className="flex h-[26px] shrink-0 items-center rounded-(--umc-radius-6) bg-fill-primary-medium-100 px-[7px] font-medium text-[14px] text-brand-default-600 leading-[1.45] shadow-drop-neutral-3">
+      <div className="mt-[10px] flex flex-wrap items-center gap-(--umc-spacing-gap-6) text-body-3-medium text-neutral-medium-600 md:text-body-1-medium">
+        {/* Figma 수상 태그: Mobile 높이 22·좌우 6·12/130%, Pad 이상은 프로젝트 카드 태그와 같은 높이 26·좌우 7·14/145% */}
+        <span
+          className={cn(
+            "flex shrink-0 items-center rounded-(--umc-radius-6) bg-fill-primary-medium-100 font-medium text-brand-default-600 tracking-normal shadow-drop-neutral-3",
+            "h-[22px] px-[6px] text-[12px] leading-[1.3]",
+            "md:h-[26px] md:px-[7px] md:text-[14px] md:leading-[1.45]",
+          )}
+        >
           {award}
         </span>
         <span>{generation}기</span>
