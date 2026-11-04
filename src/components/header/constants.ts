@@ -47,6 +47,6 @@ export const QUICK_LINKS: readonly QuickLink[] = [
     label: "지원하기",
     href: "https://university.neordinary.com/projects/apply-guide",
   },
-  { label: "UPMS", href: "https://university.neordinary.com" },
+  { label: "UPMS", href: "https://activity.university.neordinary.com/" },
   { label: "UMC 테크블로그", href: "https://tech.university.neordinary.com" },
 ]

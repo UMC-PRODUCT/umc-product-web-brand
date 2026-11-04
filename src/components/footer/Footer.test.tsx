@@ -62,11 +62,23 @@ describe("Footer", () => {
     }
   })
 
+  it("Service의 UPMS 서비스는 새 창으로 여는 UPMS 링크다", async () => {
+    await renderWithRouter(<Footer />)
+
+    const upms = screen.getByRole("link", { name: "UPMS 서비스 (새 창)" })
+    expect(upms).toHaveAttribute(
+      "href",
+      "https://activity.university.neordinary.com/",
+    )
+    expect(upms).toHaveAttribute("target", "_blank")
+    expect(upms).toHaveAttribute("rel", "noopener noreferrer")
+  })
+
   it("주소가 없는 항목은 링크가 아닌 텍스트로 둔다", async () => {
     await renderWithRouter(<Footer />)
 
-    expect(screen.queryByRole("link", { name: /UPMS 서비스/ })).toBeNull()
-    expect(screen.getByText("UPMS 서비스")).toBeInTheDocument()
+    expect(screen.queryByRole("link", { name: /리크루팅 서비스/ })).toBeNull()
+    expect(screen.getByText("리크루팅 서비스")).toBeInTheDocument()
   })
 
   it("About의 UMC PRODUCT·중앙사무국은 하위 경로가 붙은 소개 페이지 링크다", async () => {
