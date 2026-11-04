@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router"
 import useEmblaCarousel from "embla-carousel-react"
 import { type FocusEvent, type KeyboardEvent, useEffect, useState } from "react"
 
@@ -66,7 +67,7 @@ export function ProjectCarousel({
   }
 
   return (
-    // 카드에 조작할 요소가 없어 캐러셀 영역에 포커스를 둔다. 포커스하면 멈추고 좌우 화살표로 넘긴다
+    // 캐러셀 영역에 포커스하면 멈추고 좌우 화살표로 넘긴다. 카드 링크로 Tab하면 Embla가 그 카드로 넘긴다
     <section
       aria-label={`${label}, 좌우 화살표 키로 넘기기`}
       aria-roledescription="carousel"
@@ -78,7 +79,7 @@ export function ProjectCarousel({
       onBlur={() => setKeyboardFocused(false)}
       onFocus={onFocus}
       onKeyDown={onKeyDown}
-      // biome-ignore lint/a11y/noNoninteractiveTabindex: 키보드로 캐러셀을 멈추고 넘길 유일한 수단이다
+      // biome-ignore lint/a11y/noNoninteractiveTabindex: 카드 링크를 하나씩 거치지 않고 캐러셀을 멈추고 넘기는 자리다
       tabIndex={0}
     >
       {/* 위아래 여백은 카드 그림자가 잘리지 않게 둔다 */}
@@ -92,14 +93,19 @@ export function ProjectCarousel({
               data-size={slideSize(index, selectedIndex, projects.length)}
               key={project.name}
             >
-              <ProjectCard
-                award={project.award}
-                className="project-slide-card"
-                description={project.description}
-                name={project.name}
-                parts={project.parts}
-                thumbnailSrc={project.thumbnail}
-              />
+              <Link
+                className="project-slide-card rounded-(--umc-radius-24) outline-teal-500 outline-offset-2 focus-visible:outline-2"
+                params={{ projectId: project.id }}
+                to="/projects/$projectId"
+              >
+                <ProjectCard
+                  award={project.award}
+                  description={project.description}
+                  name={project.name}
+                  parts={project.parts}
+                  thumbnailSrc={project.thumbnail}
+                />
+              </Link>
             </figure>
           ))}
         </div>

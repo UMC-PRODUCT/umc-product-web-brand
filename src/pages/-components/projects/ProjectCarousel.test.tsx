@@ -1,5 +1,7 @@
-import { act, fireEvent, render, screen } from "@testing-library/react"
+import { act, fireEvent, screen, within } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+
+import { renderWithRouter } from "@/test/renderWithRouter"
 
 import { type Project } from "./constants"
 import { ProjectCarousel } from "./ProjectCarousel"
@@ -48,7 +50,7 @@ vi.mock("embla-carousel-react", () => ({
 
 const createProjects = (count: number): Project[] =>
   Array.from({ length: count }, (_, index) => ({
-    id: `프로젝트 ${index + 1}`,
+    id: `project-${index + 1}`,
     name: `프로젝트 ${index + 1}`,
     description: "소개",
     parts: ["Web"],
@@ -79,8 +81,22 @@ describe("ProjectCarousel", () => {
     embla.reset()
   })
 
-  it("가운데에서 짝수 칸 떨어진 카드는 크게, 홀수 칸은 작게 두고 거리는 루프를 넘어 가까운 쪽으로 센다", () => {
-    render(<ProjectCarousel label="수상작" projects={PROJECTS} />)
+  it("카드마다 그 프로젝트 소개 페이지로 가는 링크를 둔다", async () => {
+    await renderWithRouter(
+      <ProjectCarousel label="수상작" projects={PROJECTS} />,
+    )
+
+    expect(screen.getAllByRole("link")).toHaveLength(PROJECTS.length)
+    expect(within(slide(3)).getByRole("link")).toHaveAttribute(
+      "href",
+      "/projects/project-3",
+    )
+  })
+
+  it("가운데에서 짝수 칸 떨어진 카드는 크게, 홀수 칸은 작게 두고 거리는 루프를 넘어 가까운 쪽으로 센다", async () => {
+    await renderWithRouter(
+      <ProjectCarousel label="수상작" projects={PROJECTS} />,
+    )
 
     expect(sizes()).toEqual([
       "large",
@@ -93,8 +109,10 @@ describe("ProjectCarousel", () => {
     ])
   })
 
-  it("다음 카드는 넘어가기 시작할 때가 아니라 가운데에 도착한 뒤 크기 패턴을 옮긴다", () => {
-    render(<ProjectCarousel label="수상작" projects={PROJECTS} />)
+  it("다음 카드는 넘어가기 시작할 때가 아니라 가운데에 도착한 뒤 크기 패턴을 옮긴다", async () => {
+    await renderWithRouter(
+      <ProjectCarousel label="수상작" projects={PROJECTS} />,
+    )
 
     Object.assign(embla.state, { selectedIndex: 1, target: -400 })
     act(() => embla.emit("select"))
@@ -142,8 +160,10 @@ describe("ProjectCarousel 자동 넘김", () => {
     embla.reset()
   })
 
-  it("마우스를 올려도 멈추지 않고 2초 뒤에 넘긴다", () => {
-    render(<ProjectCarousel label="수상작" projects={PROJECTS} />)
+  it("마우스를 올려도 멈추지 않고 2초 뒤에 넘긴다", async () => {
+    await renderWithRouter(
+      <ProjectCarousel label="수상작" projects={PROJECTS} />,
+    )
 
     fireEvent.pointerEnter(
       screen.getByRole("region", { name: "수상작, 좌우 화살표 키로 넘기기" }),
@@ -153,8 +173,10 @@ describe("ProjectCarousel 자동 넘김", () => {
     expect(embla.api.scrollNext).toHaveBeenCalledTimes(1)
   })
 
-  it("키보드로 포커스한 동안에는 넘기지 않는다", () => {
-    render(<ProjectCarousel label="수상작" projects={PROJECTS} />)
+  it("키보드로 포커스한 동안에는 넘기지 않는다", async () => {
+    await renderWithRouter(
+      <ProjectCarousel label="수상작" projects={PROJECTS} />,
+    )
 
     act(() =>
       screen
