@@ -65,7 +65,8 @@ export function ProjectDetailInfo({
       )}
       {stack && stack.length > 0 && (
         <ProjectDetailSection title="기술 스택">
-          <ul className="mt-8 grid gap-(--umc-spacing-gap-12) md:grid-cols-2 md:gap-(--umc-spacing-gap-16) lg:grid-cols-3">
+          {/* Figma 기술 스택: Mobile 1열, Pad 이상 3열. 간격 Pad까지 12, Small PC 이상 16 */}
+          <ul className="mt-8 grid gap-(--umc-spacing-gap-12) md:grid-cols-3 lg:gap-(--umc-spacing-gap-16)">
             {stack.map((item) => (
               <ProjectSummaryCard key={item.title} {...item} size="md" />
             ))}

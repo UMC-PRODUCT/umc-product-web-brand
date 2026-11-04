@@ -8,12 +8,13 @@ interface ProjectSummaryCardProps
 
 // Figma Web/Project Summary/Detail Card. 그림자 #eff0f0 50%는 같은 값의 토큰이 없다
 const cardVariants = cva(
-  "flex flex-col gap-(--umc-spacing-gap-8) rounded-(--umc-radius-16) bg-white px-(--umc-spacing-padding-32) shadow-[0_4px_16px_rgb(239_240_240/0.5)]",
+  "flex flex-col gap-(--umc-spacing-gap-8) rounded-(--umc-radius-16) bg-white shadow-[0_4px_16px_rgb(239_240_240/0.5)]",
   {
     variants: {
       size: {
-        lg: "min-h-[144px] py-[22px]",
-        md: "min-h-[114px] py-(--umc-spacing-padding-20)",
+        // 랜딩 인스턴스 값: Mobile(767 이하)만 여백 위아래 16·좌우 20, Pad 이상은 원본 22·32
+        lg: "min-h-[144px] px-(--umc-spacing-padding-20) py-(--umc-spacing-padding-16) md:px-(--umc-spacing-padding-32) md:py-[22px]",
+        md: "min-h-[114px] px-(--umc-spacing-padding-32) py-(--umc-spacing-padding-20)",
       },
     },
     defaultVariants: { size: "lg" },
@@ -39,7 +40,8 @@ const descriptionVariants = cva(
     variants: {
       size: {
         lg: "text-[14px] leading-[1.5]",
-        md: "text-[13px] leading-[22px]",
+        // Figma Md 설명: Medium 13/150%. caption-1-medium은 줄 높이가 145%라 임의 값
+        md: "text-[13px] leading-[1.5]",
       },
     },
     defaultVariants: { size: "lg" },
