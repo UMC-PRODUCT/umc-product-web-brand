@@ -9,7 +9,7 @@ export interface NavItem {
 
 export interface QuickLink {
   label: string
-  href: string
+  href?: string
 }
 
 export const NAV_ITEMS: readonly NavItem[] = [
@@ -43,10 +43,9 @@ export function navIdForSection(sectionId: string): NavId | null {
 export const QUICK_LINKS_TITLE = "UMC 바로가기"
 
 export const QUICK_LINKS: readonly QuickLink[] = [
-  {
-    label: "지원하기",
-    href: "https://university.neordinary.com/projects/apply-guide",
-  },
+  { label: "지원하기" },
   { label: "UPMS", href: "https://activity.university.neordinary.com/" },
-  { label: "UMC 테크블로그", href: "https://tech.university.neordinary.com" },
+  { label: "UMC 테크블로그" },
 ]
+
+export const PREPARING_SERVICE_MESSAGE = "해당 서비스는 준비중입니다"

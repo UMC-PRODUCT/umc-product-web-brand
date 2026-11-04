@@ -1,6 +1,5 @@
 @import "tailwindcss";
-@import "@umc-product/design-tokens/fonts.css";
-@import "@umc-product/design-tokens/base.css";
+@import "@umc-product/react/styles.css";
 @import "@umc-product/design-tokens/tailwind.css";
 
 /* Figma 반응형 뷰포트(768:21185): Mobile 360~767, Pad 768~1023, Small PC 1024~1439, PC 1440~1919, Lg PC 1920~ */
