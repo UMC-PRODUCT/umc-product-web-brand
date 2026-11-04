@@ -22,7 +22,7 @@ function renderMenu() {
 
 describe("QuickLinksMenu", () => {
   it.each(["지원하기", "UMC 테크블로그"])(
-    "준비 중인 %s를 고르면 메뉴를 닫고 준비 중 토스트를 띄운다",
+    "준비 중인 %s를 고르면 메뉴를 닫고 아이콘이 있는 Error 토스트를 띄운다",
     async (label) => {
       renderMenu()
 
@@ -30,9 +30,13 @@ describe("QuickLinksMenu", () => {
       expect(item).not.toHaveAttribute("href")
       fireEvent.click(item)
 
-      expect(
-        await screen.findByText(PREPARING_SERVICE_MESSAGE),
-      ).toBeInTheDocument()
+      const message = await screen.findByText(PREPARING_SERVICE_MESSAGE, {
+        selector: ".umc-toast__message",
+      })
+      const toast = message.closest(".umc-toast")
+      expect(toast).toHaveAttribute("data-color", "error")
+      expect(toast).toHaveAttribute("data-icon")
+      expect(toast?.querySelector(".umc-toast__action")).toBeNull()
       expect(screen.queryByRole("menu")).not.toBeInTheDocument()
     },
   )

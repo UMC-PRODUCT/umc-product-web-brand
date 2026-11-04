@@ -1,4 +1,4 @@
-import { ExpandMoreIcon } from "@umc-product/icons"
+import { CheckCircleIcon, ExpandMoreIcon } from "@umc-product/icons"
 import { useToast } from "@umc-product/react"
 import { DropdownMenu } from "radix-ui"
 
@@ -50,7 +50,11 @@ export function QuickLinksMenu({ title, links }: QuickLinksMenuProps) {
               className={cn(MENU_ITEM_CLASS, "cursor-pointer")}
               key={link.label}
               onSelect={() =>
-                toast.show({ message: PREPARING_SERVICE_MESSAGE })
+                toast.show({
+                  message: PREPARING_SERVICE_MESSAGE,
+                  color: "error",
+                  icon: <CheckCircleIcon weight="fill" />,
+                })
               }
             >
               {link.label}
