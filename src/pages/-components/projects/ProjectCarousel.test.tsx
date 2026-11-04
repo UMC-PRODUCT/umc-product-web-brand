@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react"
+import { act, fireEvent, render, screen } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { type Project } from "./constants"
@@ -15,7 +15,7 @@ const embla = vi.hoisted(() => {
   const api = {
     selectedScrollSnap: () => state.selectedIndex,
     internalEngine: () => engine,
-    scrollNext: () => {},
+    scrollNext: vi.fn(),
     scrollPrev: () => {},
     on: (event: string, callback: () => void) => {
       const set = listeners.get(event) ?? new Set()
@@ -37,6 +37,7 @@ const embla = vi.hoisted(() => {
     reset() {
       listeners.clear()
       Object.assign(state, { selectedIndex: 0, target: 0, location: 0 })
+      api.scrollNext.mockClear()
     },
   }
 })
@@ -111,5 +112,56 @@ describe("ProjectCarousel", () => {
       "small",
       "large",
     ])
+  })
+})
+
+class FakePointerEvent extends MouseEvent {
+  pointerType: string
+
+  constructor(type: string, init: PointerEventInit = {}) {
+    super(type, init)
+    this.pointerType = init.pointerType ?? ""
+  }
+}
+
+describe("ProjectCarousel 자동 넘김", () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+    vi.stubGlobal("PointerEvent", FakePointerEvent)
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      media: query,
+      matches: false,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    }))
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.unstubAllGlobals()
+    embla.reset()
+  })
+
+  it("마우스를 올려도 멈추지 않고 2초 뒤에 넘긴다", () => {
+    render(<ProjectCarousel label="수상작" projects={PROJECTS} />)
+
+    fireEvent.pointerEnter(
+      screen.getByRole("region", { name: "수상작, 좌우 화살표 키로 넘기기" }),
+      { pointerType: "mouse" },
+    )
+    act(() => vi.advanceTimersByTime(2000))
+    expect(embla.api.scrollNext).toHaveBeenCalledTimes(1)
+  })
+
+  it("키보드로 포커스한 동안에는 넘기지 않는다", () => {
+    render(<ProjectCarousel label="수상작" projects={PROJECTS} />)
+
+    act(() =>
+      screen
+        .getByRole("region", { name: "수상작, 좌우 화살표 키로 넘기기" })
+        .focus(),
+    )
+    act(() => vi.advanceTimersByTime(5000))
+    expect(embla.api.scrollNext).not.toHaveBeenCalled()
   })
 })
