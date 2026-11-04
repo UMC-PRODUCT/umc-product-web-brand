@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react"
+import { ExpandMoreIcon } from "@umc-product/icons"
 import { Accordion } from "radix-ui"
 import { type ComponentProps, type ReactNode } from "react"
 
@@ -70,9 +70,9 @@ export function FaqAccordionItem({
             <span className="-my-px text-neutral-strong-800">{question}</span>
           </span>
           <span className="flex shrink-0 px-(--umc-spacing-padding-16)">
-            <ChevronDown
-              aria-hidden
-              className="size-[24px] text-[#47413c] group-data-[state=open]:rotate-180 motion-safe:transition-transform"
+            <ExpandMoreIcon
+              className="text-neutral-weak-500 group-data-[state=open]:rotate-180 motion-safe:transition-transform"
+              weight="fill"
             />
           </span>
         </Accordion.Trigger>
