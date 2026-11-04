@@ -48,8 +48,8 @@ export function FaqSection() {
             <Tabs.Content
               className={cn(
                 "mx-auto w-full outline-teal-500 outline-offset-4 focus-visible:outline-2",
-                // Figma 목록 좌우 여백: Mobile 10, Pad 이상 56. 최대 폭 1312, 1920 이상 1440
-                "max-w-[1312px] px-2.5 md:px-14 2xl:max-w-[1440px]",
+                // Figma 목록 좌우 여백: Mobile 10, Pad 32, Small PC 이상 56. 최대 폭 1312, 1920 이상 1440
+                "max-w-[1312px] px-2.5 md:px-8 lg:px-14 2xl:max-w-[1440px]",
               )}
               key={id}
               value={id}
