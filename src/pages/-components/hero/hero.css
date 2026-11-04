@@ -1,23 +1,20 @@
 .hero-backdrop {
   --lcp-visible-opacity: 0.01;
-  --hero-height: clamp(640px, 100svh, 1080px);
-  --figma-px: calc(var(--hero-height) / 1080);
+  --hero-height: 1080px;
   height: var(--hero-height);
   background:
-    linear-gradient(127.03deg, rgb(46 209 190 / 0.16) 8.35%, transparent 48.63%),
+    linear-gradient(
+      atan2(calc(1.58544 * var(--hero-height)), calc(-0.897 * 100vw)),
+      rgb(46 209 190 / 0.16) 8.35%,
+      transparent 48.63%
+    ),
     #020807;
 }
 
 .hero-glow {
-  top: calc(-1145 * var(--figma-px));
-  left: calc(-391 * var(--figma-px));
-  width: calc(3072 * var(--figma-px));
-}
-
-@media (width >= 64rem) {
-  .hero-glow {
-    left: calc(50% - 1111 * var(--figma-px));
-  }
+  top: -1101px;
+  left: max(-391px, calc(50% - 1351px));
+  width: 3072px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
