@@ -42,13 +42,15 @@ export function ProjectDetailInfo({
         <ProjectDetailSection title="핵심 기능">
           {(features.summary || features.note) && (
             <div className="mt-6 flex flex-col gap-(--umc-spacing-gap-6)">
+              {/* Figma 요약: 14/150%·16/140%·18/140%. 18은 label-1-medium과 자간(-2%)이 달라 임의 값 */}
               {features.summary && (
-                <p className="font-medium text-[18px] text-teal-grey-800 leading-[1.4]">
+                <p className="text-body-3-medium text-teal-grey-800 md:font-medium md:text-[16px] md:leading-[1.4] lg:text-[18px]">
                   {features.summary}
                 </p>
               )}
+              {/* Figma 설명: Mobile Medium 12/130%, Pad Regular 13/150%, Small PC 이상 Regular 14/150% */}
               {features.note && (
-                <p className="whitespace-pre-line text-[14px] text-neutral-weak-500 leading-[1.5]">
+                <p className="whitespace-pre-line font-medium text-[12px] text-neutral-weak-500 leading-[1.3] md:font-normal md:text-[13px] md:leading-[1.5] lg:text-[14px]">
                   {features.note}
                 </p>
               )}
@@ -63,7 +65,8 @@ export function ProjectDetailInfo({
       )}
       {stack && stack.length > 0 && (
         <ProjectDetailSection title="기술 스택">
-          <ul className="mt-8 grid gap-(--umc-spacing-gap-12) md:grid-cols-2 md:gap-(--umc-spacing-gap-16) lg:grid-cols-3">
+          {/* Figma 기술 스택: Mobile 1열, Pad 이상 3열. 간격 Pad까지 12, Small PC 이상 16 */}
+          <ul className="mt-8 grid gap-(--umc-spacing-gap-12) md:grid-cols-3 lg:gap-(--umc-spacing-gap-16)">
             {stack.map((item) => (
               <ProjectSummaryCard key={item.title} {...item} size="md" />
             ))}
