@@ -124,6 +124,34 @@ describe("subscribeSnapArrival", () => {
     expect(onArrive).toHaveBeenCalledTimes(1)
   })
 
+  it("움직이는 도중 다시 초기화돼 새 엔진이 목표에 서 있으면 바로 알린다", () => {
+    const { embla, state, emit, reInit } = createFakeEmbla()
+    const onArrive = vi.fn()
+    subscribeSnapArrival(embla, onArrive)
+
+    emit("select")
+    state.location = 200
+    emit("scroll")
+    expect(onArrive).not.toHaveBeenCalled()
+
+    const next = reInit()
+    next.location = 400
+    emit("reInit")
+    expect(onArrive).toHaveBeenCalledTimes(1)
+  })
+
+  it("멈춰 있을 때 다시 초기화되면 다시 알리지 않는다", () => {
+    const { embla, state, emit, reInit } = createFakeEmbla()
+    const onArrive = vi.fn()
+    state.location = 400
+    subscribeSnapArrival(embla, onArrive)
+
+    const next = reInit()
+    next.location = 400
+    emit("reInit")
+    expect(onArrive).not.toHaveBeenCalled()
+  })
+
   it("구독을 풀면 리스너를 모두 지운다", () => {
     const { embla, count } = createFakeEmbla()
     const unsubscribe = subscribeSnapArrival(embla, vi.fn())

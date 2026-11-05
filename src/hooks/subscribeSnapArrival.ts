@@ -32,9 +32,11 @@ export function subscribeSnapArrival(
   emblaApi.on("select", depart)
   emblaApi.on("scroll", checkArrival)
   emblaApi.on("settle", checkArrival)
+  emblaApi.on("reInit", checkArrival)
   return () => {
     emblaApi.off("select", depart)
     emblaApi.off("scroll", checkArrival)
     emblaApi.off("settle", checkArrival)
+    emblaApi.off("reInit", checkArrival)
   }
 }
