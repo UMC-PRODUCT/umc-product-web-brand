@@ -62,6 +62,23 @@ describe("Footer", () => {
     }
   })
 
+  it("UMC 채널의 Web·iOS·Android는 새 창으로 여는 웹과 스토어 링크다", async () => {
+    await renderWithRouter(<Footer />)
+
+    const expected = {
+      Web: "https://university.neordinary.com",
+      iOS: "https://apps.apple.com/kr/app/umc/id6759412446",
+      Android:
+        "https://play.google.com/store/apps/details?id=com.umc.product&pcampaignid=web_share",
+    }
+    for (const [label, href] of Object.entries(expected)) {
+      const link = screen.getByRole("link", { name: `${label} (새 창)` })
+      expect(link).toHaveAttribute("href", href)
+      expect(link).toHaveAttribute("target", "_blank")
+      expect(link).toHaveAttribute("rel", "noopener noreferrer")
+    }
+  })
+
   it("Service의 UPMS 서비스는 새 창으로 여는 UPMS 링크다", async () => {
     await renderWithRouter(<Footer />)
 

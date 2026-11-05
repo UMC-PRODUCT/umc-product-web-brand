@@ -66,7 +66,17 @@ const CHANNEL_ROWS: FooterChannel[][] = [
   [
     {
       icon: "umc",
-      links: [{ label: "Web" }, { label: "iOS" }, { label: "Android" }],
+      links: [
+        { label: "Web", href: "https://university.neordinary.com" },
+        {
+          label: "iOS",
+          href: "https://apps.apple.com/kr/app/umc/id6759412446",
+        },
+        {
+          label: "Android",
+          href: "https://play.google.com/store/apps/details?id=com.umc.product&pcampaignid=web_share",
+        },
+      ],
     },
     { icon: "umc", links: [{ label: "Product Tech" }] },
   ],
