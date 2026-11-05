@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { Pagination } from "@umc-product/react"
 
 import { Container } from "@/components/layout/Container"
 
@@ -11,10 +12,10 @@ import {
 } from "./-components/constants"
 import { ProjectFilterDropdown } from "./-components/list/ProjectFilterDropdown"
 import { ProjectList } from "./-components/list/ProjectList"
-import { ProjectPagination } from "./-components/list/ProjectPagination"
 import { ProjectSearchField } from "./-components/list/ProjectSearchField"
 import { ProjectsHero } from "./-components/list/ProjectsHero"
 import { ProjectsPageHeader } from "./-components/list/ProjectsPageHeader"
+import { useProjectPageSize } from "./-components/list/useProjectPageSize"
 import { ProjectPageShell } from "./-components/ProjectPageShell"
 import {
   getProjectPage,
@@ -32,7 +33,12 @@ export const Route = createFileRoute("/projects/")({
 function ProjectsPage() {
   const search = Route.useSearch()
   const navigate = Route.useNavigate()
-  const { projects, page, pageCount } = getProjectPage(PROJECT_LIST, search)
+  const pageSize = useProjectPageSize()
+  const { projects, page, pageCount } = getProjectPage(
+    PROJECT_LIST,
+    search,
+    pageSize,
+  )
 
   const changeSearch = (next: ProjectSearch) =>
     navigate({ search: next, replace: true, resetScroll: false })
@@ -80,15 +86,16 @@ function ProjectsPage() {
             />
           </div>
         </div>
-        <ProjectList projects={projects} />
+        <ProjectList pageSize={pageSize} projects={projects} />
         {projects.length > 0 && (
-          <ProjectPagination
-            className="mt-8"
+          // Figma Pagination(디자인 시스템 라이브러리): 번호 4개씩 묶어 보여 주고, 랜딩 인스턴스는 덮어쓴 값이 없다
+          <Pagination
+            className="mt-8 justify-center"
             onPageChange={(next) =>
               changeSearch({ ...search, page: next > 1 ? next : undefined })
             }
             page={page}
-            pageCount={pageCount}
+            totalPages={pageCount}
           />
         )}
       </Container>

@@ -59,18 +59,22 @@ describe("filterProjects", () => {
 describe("getProjectPage", () => {
   const many = Array.from({ length: 10 }, (_, index) => project(`P${index}`))
 
-  it("한 페이지에 9개씩 나눈다", () => {
-    const { projects, pageCount } = getProjectPage(many, { page: 2 })
-
-    expect(pageCount).toBe(2)
-    expect(projects).toEqual([many[9]])
+  it("받은 개수만큼 한 페이지로 나눈다", () => {
+    expect(getProjectPage(many, { page: 2 }, 9)).toMatchObject({
+      pageCount: 2,
+      projects: [many[9]],
+    })
+    expect(getProjectPage(many, { page: 2 }, 4)).toMatchObject({
+      pageCount: 3,
+      projects: many.slice(4, 8),
+    })
   })
 
   it("없는 페이지는 마지막 페이지로 맞춘다", () => {
-    expect(getProjectPage(many, { page: 5 }).page).toBe(2)
+    expect(getProjectPage(many, { page: 5 }, 9).page).toBe(2)
   })
 
   it("결과가 없어도 페이지 수는 1이다", () => {
-    expect(getProjectPage([], {}).pageCount).toBe(1)
+    expect(getProjectPage([], {}, 9).pageCount).toBe(1)
   })
 })

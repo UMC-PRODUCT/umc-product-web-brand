@@ -96,8 +96,9 @@ umc-product-web-v2의 기술 스택에서 코어만 가져왔습니다. 두 저�
 | 스타일 | tailwindcss, @tailwindcss/vite | 4 | 유틸리티 CSS |
 | 스타일 유틸 | class-variance-authority, clsx, tailwind-merge | 0.7, 2, 3 | 변형 정의, 클래스 병합. `cn()`은 디자인 시스템 텍스트 스타일과 그림자 유틸을 등록해 둡니다 (`src/utils/cn.ts`) |
 | 헤드리스 UI | radix-ui | 1 | 아코디언처럼 동작이 있는 UI의 접근성 처리 |
-| 아이콘 | lucide-react, @umc-product/icons | 0.545, 0.5 | SVG 아이콘 컴포넌트. UMC 로고와 픽토그램은 디자인 시스템 패키지에서 씁니다 |
-| 디자인 토큰 | @umc-product/design-tokens | 0.5 | 색, 텍스트 스타일, 그림자 토큰과 Tailwind 유틸리티, Pretendard 가변 폰트 (`src/index.css`) |
+| 아이콘 | lucide-react, @umc-product/icons | 0.545, 0.12 | SVG 아이콘 컴포넌트. UMC 로고와 픽토그램은 디자인 시스템 패키지에서 씁니다 |
+| 디자인 토큰 | @umc-product/design-tokens | 0.12 | 색, 텍스트 스타일, 그림자 토큰과 Tailwind 유틸리티, Pretendard 가변 폰트 (`src/index.css`) |
+| 디자인 시스템 컴포넌트 | @umc-product/react | 0.12 | 시안과 같은 컴포넌트가 있을 때 쓰는 UI 컴포넌트. 지금은 토스트(`src/App.tsx`)와 프로젝트 목록 페이지네이션(`src/pages/projects/index.tsx`) |
 | SVG | vite-plugin-svgr | 4 | SVG 파일을 React 컴포넌트로 import |
 | API 타입 | openapi-typescript | 7 | OpenAPI 스키마에서 TypeScript 타입 생성 |
 | 린트·포맷 | @biomejs/biome | 2 | 린트, 포맷, import 정렬, Tailwind 클래스 정렬 |
@@ -110,7 +111,8 @@ umc-product-web-v2의 기술 스택에서 코어만 가져왔습니다. 두 저�
 - zustand, axios, react-hook-form, zod, @hookform/resolvers, openapi-typescript는 설치만 해 두었고 아직 쓰는 곳이 없습니다. 처음 쓰는 PR에서 파일 위치와 사용 규칙을 이 문서에 추가합니다.
 - `@umc-product/icons`는 UMC 로고와 픽토그램에 씁니다(예: `src/components/footer/Footer.tsx`의 `UmcLogo`). 패키지에 없는 로고나 SNS 아이콘은 Figma SVG를 `currentColor`로 바꿔 `src/assets/landing/<섹션>/`에 두고 `?react`로 불러옵니다.
 - 디자인 토큰의 `tailwind.css`는 Tailwind 기본 색 팔레트를 지웁니다. `gray-500` 같은 기본 색 클래스는 생성되지 않으니 디자인 시스템 유틸(`text-brand-default-600`, `bg-teal-grey-75` 등)을 씁니다. Figma 변수 이름은 여러 색에 겹쳐 붙어 있으므로 hex 값으로 토큰을 찾습니다.
-- 디자인 시스템 React 컴포넌트(`@umc-product/react`)는 쓰지 않습니다. 랜딩 시안의 버튼이 대부분 링크인데 이 패키지의 `Button`은 `<button>`으로만 렌더링되고, 크기도 시안과 달라서입니다. UI는 `src/components`와 섹션 `-components`에 직접 만들고, 디자인 토큰만 가져다 씁니다.
+- 디자인 시스템 React 컴포넌트(`@umc-product/react`)에 시안과 같은 컴포넌트가 있으면 그것을 씁니다. 피그마 인스턴스가 디자인 시스템 라이브러리 컴포넌트이고 랜딩에서 덮어쓴 값이 거의 없을 때가 해당합니다. CSS는 `src/index.css`에서 `@umc-product/react/styles.css`로 불러옵니다.
+- 시안과 맞지 않으면 `src/components`와 섹션 `-components`에 직접 만듭니다. 예를 들어 랜딩 버튼은 대부분 링크인데 이 패키지의 `Button`은 `<button>`으로만 렌더링되고 크기도 시안과 달라서 직접 만든 컴포넌트(`src/components/button/`)를 씁니다.
 
 ## 폴더 구조와 라우팅
 
