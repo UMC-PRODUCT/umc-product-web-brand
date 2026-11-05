@@ -63,7 +63,7 @@ export function MobileMenu({
       </button>
       {open && (
         <div
-          className="absolute inset-x-0 top-full flex max-h-[calc(100dvh_-_var(--umc-layout-header-height))] flex-col items-start overflow-y-auto bg-[#0d1a19] px-6 pt-4 pb-6"
+          className="absolute inset-x-0 top-full flex max-h-[calc(100dvh_-_var(--umc-layout-header-height))] flex-col items-start overflow-y-auto bg-(--header-panel-bg) px-6 pt-4 pb-6"
           id={panelId}
         >
           <nav aria-label="주요 섹션">
@@ -72,7 +72,7 @@ export function MobileMenu({
                 <li key={item.id}>
                   <LandingSectionLink
                     aria-current={item.id === activeId ? "location" : undefined}
-                    className="block rounded-lg px-2.5 py-2 text-teal-grey-400 text-title-2-medium aria-[current=location]:text-teal-300 aria-[current=location]:text-title-2-semibold"
+                    className="block rounded-lg px-2.5 py-2 text-(--header-panel-item-fg) text-title-2-medium aria-[current=location]:text-(--header-panel-active-fg) aria-[current=location]:text-title-2-semibold"
                     onClick={close}
                     sectionId={item.id}
                   >
