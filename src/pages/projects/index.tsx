@@ -15,6 +15,7 @@ import { ProjectPagination } from "./-components/list/ProjectPagination"
 import { ProjectSearchField } from "./-components/list/ProjectSearchField"
 import { ProjectsHero } from "./-components/list/ProjectsHero"
 import { ProjectsPageHeader } from "./-components/list/ProjectsPageHeader"
+import { useProjectPageSize } from "./-components/list/useProjectPageSize"
 import { ProjectPageShell } from "./-components/ProjectPageShell"
 import {
   getProjectPage,
@@ -32,7 +33,12 @@ export const Route = createFileRoute("/projects/")({
 function ProjectsPage() {
   const search = Route.useSearch()
   const navigate = Route.useNavigate()
-  const { projects, page, pageCount } = getProjectPage(PROJECT_LIST, search)
+  const pageSize = useProjectPageSize()
+  const { projects, page, pageCount } = getProjectPage(
+    PROJECT_LIST,
+    search,
+    pageSize,
+  )
 
   const changeSearch = (next: ProjectSearch) =>
     navigate({ search: next, replace: true, resetScroll: false })
@@ -80,7 +86,7 @@ function ProjectsPage() {
             />
           </div>
         </div>
-        <ProjectList projects={projects} />
+        <ProjectList pageSize={pageSize} projects={projects} />
         {projects.length > 0 && (
           <ProjectPagination
             className="mt-8"

@@ -11,21 +11,24 @@ import { ProjectCardSkeleton } from "./ProjectCardSkeleton"
 interface ProjectListProps {
   projects: readonly Project[]
   isLoading?: boolean
+  /** 불러오는 중에 보여 줄 스켈레톤 수. 한 페이지 개수와 같게 둔다 */
+  pageSize?: number
 }
 
 const GRID_CLASS =
   "mt-8 grid gap-(--umc-spacing-gap-24) px-3 md:grid-cols-2 lg:grid-cols-3"
-const SKELETON_KEYS = Array.from(
-  { length: PROJECT_PAGE_SIZE },
-  (_, index) => index,
-)
 
-export function ProjectList({ projects, isLoading = false }: ProjectListProps) {
+export function ProjectList({
+  projects,
+  isLoading = false,
+  pageSize = PROJECT_PAGE_SIZE.desktop,
+}: ProjectListProps) {
   if (isLoading) {
+    const skeletonKeys = Array.from({ length: pageSize }, (_, index) => index)
     return (
       <div aria-busy className={GRID_CLASS} role="status">
         <span className="sr-only">{PROJECT_LIST_COPY.loading}</span>
-        {SKELETON_KEYS.map((key) => (
+        {skeletonKeys.map((key) => (
           <ProjectCardSkeleton key={key} />
         ))}
       </div>

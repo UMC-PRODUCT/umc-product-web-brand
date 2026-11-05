@@ -1,6 +1,11 @@
 import { z } from "zod"
 
-export const PROJECT_PAGE_SIZE = 9
+// Figma 프로젝트 보러가기 반응형(896:36692): 1024 이상 3×3, 768~1023 2×3, 767 이하 1×4
+export const PROJECT_PAGE_SIZE = {
+  desktop: 9,
+  tablet: 6,
+  mobile: 4,
+} as const
 
 const searchSchema = z.object({
   q: z.string().optional().catch(undefined),
@@ -58,13 +63,14 @@ export function filterProjects<T extends FilterableProject>(
 export function getProjectPage<T extends FilterableProject>(
   projects: readonly T[],
   search: ProjectSearch,
+  pageSize: number,
 ) {
   const filtered = filterProjects(projects, search)
-  const pageCount = Math.max(Math.ceil(filtered.length / PROJECT_PAGE_SIZE), 1)
+  const pageCount = Math.max(Math.ceil(filtered.length / pageSize), 1)
   const page = Math.min(search.page ?? 1, pageCount)
-  const start = (page - 1) * PROJECT_PAGE_SIZE
+  const start = (page - 1) * pageSize
   return {
-    projects: filtered.slice(start, start + PROJECT_PAGE_SIZE),
+    projects: filtered.slice(start, start + pageSize),
     page,
     pageCount,
   }
