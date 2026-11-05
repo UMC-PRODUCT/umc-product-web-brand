@@ -17,7 +17,7 @@ export function RecruitmentSection() {
       <Container className="flex flex-col items-center">
         <SectionHeading
           // 설명은 시안처럼 두 줄로 끊는다
-          className="whitespace-pre-line [&>p]:text-neutral-weak-500 xl:[&>p]:text-[22px]"
+          className="whitespace-pre-line [&>p]:text-neutral-weak-500"
           description={RECRUITMENT_COPY.description}
           title={RECRUITMENT_COPY.title}
           titleId="recruit-title"
