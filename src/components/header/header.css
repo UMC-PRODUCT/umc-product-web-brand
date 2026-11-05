@@ -25,6 +25,9 @@
   --header-menu-item-fg: var(--umc-color-text-neutral-default-900);
   --header-menu-item-hover-bg: var(--umc-color-teal-grey-50);
   --header-menu-item-hover-shadow: var(--umc-shadow-inner-neutral-2);
+  --header-panel-bg: var(--umc-color-teal-grey-75);
+  --header-panel-item-fg: var(--umc-color-text-neutral-medium-600);
+  --header-panel-active-fg: var(--umc-color-text-brand-default-600);
 
   background-color: var(--header-bg);
   background-image: var(--header-bg-image);
@@ -64,6 +67,9 @@
   --header-menu-item-fg: white;
   --header-menu-item-hover-bg: rgb(255 255 255 / 0.12);
   --header-menu-item-hover-shadow: none;
+  --header-panel-bg: #0d1a19;
+  --header-panel-item-fg: var(--umc-color-teal-grey-400);
+  --header-panel-active-fg: var(--umc-color-teal-300);
 }
 
 @media (width >= 64rem) {
@@ -73,19 +79,6 @@
       var(--umc-color-fill-neutral-weaker-50) 80%,
       transparent
     );
-  }
-}
-
-@media (width < 64rem) {
-  .site-header[data-menu-open="true"] {
-    --header-shadow: 0 4px 16px rgb(65 70 69 / 0.3);
-  }
-
-  .site-header[data-menu-open="true"]:not([data-tone="dark"]) {
-    --header-bg: #0d1a19;
-    --header-logo: var(--umc-color-teal-50);
-    --header-logo-hover: var(--umc-color-teal-200);
-    --header-focus: white;
   }
 }
 
