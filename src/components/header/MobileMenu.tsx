@@ -63,7 +63,7 @@ export function MobileMenu({
       </button>
       {open && (
         <div
-          className="absolute inset-x-0 top-full flex max-h-[calc(100dvh_-_var(--umc-layout-header-height))] flex-col items-start overflow-y-auto bg-(--header-panel-bg) px-6 pt-4 pb-6"
+          className="site-header-panel absolute inset-x-0 top-full flex max-h-[calc(100dvh_-_var(--umc-layout-header-height))] flex-col items-start overflow-y-auto bg-(--header-panel-bg) px-6 pt-4 pb-6"
           id={panelId}
         >
           <nav aria-label="주요 섹션">

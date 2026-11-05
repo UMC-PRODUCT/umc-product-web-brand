@@ -72,6 +72,22 @@
   --header-panel-active-fg: var(--umc-color-teal-300);
 }
 
+@media (width < 64rem) {
+  .site-header[data-tone="dark"][data-menu-open="true"] {
+    --header-bg: transparent;
+    --header-bg-image: none;
+    --header-panel-bg: rgb(7 33 30 / 0.6);
+  }
+
+  .site-header[data-tone="dark"] .site-header-panel {
+    top: 0;
+    z-index: -1;
+    max-height: 100dvh;
+    padding-top: calc(var(--umc-layout-header-height) + 16px);
+    backdrop-filter: blur(21px);
+  }
+}
+
 @media (width >= 64rem) {
   .site-header-translucent {
     --header-bg: color-mix(
