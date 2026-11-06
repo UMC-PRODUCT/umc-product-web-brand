@@ -1,0 +1,39 @@
+.member-hero-glow {
+  position: absolute;
+  top: 30px;
+  left: -250px;
+  z-index: -1;
+  width: 3000px;
+  height: 640px;
+  background: radial-gradient(
+    closest-side,
+    rgb(163 222 219 / 0.33),
+    rgb(163 222 219 / 0.28) 25%,
+    rgb(163 222 219 / 0.14) 55%,
+    rgb(163 222 219 / 0.05) 80%,
+    rgb(163 222 219 / 0)
+  );
+  transform: rotate(11deg);
+  pointer-events: none;
+}
+
+.member-hero-glow-breath {
+  background: radial-gradient(
+    closest-side,
+    rgb(163 222 219 / 0.2),
+    rgb(163 222 219 / 0)
+  );
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .member-hero-glow-breath {
+    animation: member-hero-breath 2.4s ease-in-out;
+  }
+}
+
+@keyframes member-hero-breath {
+  50% {
+    opacity: 1;
+  }
+}

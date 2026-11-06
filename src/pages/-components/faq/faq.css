@@ -1,0 +1,32 @@
+/*
+ * FAQ 아코디언 펼침·접힘 높이 전환
+ * radix Accordion이 내용 높이를 --radix-accordion-content-height로 알려 준다
+ * 기본은 전환 없이 바로 열리고, 동작 줄이기를 켜지 않았을 때만 움직인다
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .faq-accordion-content[data-state="open"] {
+    animation: faq-accordion-open 240ms ease-out;
+  }
+
+  .faq-accordion-content[data-state="closed"] {
+    animation: faq-accordion-close 200ms ease-out;
+  }
+}
+
+@keyframes faq-accordion-open {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes faq-accordion-close {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}

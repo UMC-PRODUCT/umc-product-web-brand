@@ -12,4 +12,10 @@ describe("cn", () => {
 
     expect(cn("text-sm", isActive && "font-bold", undefined)).toBe("text-sm")
   })
+
+  it("디자인 시스템 텍스트 스타일과 글자색을 함께 남긴다", () => {
+    expect(cn("text-body-1-regular", "text-brand-strong-800")).toBe(
+      "text-body-1-regular text-brand-strong-800",
+    )
+  })
 })

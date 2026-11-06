@@ -1,11 +1,34 @@
 @import "tailwindcss";
-@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+@import "@umc-product/react/styles.css";
+@import "@umc-product/design-tokens/tailwind.css";
+
+/* Figma 반응형 뷰포트(768:21185): Mobile 360~767, Pad 768~1023, Small PC 1024~1439, PC 1440~1919, Lg PC 1920~ */
+@theme {
+  --breakpoint-sm: initial;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 90rem;
+  --breakpoint-2xl: 120rem;
+  --color-part-android: #daf1e5;
+  --color-part-spring: #ede3d9;
+}
 
 @layer base {
   html {
     overscroll-behavior: none;
+    --anchor-gap-below-header: 10px;
+    scroll-padding-top: calc(
+      var(--umc-layout-header-height) +
+      var(--anchor-gap-below-header)
+    );
+    font-family: var(--umc-font-family-brand);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
   button:not(:disabled) {
     cursor: pointer;

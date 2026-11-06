@@ -1,0 +1,187 @@
+/*
+ * 섹션 사이 세로 간격
+ * Figma 반응형 프레임(768:21185)에서 1023 이하는 앞 섹션 콘텐츠 끝부터 다음 섹션 콘텐츠 시작까지 잰 값이다
+ * (절대 위치 장식, 숨긴 레이어 제외). 360·390·767은 값이 같고 768·1023도 같다
+ * 1024 이상은 스크롤 스냅용 화면 프레임(749:23069, 1137:38073, 749:24263)의 최소 높이·패딩·간격을 쓴다
+ * 자석은 Preview까지만 걸려서 프로젝트·모집 프레임은 화면 높이 대신 시안 프레임 높이(688, 820)를 쓴다
+ * 프로젝트·모집은 앵커 이동이 제목에서 멈추도록 프레임 위 여백만큼 scroll-margin-top을 뺀다
+ * 2xl의 세로 가운데 정렬도 같은 이유로 정렬 결과(위 여백 94, 131)를 고정값으로 둔다
+ * 미디어 쿼리 폭은 index.css의 --breakpoint-md(48rem), lg(64rem), xl(90rem), 2xl(120rem)과 같다
+ */
+.landing-main > #about {
+  margin-top: 120px;
+}
+.landing-main > #stats {
+  margin-top: 122px;
+}
+.landing-main > #values {
+  margin-top: 122px;
+}
+.landing-main > #preview {
+  margin-top: 154px;
+}
+.landing-main > #universities {
+  margin-top: 122px;
+}
+.landing-main > #projects {
+  margin-top: 182px;
+}
+.landing-main > #recruit {
+  margin-top: 154px;
+}
+.landing-main > #faq {
+  margin-top: 154px;
+}
+/* FAQ 섹션 아래 여백 32 + 본문 묶음 아래 여백 120 */
+.landing-main > #cta {
+  margin-top: 152px;
+}
+
+@media (width >= 48rem) {
+  .landing-main > #about {
+    margin-top: 150px;
+  }
+  .landing-main > #stats {
+    margin-top: 180px;
+  }
+  .landing-main > #values {
+    margin-top: 206px;
+  }
+  .landing-main > #preview {
+    margin-top: 212px;
+  }
+  .landing-main > #universities {
+    margin-top: 172px;
+  }
+  .landing-main > #projects {
+    margin-top: 232px;
+  }
+  .landing-main > #recruit {
+    margin-top: 184px;
+  }
+  .landing-main > #faq {
+    margin-top: 212px;
+  }
+  .landing-main > #cta {
+    margin-top: 180px;
+  }
+}
+
+@media (width >= 64rem) {
+  .landing-main > :is(#stats, #values, #preview) {
+    min-height: calc(100svh - var(--umc-layout-header-height));
+  }
+  .landing-main > :is(#projects, #recruit) {
+    min-height: 688px;
+    padding-top: var(--frame-padding-top);
+    scroll-margin-top: calc(-1 * var(--frame-padding-top));
+  }
+  .landing-main > #about {
+    margin-top: 70px;
+  }
+  .landing-main > #stats {
+    margin-top: 120px;
+    padding-top: 60px;
+  }
+  .landing-main > #values {
+    margin-top: 120px;
+    padding-block: 20px;
+  }
+  .landing-main > #preview {
+    margin-top: 120px;
+    padding-block: 16px;
+  }
+  .landing-main > #universities {
+    margin-top: 152px;
+  }
+  .landing-main > #projects {
+    --frame-padding-top: 48px;
+    margin-top: 200px;
+  }
+  .landing-main > #recruit {
+    --frame-padding-top: 48px;
+    margin-top: 120px;
+  }
+  .landing-main > #faq {
+    margin-top: 180px;
+  }
+  .landing-main > #cta {
+    margin-top: 120px;
+  }
+}
+
+@media (width >= 90rem) {
+  .landing-main > :is(#projects, #recruit) {
+    min-height: 820px;
+  }
+  .landing-main > #about {
+    margin-top: 108px;
+  }
+  .landing-main > #stats {
+    margin-top: 130px;
+    padding-top: 80px;
+  }
+  .landing-main > #values {
+    margin-top: 130px;
+    padding-block: 60px 0;
+  }
+  .landing-main > #preview {
+    margin-top: 130px;
+    padding-block: 60px 0;
+  }
+  .landing-main > #universities {
+    margin-top: 162px;
+  }
+  .landing-main > #projects {
+    --frame-padding-top: 60px;
+    margin-top: 210px;
+  }
+  .landing-main > #recruit {
+    --frame-padding-top: 80px;
+    margin-top: 130px;
+  }
+  .landing-main > #faq {
+    margin-top: 150px;
+  }
+  .landing-main > #cta {
+    margin-top: 210px;
+  }
+}
+
+@media (width >= 120rem) {
+  .landing-main > :is(#stats, #values, #preview) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .landing-main > #values {
+    padding-top: 0;
+  }
+  .landing-main > #preview {
+    padding-top: 30px;
+  }
+  .landing-main > #projects {
+    --frame-padding-top: 94px;
+  }
+  .landing-main > #recruit {
+    --frame-padding-top: 131px;
+    padding-bottom: 20px;
+  }
+  .landing-main > #faq {
+    margin-top: 190px;
+  }
+  .landing-main > #cta {
+    margin-top: 196px;
+  }
+}
+
+/*
+ * 소개 축소 인터랙션(.about-zoom, 1024 이상)은 스크롤 구간이 있어 정적인 시안 간격을 그대로 쓸 수 없다.
+ * 히어로 아래와 소개 아래 간격은 인터랙션에 맞춘 기존 값을 유지한다
+ */
+.landing-main > #hero + .about-zoom {
+  margin-top: 217px;
+}
+.landing-main > .about-zoom + #stats {
+  margin-top: 360px;
+}

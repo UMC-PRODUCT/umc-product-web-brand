@@ -1,0 +1,59 @@
+import { type CSSProperties, Fragment } from "react"
+
+import { SPONSORS, SPONSORS_COPY, type Sponsor } from "./constants"
+
+const LINE_BREAK_CLASS = {
+  mobile: "h-[6.5px] basis-full md:hidden",
+  tablet: "hidden h-1 basis-full md:block lg:hidden",
+} as const
+
+const slotSize = (sponsor: Sponsor) =>
+  ({
+    "--slot-width": `${sponsor.slotWidth}px`,
+    "--slot-width-xl": `${sponsor.slotWidthXl ?? sponsor.slotWidth}px`,
+    "--slot-height": `${sponsor.slotHeight}px`,
+  }) as CSSProperties
+
+export function SponsorsBand() {
+  const [firstLine, secondLine] = SPONSORS_COPY.descriptionLines
+
+  return (
+    <div className="mt-10 md:mt-[50px] xl:mt-[60px]">
+      <h3 className="sr-only">{SPONSORS_COPY.title}</h3>
+      <div className="bg-white px-8 pt-6 pb-[22px] md:pt-8 md:pb-6 xl:pt-10 xl:pb-7">
+        <ul className="mx-auto flex max-w-[1376px] flex-wrap items-center justify-center gap-x-[calc(6px*var(--sponsor-scale))] [--sponsor-scale:0.49] lg:flex-nowrap md:[--sponsor-scale:0.65] xl:[--sponsor-scale:0.83]">
+          {SPONSORS.map((sponsor) => (
+            <Fragment key={sponsor.id}>
+              <li
+                className="flex min-h-[calc(var(--slot-height)*var(--sponsor-scale))] min-w-0 shrink basis-[calc(var(--slot-width)*var(--sponsor-scale))] items-center justify-center xl:basis-[calc(var(--slot-width-xl)*var(--sponsor-scale))]"
+                style={slotSize(sponsor)}
+              >
+                <img
+                  alt={sponsor.name}
+                  className="h-auto max-w-full"
+                  decoding="async"
+                  height={sponsor.height}
+                  loading="lazy"
+                  src={sponsor.logo}
+                  style={{
+                    width: `calc(${sponsor.width}px * var(--sponsor-scale))`,
+                  }}
+                  width={sponsor.width}
+                />
+              </li>
+              {sponsor.lineBreakAfter && (
+                <li
+                  aria-hidden
+                  className={LINE_BREAK_CLASS[sponsor.lineBreakAfter]}
+                />
+              )}
+            </Fragment>
+          ))}
+        </ul>
+        <p className="mt-5 break-keep text-center text-base text-neutral-medium-600 leading-[1.4] tracking-[-0.02em] lg:text-[22px] xl:mt-6 xl:text-[26px]">
+          {firstLine} {secondLine}
+        </p>
+      </div>
+    </div>
+  )
+}

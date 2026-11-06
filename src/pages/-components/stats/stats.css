@@ -1,0 +1,41 @@
+.stat-card-layers {
+  container-type: size;
+  background-color: rgb(12 42 37 / 0.86);
+}
+
+.stat-card-sheen {
+  background: linear-gradient(
+    atan2(calc(1.415 * 100cqh), calc(-0.4706 * 100cqw)),
+    rgb(46 209 190 / 0.12) 8.49%,
+    rgb(46 209 190 / 0) 61.52%
+  );
+}
+
+.stat-card-dodge {
+  background: rgb(38 38 38 / 0.2);
+  mix-blend-mode: color-dodge;
+}
+
+.stat-card-edge {
+  background: linear-gradient(
+    atan2(calc(-1.2654 * 100cqh), calc(0.4904 * 100cqw)),
+    rgb(46 209 190 / 0.24) -16.06%,
+    rgb(46 209 190 / 0) 20.62%
+  );
+}
+
+.stat-card-value {
+  text-shadow: 0 0 20px rgb(16 181 162 / 0.5);
+}
+
+.stat-card-unit {
+  color: #e9ecec;
+  text-shadow: 0 0 20px rgb(255 255 255 / 0.5);
+}
+
+.stats-glow {
+  border-radius: 50%;
+  background-color: rgb(54 211 192);
+  opacity: 0.16;
+  filter: blur(350px);
+}
