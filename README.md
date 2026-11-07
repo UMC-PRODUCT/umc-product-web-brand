@@ -398,19 +398,8 @@ import { describe, expect, it } from "vitest"
 
 | 브랜치 | 역할 | 배포 |
 | --- | --- | --- |
-| `dev` | 기본 브랜치. 기능 PR이 모이는 통합 브랜치 | Amplify `dev.university.neordinary.com`, GitHub Pages 확인용 |
+| `dev` | 기본 브랜치. 기능 PR이 모이는 통합 브랜치 | Amplify `dev.university.neordinary.com` |
 | `main` | 릴리스 브랜치 | Amplify `university.neordinary.com` |
-
-### dev 확인용 배포: GitHub Pages
-
-- 주소: <https://umc-product.github.io/umc-product-web-brand/>
-- `.github/workflows/deploy-dev.yml`이 `dev` push 때 빌드해 배포합니다. 바로 다시 배포하려면 Actions의 `Deploy dev`에서 Run workflow를 누릅니다
-- 사이트가 하위 경로(`/umc-product-web-brand/`)에 있어서, 워크플로가 `configure-pages`에서 받은 기준 경로를 `vite build --base`로 넘깁니다. 라우터는 `import.meta.env.BASE_URL`을 `basepath`로 씁니다
-- 그래서 이미지 같은 자원은 import로 불러옵니다. `/`로 시작하는 경로를 문자열로 직접 쓰면 Pages에서 깨집니다
-- 서버 rewrite가 없어 `index.html`을 `404.html`로 복사합니다. 하위 경로에서 새로고침해도 앱이 뜨지만, 응답 상태 코드는 404입니다
-- 배포 결과는 Actions의 `Deploy dev` 실행과 저장소 Environments의 `github-pages`에서 봅니다
-- 공개 저장소라 누구나 열 수 있습니다. 비밀값을 번들에 넣지 않습니다
-- 같은 조건을 로컬에서 보려면 `pnpm build --base /umc-product-web-brand/` 뒤에 `pnpm preview --base /umc-product-web-brand/`를 실행합니다
 
 ### Amplify 배포
 
