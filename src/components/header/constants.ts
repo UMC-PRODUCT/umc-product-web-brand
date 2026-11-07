@@ -7,10 +7,11 @@ export interface NavItem {
   label: string
 }
 
-export interface QuickLink {
-  label: string
-  href?: string
-}
+export type QuickLinkNotice = "recruiting" | "preparing"
+
+export type QuickLink =
+  | { label: string; href: string }
+  | { label: string; notice: QuickLinkNotice }
 
 export const NAV_ITEMS: readonly NavItem[] = [
   { id: "about", label: "소개" },
@@ -43,12 +44,12 @@ export function navIdForSection(sectionId: string): NavId | null {
 export const QUICK_LINKS_TITLE = "UMC 바로가기"
 
 export const QUICK_LINKS: readonly QuickLink[] = [
-  { label: "지원하기" },
+  { label: "지원하기", notice: "recruiting" },
   {
     label: "데모데이 매칭 서비스",
     href: "https://activity.university.neordinary.com/",
   },
-  { label: "UMC 테크블로그" },
+  { label: "UMC 테크블로그", notice: "preparing" },
 ]
 
-export const PREPARING_SERVICE_MESSAGE = "해당 서비스는 준비중입니다"
+export const PREPARING_SERVICE_MESSAGE = "해당 서비스는 현재 준비 중이에요."

@@ -7,9 +7,6 @@ export const RECRUITMENT_COPY = {
   cta: "모집 안내 보러가기",
 } as const
 
-// TODO: 리크루팅 페이지가 만들어지면 주소를 넣는다. null이면 버튼을 비활성으로 둔다
-export const RECRUITMENT_PAGE_URL: string | null = null
-
 export interface RecruitmentField {
   field: FeatureCardField
   title: string
