@@ -9,17 +9,15 @@ import { type ReactNode } from "react"
 
 interface RenderWithRouterOptions {
   path?: string
-  basepath?: string
 }
 
 export async function renderWithRouter(
   ui: ReactNode,
-  { path = "/", basepath }: RenderWithRouterOptions = {},
+  { path = "/" }: RenderWithRouterOptions = {},
 ) {
   const router = createRouter({
     routeTree: createRootRoute({ component: () => ui }),
     history: createMemoryHistory({ initialEntries: [path] }),
-    basepath,
     trailingSlash: "never",
   })
   const view = await act(async () => render(<RouterProvider router={router} />))
