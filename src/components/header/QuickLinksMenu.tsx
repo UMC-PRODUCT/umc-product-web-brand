@@ -1,10 +1,15 @@
 import { CheckCircleIcon, ExpandMoreIcon } from "@umc-product/icons"
-import { useToast } from "@umc-product/react"
 import { DropdownMenu } from "radix-ui"
 
+import { useTopToast } from "@/components/toast/TopToastProvider"
+import { useRecruitingNoticeToast } from "@/hooks/useRecruitingNoticeToast"
 import { cn } from "@/utils/cn"
 
-import { PREPARING_SERVICE_MESSAGE, type QuickLink } from "./constants"
+import {
+  PREPARING_SERVICE_MESSAGE,
+  type QuickLink,
+  type QuickLinkNotice,
+} from "./constants"
 
 const MENU_ITEM_CLASS =
   "site-header-menu-item flex h-[38px] items-center whitespace-nowrap rounded-lg px-3 text-body-2-regular"
@@ -15,7 +20,18 @@ interface QuickLinksMenuProps {
 }
 
 export function QuickLinksMenu({ title, links }: QuickLinksMenuProps) {
-  const toast = useToast()
+  const topToast = useTopToast()
+  const showRecruitingNotice = useRecruitingNoticeToast()
+  const showPreparingNotice = () =>
+    topToast.show({
+      message: PREPARING_SERVICE_MESSAGE,
+      color: "error",
+      icon: <CheckCircleIcon weight="fill" />,
+    })
+  const showNotice: Record<QuickLinkNotice, () => void> = {
+    recruiting: showRecruitingNotice,
+    preparing: showPreparingNotice,
+  }
 
   return (
     <DropdownMenu.Root modal={false}>
@@ -33,7 +49,7 @@ export function QuickLinksMenu({ title, links }: QuickLinksMenuProps) {
         sideOffset={0}
       >
         {links.map((link) =>
-          link.href ? (
+          "href" in link ? (
             <DropdownMenu.Item asChild key={link.label}>
               <a
                 className={MENU_ITEM_CLASS}
@@ -49,13 +65,7 @@ export function QuickLinksMenu({ title, links }: QuickLinksMenuProps) {
             <DropdownMenu.Item
               className={cn(MENU_ITEM_CLASS, "cursor-pointer")}
               key={link.label}
-              onSelect={() =>
-                toast.show({
-                  message: PREPARING_SERVICE_MESSAGE,
-                  color: "error",
-                  icon: <CheckCircleIcon weight="fill" />,
-                })
-              }
+              onSelect={showNotice[link.notice]}
             >
               {link.label}
             </DropdownMenu.Item>
