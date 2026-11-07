@@ -2,16 +2,15 @@ import { Button } from "@/components/button/Button"
 import { Container } from "@/components/layout/Container"
 import { Section } from "@/components/layout/Section"
 import { SectionHeading } from "@/components/layout/SectionHeading"
+import { useRecruitingNoticeToast } from "@/hooks/useRecruitingNoticeToast"
 import { cn } from "@/utils/cn"
 
-import {
-  RECRUITMENT_COPY,
-  RECRUITMENT_FIELDS,
-  RECRUITMENT_PAGE_URL,
-} from "./constants"
+import { RECRUITMENT_COPY, RECRUITMENT_FIELDS } from "./constants"
 import { FeatureCard } from "./FeatureCard"
 
 export function RecruitmentSection() {
+  const showRecruitingNotice = useRecruitingNoticeToast()
+
   return (
     <Section headerTone="light" id="recruit" labelledBy="recruit-title">
       <Container className="flex flex-col items-center">
@@ -40,29 +39,21 @@ export function RecruitmentSection() {
             </li>
           ))}
         </ul>
-        {/* 리크루팅 페이지가 생기기 전에는 비활성 <button>, 주소가 생기면 <a>로 렌더링한다 */}
         <Button
           arrow
-          asChild={RECRUITMENT_PAGE_URL !== null}
           className={cn(
             "mt-8 md:mt-12 lg:mt-[54px]",
-            // Figma에 비활성 상태가 없어 모양은 Default로 두고 hover 반응만 막는다
-            "disabled:pointer-events-none",
             "h-12 rounded-(--umc-radius-14) bg-teal-grey-75 pr-[14px] pl-(--umc-spacing-padding-16) text-[17px] text-neutral-medium-600 leading-[1.4] tracking-[-0.34px] backdrop-blur-none [&>span]:p-0 [&>span]:text-icon-neutral-medium-500 [&_svg]:size-4",
             "md:h-[64px] md:rounded-(--umc-radius-18) md:bg-fill-neutral-medium-100 md:pr-(--umc-spacing-padding-16) md:pl-(--umc-spacing-padding-28) md:text-[22px] md:text-teal-grey-700 md:leading-[1.35] md:tracking-[-0.22px] md:backdrop-blur-[4px] md:[&>span]:p-(--umc-spacing-padding-4) md:[&>span]:text-icon-neutral-strong-600 md:[&_svg]:size-6",
             "xl:h-[68px] xl:pr-(--umc-spacing-padding-20) xl:pl-(--umc-spacing-padding-32)",
             "xl:text-[24px] xl:tracking-[-0.24px]",
           )}
           color="neutral"
-          disabled={RECRUITMENT_PAGE_URL === null}
+          onClick={showRecruitingNotice}
           size="lg"
           variant="weak"
         >
-          {RECRUITMENT_PAGE_URL === null ? (
-            RECRUITMENT_COPY.cta
-          ) : (
-            <a href={RECRUITMENT_PAGE_URL}>{RECRUITMENT_COPY.cta}</a>
-          )}
+          {RECRUITMENT_COPY.cta}
         </Button>
       </Container>
     </Section>
