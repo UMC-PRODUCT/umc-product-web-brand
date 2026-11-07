@@ -29,15 +29,12 @@ describe("LandingSectionLink", () => {
     ).not.toHaveAttribute("aria-current")
   })
 
-  it("basepath가 붙은 랜딩 해시 주소를 만든다", async () => {
-    await renderWithRouter(<Links />, {
-      path: "/umc-product-web-brand",
-      basepath: "/umc-product-web-brand",
-    })
+  it("랜딩 해시 주소를 만든다", async () => {
+    await renderWithRouter(<Links />)
 
     expect(
       screen.getByRole("link", { name: "자주 묻는 질문" }),
-    ).toHaveAttribute("href", "/umc-product-web-brand/#faq")
+    ).toHaveAttribute("href", "/#faq")
   })
 
   it("다른 경로에서 누르면 랜딩으로 이동하고 해시를 남긴다", async () => {

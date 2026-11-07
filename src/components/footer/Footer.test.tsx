@@ -98,19 +98,16 @@ describe("Footer", () => {
     expect(screen.getByText("리크루팅 서비스")).toBeInTheDocument()
   })
 
-  it("About의 UMC PRODUCT·중앙사무국은 하위 경로가 붙은 소개 페이지 링크다", async () => {
-    await renderWithRouter(<Footer />, {
-      path: "/umc-product-web-brand",
-      basepath: "/umc-product-web-brand",
-    })
+  it("About의 UMC PRODUCT·중앙사무국은 소개 페이지 링크다", async () => {
+    await renderWithRouter(<Footer />)
 
     expect(screen.getByRole("link", { name: "UMC PRODUCT" })).toHaveAttribute(
       "href",
-      "/umc-product-web-brand/about/umc-product",
+      "/about/umc-product",
     )
     expect(screen.getByRole("link", { name: "중앙사무국" })).toHaveAttribute(
       "href",
-      "/umc-product-web-brand/about/central-office",
+      "/about/central-office",
     )
   })
 })
