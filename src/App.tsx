@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { createRouter, RouterProvider } from "@tanstack/react-router"
 import { ToastProvider } from "@umc-product/react"
 
@@ -38,7 +37,6 @@ export function App() {
       <ToastProvider>
         <RouterProvider router={router} />
       </ToastProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }
