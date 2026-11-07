@@ -2,6 +2,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react"
 import { ToastProvider } from "@umc-product/react"
 import { describe, expect, it } from "vitest"
 
+import { TopToastProvider } from "@/components/toast/TopToastProvider"
 import { RECRUITING_NOTICE_MESSAGE } from "@/hooks/useRecruitingNoticeToast"
 
 import {
@@ -13,9 +14,11 @@ import { QuickLinksMenu } from "./QuickLinksMenu"
 
 function renderMenu() {
   render(
-    <ToastProvider>
-      <QuickLinksMenu links={QUICK_LINKS} title={QUICK_LINKS_TITLE} />
-    </ToastProvider>,
+    <TopToastProvider>
+      <ToastProvider>
+        <QuickLinksMenu links={QUICK_LINKS} title={QUICK_LINKS_TITLE} />
+      </ToastProvider>
+    </TopToastProvider>,
   )
   fireEvent.keyDown(screen.getByRole("button", { name: QUICK_LINKS_TITLE }), {
     key: "Enter",
@@ -38,6 +41,7 @@ describe("QuickLinksMenu", () => {
     })
     const toast = message.closest<HTMLElement>(".umc-toast")
     expect(toast).toHaveAttribute("data-color", "brand")
+    expect(toast).toHaveAttribute("data-placement", "bottom")
     expect(toast).toHaveAttribute("data-icon")
     expect(toast?.querySelector(".umc-toast__close")).toBeNull()
     expect(
@@ -46,7 +50,7 @@ describe("QuickLinksMenu", () => {
     expect(screen.queryByRole("menu")).not.toBeInTheDocument()
   })
 
-  it("준비 중인 UMC 테크블로그를 고르면 메뉴를 닫고 아이콘이 있는 Error 토스트를 띄운다", async () => {
+  it("준비 중인 UMC 테크블로그를 고르면 메뉴를 닫고 아이콘만 있는 상단 Error 토스트를 띄운다", async () => {
     renderMenu()
     selectNoticeItem("UMC 테크블로그")
 
@@ -55,8 +59,10 @@ describe("QuickLinksMenu", () => {
     })
     const toast = message.closest(".umc-toast")
     expect(toast).toHaveAttribute("data-color", "error")
+    expect(toast).toHaveAttribute("data-placement", "top")
     expect(toast).toHaveAttribute("data-icon")
     expect(toast?.querySelector(".umc-toast__action")).toBeNull()
+    expect(toast?.querySelector(".umc-toast__close")).toBeNull()
     expect(screen.queryByRole("menu")).not.toBeInTheDocument()
   })
 

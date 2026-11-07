@@ -1,7 +1,7 @@
 import { CheckCircleIcon, ExpandMoreIcon } from "@umc-product/icons"
-import { useToast } from "@umc-product/react"
 import { DropdownMenu } from "radix-ui"
 
+import { useTopToast } from "@/components/toast/TopToastProvider"
 import { useRecruitingNoticeToast } from "@/hooks/useRecruitingNoticeToast"
 import { cn } from "@/utils/cn"
 
@@ -20,10 +20,10 @@ interface QuickLinksMenuProps {
 }
 
 export function QuickLinksMenu({ title, links }: QuickLinksMenuProps) {
-  const toast = useToast()
+  const topToast = useTopToast()
   const showRecruitingNotice = useRecruitingNoticeToast()
   const showPreparingNotice = () =>
-    toast.show({
+    topToast.show({
       message: PREPARING_SERVICE_MESSAGE,
       color: "error",
       icon: <CheckCircleIcon weight="fill" />,

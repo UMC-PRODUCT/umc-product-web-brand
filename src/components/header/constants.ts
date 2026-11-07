@@ -49,4 +49,4 @@ export const QUICK_LINKS: readonly QuickLink[] = [
   { label: "UMC 테크블로그", notice: "preparing" },
 ]
 
-export const PREPARING_SERVICE_MESSAGE = "해당 서비스는 준비중입니다"
+export const PREPARING_SERVICE_MESSAGE = "해당 서비스는 현재 준비 중이에요."
