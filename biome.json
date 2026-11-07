@@ -11,7 +11,8 @@
       "!src/routeTree.gen.ts",
       "!pnpm-lock.yaml",
       "!.claude",
-      "!src/assets/**/*.svg"
+      "!src/assets/**/*.svg",
+      "!public"
     ]
   },
   "formatter": {
