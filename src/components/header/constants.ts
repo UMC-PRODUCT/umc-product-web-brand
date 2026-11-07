@@ -45,7 +45,10 @@ export const QUICK_LINKS_TITLE = "UMC 바로가기"
 
 export const QUICK_LINKS: readonly QuickLink[] = [
   { label: "지원하기", notice: "recruiting" },
-  { label: "UPMS", href: "https://activity.university.neordinary.com/" },
+  {
+    label: "데모데이 매칭 서비스",
+    href: "https://activity.university.neordinary.com/",
+  },
   { label: "UMC 테크블로그", notice: "preparing" },
 ]
 

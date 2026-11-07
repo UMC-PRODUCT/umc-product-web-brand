@@ -45,7 +45,7 @@ const LINK_GROUPS: FooterLinkGroup[] = [
       { label: "UMC PRODUCT APP" },
       { label: "리크루팅 서비스" },
       {
-        label: "UPMS 서비스",
+        label: "데모데이 매칭 서비스",
         href: "https://activity.university.neordinary.com/",
       },
     ],

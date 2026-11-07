@@ -66,10 +66,12 @@ describe("QuickLinksMenu", () => {
     expect(screen.queryByRole("menu")).not.toBeInTheDocument()
   })
 
-  it("UPMS는 새 창으로 여는 링크로 남는다", () => {
+  it("데모데이 매칭 서비스는 새 창으로 여는 UPMS 링크로 남는다", () => {
     renderMenu()
 
-    const upms = screen.getByRole("menuitem", { name: "UPMS (새 창)" })
+    const upms = screen.getByRole("menuitem", {
+      name: "데모데이 매칭 서비스 (새 창)",
+    })
     expect(upms).toHaveAttribute(
       "href",
       "https://activity.university.neordinary.com/",

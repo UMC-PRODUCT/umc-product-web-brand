@@ -33,7 +33,7 @@ describe("Footer", () => {
         .getAllByRole("heading", { level: 2 })
         .map((heading) => heading.textContent),
     ).toEqual(["About", "Service", "Community"])
-    expect(within(nav).getByText("UPMS 서비스")).toBeInTheDocument()
+    expect(within(nav).getByText("데모데이 매칭 서비스")).toBeInTheDocument()
   })
 
   it("채널 목록의 아이콘은 보조기술에서 숨긴다", async () => {
@@ -79,10 +79,12 @@ describe("Footer", () => {
     }
   })
 
-  it("Service의 UPMS 서비스는 새 창으로 여는 UPMS 링크다", async () => {
+  it("Service의 데모데이 매칭 서비스는 새 창으로 여는 UPMS 링크다", async () => {
     await renderWithRouter(<Footer />)
 
-    const upms = screen.getByRole("link", { name: "UPMS 서비스 (새 창)" })
+    const upms = screen.getByRole("link", {
+      name: "데모데이 매칭 서비스 (새 창)",
+    })
     expect(upms).toHaveAttribute(
       "href",
       "https://activity.university.neordinary.com/",
