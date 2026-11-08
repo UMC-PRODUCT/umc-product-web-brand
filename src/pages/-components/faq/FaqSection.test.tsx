@@ -52,4 +52,28 @@ describe("FaqSection", () => {
     expect(first).toHaveAttribute("aria-expanded", "false")
     expect(second).toHaveAttribute("aria-expanded", "true")
   })
+
+  it("펼친 질문을 다시 누르면 접는다", () => {
+    render(<FaqSection />)
+
+    const question = screen.getByRole("button", { name: /전공자가 아니어도/ })
+
+    fireEvent.click(question)
+    expect(question).toHaveAttribute("aria-expanded", "true")
+
+    fireEvent.click(question)
+    expect(question).toHaveAttribute("aria-expanded", "false")
+  })
+
+  it("질문 제목은 heading 안의 버튼이고 접두 Q는 낭독하지 않는다", () => {
+    render(<FaqSection />)
+
+    expect(
+      screen.getByRole("heading", { name: /전공자가 아니어도/ }),
+    ).toContainElement(
+      screen.getByRole("button", {
+        name: "전공자가 아니어도 지원할 수 있나요?",
+      }),
+    )
+  })
 })

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { ToastProvider } from "@umc-product/react"
 import { describe, expect, it } from "vitest"
 
@@ -32,7 +32,7 @@ function selectNoticeItem(label: string) {
 }
 
 describe("QuickLinksMenu", () => {
-  it("지원하기를 고르면 메뉴를 닫고 양쪽에 원뿔이 있고 X가 없는 리크루팅 안내 Brand 토스트를 띄운다", async () => {
+  it("지원하기를 고르면 메뉴를 닫고 양쪽에 원뿔이 있는 리크루팅 안내 서비스 공지 토스트를 띄운다", async () => {
     renderMenu()
     selectNoticeItem("지원하기")
 
@@ -40,13 +40,12 @@ describe("QuickLinksMenu", () => {
       selector: ".umc-toast__message",
     })
     const toast = message.closest<HTMLElement>(".umc-toast")
+    expect(toast).toHaveAttribute("data-kind", "service-notice")
     expect(toast).toHaveAttribute("data-color", "brand")
     expect(toast).toHaveAttribute("data-placement", "bottom")
-    expect(toast).toHaveAttribute("data-icon")
+    expect(toast?.querySelectorAll(".umc-toast__pictogram")).toHaveLength(2)
     expect(toast?.querySelector(".umc-toast__close")).toBeNull()
-    expect(
-      toast && within(toast).getByRole("button", { name: "닫기" }),
-    ).toHaveClass("umc-toast__action")
+    expect(toast?.querySelector(".umc-toast__action")).toBeNull()
     expect(screen.queryByRole("menu")).not.toBeInTheDocument()
   })
 
