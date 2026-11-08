@@ -8,7 +8,7 @@ import { RECRUITMENT_COPY } from "./constants"
 import { RecruitmentSection } from "./RecruitmentSection"
 
 describe("RecruitmentSection", () => {
-  it("모집 안내 보러가기를 누르면 리크루팅 안내 Brand 토스트를 띄운다", async () => {
+  it("모집 안내 보러가기를 누르면 리크루팅 안내 서비스 공지 토스트를 띄운다", async () => {
     render(
       <ToastProvider>
         <RecruitmentSection />
@@ -23,7 +23,8 @@ describe("RecruitmentSection", () => {
       selector: ".umc-toast__message",
     })
     const toast = message.closest(".umc-toast")
+    expect(toast).toHaveAttribute("data-kind", "service-notice")
     expect(toast).toHaveAttribute("data-color", "brand")
-    expect(toast).toHaveAttribute("data-icon")
+    expect(toast?.querySelectorAll(".umc-toast__pictogram")).toHaveLength(2)
   })
 })
