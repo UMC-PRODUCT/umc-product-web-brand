@@ -8,6 +8,7 @@ import { AboutSection } from "./-components/about/AboutSection"
 import { CtaSection } from "./-components/cta/CtaSection"
 import { FaqSection } from "./-components/faq/FaqSection"
 import { HeroSection } from "./-components/hero/HeroSection"
+import { LandingNoticePopup } from "./-components/notice-popup/LandingNoticePopup"
 import { PreviewSection } from "./-components/preview/PreviewSection"
 import { ProjectsSection } from "./-components/projects/ProjectsSection"
 import { RecruitmentSection } from "./-components/recruitment/RecruitmentSection"
@@ -53,6 +54,7 @@ function LandingPage() {
         <CtaSection />
       </main>
       <Footer />
+      <LandingNoticePopup />
     </div>
   )
 }
