@@ -1,10 +1,14 @@
-import { NOTICE_POPUP_TITLE } from "./constants"
+import { useState } from "react"
+
+import { NOTICE_POPUP_MIN_WIDTH_QUERY, NOTICE_POPUP_TITLE } from "./constants"
 import { DemoDayMatchingSlide } from "./DemoDayMatchingSlide"
 import { NoticePopup } from "./NoticePopup"
-import { useNoticePopupOpen } from "./useNoticePopupOpen"
+
+const isWideEnoughForPopup = () =>
+  window.matchMedia(NOTICE_POPUP_MIN_WIDTH_QUERY).matches
 
 export function LandingNoticePopup() {
-  const [open, setOpen] = useNoticePopupOpen()
+  const [open, setOpen] = useState(isWideEnoughForPopup)
 
   return (
     <NoticePopup
