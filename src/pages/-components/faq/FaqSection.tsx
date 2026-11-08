@@ -1,3 +1,4 @@
+import { Accordion, AccordionItem } from "@umc-product/react"
 import { Tabs } from "radix-ui"
 
 import { Container } from "@/components/layout/Container"
@@ -6,8 +7,9 @@ import { SectionHeading } from "@/components/layout/SectionHeading"
 import { cn } from "@/utils/cn"
 
 import { FAQ_CATEGORIES, FAQ_COPY } from "./constants"
-import { FaqAccordion, FaqAccordionItem } from "./FaqAccordion"
 import { FaqChip } from "./FaqChip"
+
+import "./faq.css"
 
 export function FaqSection() {
   return (
@@ -54,17 +56,16 @@ export function FaqSection() {
               key={id}
               value={id}
             >
-              <FaqAccordion collapsible type="single">
+              <Accordion className="faq-accordion">
                 {items.map(({ question, answer }) => (
-                  <FaqAccordionItem
+                  <AccordionItem
+                    body={answer}
                     key={question}
-                    question={question}
+                    title={question}
                     value={question}
-                  >
-                    {answer}
-                  </FaqAccordionItem>
+                  />
                 ))}
-              </FaqAccordion>
+              </Accordion>
             </Tabs.Content>
           ))}
         </Tabs.Root>

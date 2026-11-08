@@ -1,32 +1,71 @@
-/*
- * FAQ 아코디언 펼침·접힘 높이 전환
- * radix Accordion이 내용 높이를 --radix-accordion-content-height로 알려 준다
- * 기본은 전환 없이 바로 열리고, 동작 줄이기를 켜지 않았을 때만 움직인다
- */
-@media (prefers-reduced-motion: no-preference) {
-  .faq-accordion-content[data-state="open"] {
-    animation: faq-accordion-open 240ms ease-out;
+.faq-accordion .umc-accordion-item {
+  --umc-accordion-item-bg: rgb(252 252 252 / 0.2);
+}
+
+.faq-accordion .umc-accordion-item__title {
+  margin-block: -1px;
+}
+
+.faq-accordion .umc-accordion-item__trigger::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+@media (width < 48rem) {
+  .faq-accordion {
+    gap: var(--umc-spacing-gap-12);
   }
 
-  .faq-accordion-content[data-state="closed"] {
-    animation: faq-accordion-close 200ms ease-out;
+  .faq-accordion .umc-accordion-item {
+    padding: 15px 15px 15px 23px;
+  }
+
+  .faq-accordion .umc-accordion-item__prefix {
+    font-size: 18px;
+  }
+
+  .faq-accordion .umc-accordion-item__title {
+    font-size: 14px;
+  }
+
+  .faq-accordion .umc-accordion-item__body {
+    font-size: 13px;
   }
 }
 
-@keyframes faq-accordion-open {
-  from {
-    height: 0;
+@media (48rem <= width < 64rem) {
+  .faq-accordion .umc-accordion-item:not([data-open]) {
+    padding-block: 19px;
   }
-  to {
-    height: var(--radix-accordion-content-height);
+
+  .faq-accordion .umc-accordion-item__title {
+    font-size: 18px;
   }
 }
 
-@keyframes faq-accordion-close {
-  from {
-    height: var(--radix-accordion-content-height);
+@media (64rem <= width < 90rem) {
+  .faq-accordion .umc-accordion-item__prefix {
+    font-size: 24px;
   }
-  to {
-    height: 0;
+
+  .faq-accordion .umc-accordion-item__title {
+    font-size: 20px;
+  }
+}
+
+@media (48rem <= width < 90rem) {
+  .faq-accordion {
+    gap: var(--umc-spacing-gap-20);
+  }
+
+  .faq-accordion .umc-accordion-item__body {
+    font-size: 16px;
+  }
+}
+
+@media (width >= 120rem) {
+  .faq-accordion {
+    gap: var(--umc-spacing-gap-20);
   }
 }
