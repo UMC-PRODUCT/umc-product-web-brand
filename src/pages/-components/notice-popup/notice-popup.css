@@ -64,3 +64,45 @@
   --notice-popup-glass-border-width: 1px;
   --notice-popup-glass-border-alpha: 0.1;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .notice-popup-overlay[data-state="open"] {
+    animation: notice-popup-dim-in var(--umc-motion-duration);
+  }
+
+  .notice-popup-overlay[data-state="closed"] {
+    animation: notice-popup-dim-out var(--umc-motion-duration) forwards;
+  }
+
+  .notice-popup-content[data-state="open"] {
+    animation: notice-popup-fade-in var(--umc-motion-duration);
+  }
+
+  .notice-popup-content[data-state="closed"] {
+    animation: notice-popup-fade-out var(--umc-motion-duration) forwards;
+  }
+}
+
+@keyframes notice-popup-dim-in {
+  from {
+    background-color: transparent;
+  }
+}
+
+@keyframes notice-popup-dim-out {
+  to {
+    background-color: transparent;
+  }
+}
+
+@keyframes notice-popup-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes notice-popup-fade-out {
+  to {
+    opacity: 0;
+  }
+}
