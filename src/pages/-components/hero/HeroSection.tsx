@@ -48,7 +48,7 @@ export function HeroSection() {
             width={3072}
           />
         </div>
-        <Container className="flex h-full flex-col items-center justify-center pt-20 pb-[120px]">
+        <Container className="flex h-svh flex-col items-center justify-center py-20">
           <hgroup className="flex flex-col items-center text-center">
             <p
               className="hero-eyebrow font-medium text-[#20c9bc] text-lg uppercase leading-[1.4] tracking-[1px] md:text-2xl min-[360px]:whitespace-nowrap"
