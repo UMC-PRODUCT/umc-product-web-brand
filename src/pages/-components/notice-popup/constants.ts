@@ -1,7 +1,5 @@
 export const NOTICE_POPUP_TITLE = "UMC 안내"
 
-export const NOTICE_POPUP_MIN_WIDTH_QUERY = "(min-width: 64rem)"
-
 export const DEMO_DAY_MATCHING_COPY = {
   title: "UMC Demo Day",
   subtitle: "팀 매칭 시스템",
