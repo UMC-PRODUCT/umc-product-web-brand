@@ -10,7 +10,7 @@ interface NoticePopupPaginationProps {
 }
 
 const ARROW_CLASS =
-  "flex size-[30px] shrink-0 items-center justify-center rounded-lg text-[#9ca3a3] outline-teal-500 focus-visible:outline-2 disabled:cursor-default disabled:text-teal-grey-300"
+  "flex size-[23.631px] shrink-0 items-center justify-center rounded-lg text-[#9ca3a3] outline-teal-500 focus-visible:outline-2 disabled:cursor-default disabled:text-teal-grey-300 lg:size-[30px]"
 
 export function NoticePopupPagination({
   slides,
@@ -21,7 +21,7 @@ export function NoticePopupPagination({
   const lastIndex = slides.length - 1
 
   return (
-    <div className="notice-popup-pagination relative flex items-center gap-2.5 rounded-xl bg-[rgb(251_252_252/0.05)] px-3 py-1.5 backdrop-blur-[21px]">
+    <div className="notice-popup-pagination relative mb-1 flex items-center gap-[7px] rounded-xl bg-[rgb(251_252_252/0.05)] px-2 py-1 backdrop-blur-[21px] md:mb-0 lg:gap-2.5 lg:px-3 lg:py-1.5">
       <button
         aria-controls={controlsId}
         aria-label="이전 안내"
@@ -30,9 +30,9 @@ export function NoticePopupPagination({
         onClick={() => onSelect(selectedIndex - 1)}
         type="button"
       >
-        <ChevronLeft aria-hidden />
+        <ChevronLeft aria-hidden className="size-full" />
       </button>
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-[4.726px] lg:gap-1.5">
         {slides.map(({ id }, index) => {
           const isSelected = index === selectedIndex
           return (
@@ -41,8 +41,10 @@ export function NoticePopupPagination({
               aria-current={isSelected ? "true" : undefined}
               aria-label={`${index + 1}번째 안내`}
               className={cn(
-                "h-2 rounded-full bg-teal-grey-300 outline-teal-500 outline-offset-2 focus-visible:outline-2",
-                isSelected ? "w-[18px] rounded-[6px] bg-teal-grey-500" : "w-2",
+                "h-[6.302px] rounded-full bg-teal-grey-300 outline-teal-500 outline-offset-2 focus-visible:outline-2 lg:h-2",
+                isSelected
+                  ? "w-[14.179px] rounded-[6px] bg-teal-grey-500 lg:w-[18px]"
+                  : "w-[6.302px] lg:w-2",
               )}
               key={id}
               onClick={() => onSelect(index)}
@@ -59,7 +61,7 @@ export function NoticePopupPagination({
         onClick={() => onSelect(selectedIndex + 1)}
         type="button"
       >
-        <ChevronRight aria-hidden />
+        <ChevronRight aria-hidden className="size-full" />
       </button>
     </div>
   )
