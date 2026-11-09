@@ -29,10 +29,10 @@ export function NoticePopup({
   return (
     <Dialog.Root onOpenChange={onOpenChange} open={open}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-80 grid place-items-center overflow-auto bg-dimmed-weak p-4">
+        <Dialog.Overlay className="notice-popup-overlay fixed inset-0 z-80 grid place-items-center overflow-auto bg-dimmed-medium p-4">
           <Dialog.Content
             aria-describedby={undefined}
-            className="relative flex flex-col items-center gap-2 rounded-[34px] bg-white p-2.5 shadow-drop-neutral-2 outline-none"
+            className="notice-popup-content relative flex flex-col items-center gap-2 rounded-[34px] bg-white p-2.5 shadow-drop-neutral-2 outline-none"
             onOpenAutoFocus={(event) => {
               event.preventDefault()
               contentRef.current?.focus()
