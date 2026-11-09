@@ -1,6 +1,6 @@
 .hero-backdrop {
   --lcp-visible-opacity: 0.01;
-  --hero-height: 1080px;
+  --hero-height: max(1080px, 100svh);
   height: var(--hero-height);
   background:
     linear-gradient(
