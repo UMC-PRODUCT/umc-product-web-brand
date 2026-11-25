@@ -19,7 +19,7 @@ export function PageHeader({ title, description }: PageHeaderProps) {
           </li>
         </ol>
       </nav>
-      <h1 className="mt-[26px] text-heading-4-semibold text-teal-grey-900 md:text-heading-2-semibold">
+      <h1 className="mt-[26px] text-heading-3-semibold text-teal-grey-900 md:text-heading-2-semibold">
         {title}
       </h1>
       <p className="mt-3 text-body-3-regular text-teal-grey-600">
