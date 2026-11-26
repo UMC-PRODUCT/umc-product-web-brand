@@ -100,7 +100,7 @@ function CentralOfficePage() {
           ))}
         </div>
       ) : (
-        <p className="mt-8 text-body-3-medium text-teal-grey-500 md:mt-[100px] md:text-title-3-medium">
+        <p className="mt-8 font-medium text-[13px] text-teal-grey-500 leading-[1.5] md:mt-[100px] md:text-body-3-medium">
           {`${selectedGeneration?.label} ${selectedBureau?.label} 명단이 없어요.`}
         </p>
       )}
